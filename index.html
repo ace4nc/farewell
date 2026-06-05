@@ -80,17 +80,11 @@ to{opacity:1;}
 position:fixed;
 left:50%;
 top:40%;
-
-transform:
-translate(-50%,-50%);
-
+transform:translate(-50%,-50%);
 width:min(90vw,900px);
-
 opacity:0;
-
 transition:4s ease;
-
-z-index:20; /* Layered safely on top of falling cards context */
+z-index:20;
 
 filter:
 brightness(1.2)
@@ -111,7 +105,7 @@ opacity:.9;
 
 #wrap{
 position:relative;
-z-index:30; /* Higher priority layer content wrapper */
+z-index:30;
 height:100vh;
 
 display:flex;
@@ -120,7 +114,8 @@ align-items:center;
 
 padding:30px;
 text-align:center;
-transition:opacity 2s ease;
+
+transition:2s ease;
 }
 
 #content{
@@ -130,14 +125,10 @@ width:100%;
 
 #text{
 font-size:clamp(1.4rem,4vw,2.5rem);
-
 letter-spacing:.08em;
 line-height:1.8;
-
 opacity:0;
-
 transition:2s;
-
 min-height:200px;
 }
 
@@ -166,14 +157,10 @@ letter-spacing:.15em;
 
 .cursor{
 display:inline-block;
-
 width:2px;
 height:1em;
-
 background:#d4d0c7;
-
 animation:blink 1s infinite;
-
 margin-left:4px;
 }
 
@@ -193,10 +180,8 @@ pointer-events:none;
 
 #light{
 position:fixed;
-
 left:-100%;
 top:0;
-
 width:40%;
 height:100%;
 z-index:40;
@@ -212,20 +197,28 @@ transparent
 transform:skewX(-25deg);
 }
 
-/* ======================================= */
-/* NEW ADDITIONS: HERO COUNTDOWN COMPONENT */
-/* ======================================= */
+/* HERO PAGE */
 
 #hero{
 position:fixed;
 inset:0;
-background:radial-gradient(circle at center, rgba(5,5,5,0.4) 0%, rgba(0,0,0,0.85) 100%);
+
 display:none;
 justify-content:center;
 align-items:center;
 text-align:center;
+
 padding:40px;
+
+background:
+radial-gradient(
+circle at center,
+rgba(5,5,5,.4) 0%,
+rgba(0,0,0,.85) 100%
+);
+
 z-index:50;
+
 opacity:0;
 transition:2.5s ease;
 }
@@ -248,6 +241,8 @@ opacity:.7;
 margin-bottom:40px;
 }
 
+/* COUNTDOWN */
+
 .countdown{
 display:flex;
 justify-content:center;
@@ -258,12 +253,21 @@ flex-wrap:wrap;
 .card{
 width:90px;
 height:110px;
-background:linear-gradient(180deg,#141414,#050505);
+
+background:
+linear-gradient(
+180deg,
+#141414,
+#050505
+);
+
 border:1px solid rgba(201,164,92,.4);
+
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
+
 border-radius:14px;
 }
 
@@ -285,15 +289,14 @@ opacity:.5;
 letter-spacing:.2em;
 }
 
-/* ======================================= */
-/* NEW ADDITIONS: AMBIENT AMBIENT ENGINE   */
-/* ======================================= */
+/* FALLING CARDS */
 
 #cardContainer{
 position:fixed;
 inset:0;
-z-index:2; /* Hidden behind the mask image and text overlays */
+z-index:2;
 pointer-events:none;
+
 perspective:1200px;
 overflow:hidden;
 transform-style:flat;
@@ -301,19 +304,29 @@ transform-style:flat;
 
 .falling-card{
 position:absolute;
+
 width:75px;
 height:105px;
-background:#ffffff;
+
+background:#fff;
+
 border-radius:6px;
-box-shadow:0 12px 30px rgba(0,0,0,0.6);
+
+box-shadow:
+0 12px 30px rgba(0,0,0,.6);
+
 display:flex;
 justify-content:center;
 align-items:center;
+
 font-family:sans-serif;
 font-weight:bold;
+
 user-select:none;
 will-change:transform;
-animation:fallLinear linear infinite;
+
+animation:
+fallLinear linear infinite;
 }
 
 .card-suit{
@@ -325,91 +338,142 @@ position:absolute;
 position:absolute;
 font-size:12px;
 line-height:1;
+
 display:flex;
 flex-direction:column;
 align-items:center;
 }
 
-.corner-top{ top:6px; left:6px; }
-.corner-bottom{ bottom:6px; right:6px; transform:rotate(180deg); }
+.corner-top{
+top:6px;
+left:6px;
+}
+
+.corner-bottom{
+bottom:6px;
+right:6px;
+transform:rotate(180deg);
+}
 
 @keyframes fallLinear{
+
 0%{
-transform:translate3d(var(--x-start), -150px, var(--z-depth)) rotateX(0deg) rotateY(0deg) rotateZ(var(--r-start));
+transform:
+translate3d(
+var(--x-start),
+-150px,
+var(--z-depth)
+)
+rotateX(0deg)
+rotateY(0deg)
+rotateZ(var(--r-start));
 }
+
 100%{
-transform:translate3d(var(--x-end), 105vh, var(--z-depth)) rotateX(var(--rot-x)) rotateY(var(--rot-y)) rotateZ(var(--rot-z));
+transform:
+translate3d(
+var(--x-end),
+105vh,
+var(--z-depth)
+)
+rotateX(var(--rot-x))
+rotateY(var(--rot-y))
+rotateZ(var(--rot-z));
 }
+
 }
 
 </style>
 </head>
 
 <body>
+  <div id="bg">
 
-<div id="bg">
+    <div class="smoke"></div>
 
-<div class="smoke"></div>
+    <img src="mask.png" id="mask">
 
-<img src="mask.png" id="mask">
+    <div id="light"></div>
 
-<div id="light"></div>
-
-<div id="cardContainer"></div>
+    <!-- Falling Cards Layer -->
+    <div id="cardContainer"></div>
 
 </div>
+
+<!-- INTRO SCREEN -->
 
 <div id="wrap">
 
-<div id="content">
+    <div id="content">
 
-<div id="text"></div>
+        <div id="text"></div>
 
-<div id="nameArea">
+        <div id="nameArea">
 
-<div>
-<span id="typed"></span>
-<span class="cursor"></span>
+            <div>
+                <span id="typed"></span>
+                <span class="cursor"></span>
+            </div>
+
+            <input
+                id="input"
+                type="text"
+                autocomplete="off">
+
+        </div>
+
+    </div>
+
 </div>
 
-<input
-id="input"
-type="text"
-autocomplete="off">
-
-</div>
-
-</div>
-
-</div>
+<!-- SECOND PAGE -->
 
 <div id="hero">
 
-<div class="hero-inner">
+    <div class="hero-inner">
 
-<div class="title">FAREWELL</div>
+        <div class="title">
+            FAREWELL
+        </div>
 
-<div class="subtitle">CLASS OF 2026</div>
+        <div class="subtitle">
+            CLASS OF 2026
+        </div>
 
-<div class="countdown">
+        <div class="countdown">
 
-<div class="card"><span id="d">00</span><small>DAYS</small></div>
-<div class="card"><span id="h">00</span><small>HOURS</small></div>
-<div class="card"><span id="m">00</span><small>MINS</small></div>
-<div class="card"><span id="s">00</span><small>SECS</small></div>
+            <div class="card">
+                <span id="d">00</span>
+                <small>DAYS</small>
+            </div>
+
+            <div class="card">
+                <span id="h">00</span>
+                <small>HOURS</small>
+            </div>
+
+            <div class="card">
+                <span id="m">00</span>
+                <small>MINS</small>
+            </div>
+
+            <div class="card">
+                <span id="s">00</span>
+                <small>SECS</small>
+            </div>
+
+        </div>
+
+        <div class="note">
+            AUGUST 9
+        </div>
+
+    </div>
 
 </div>
 
-<div class="note">
-AUGUST 9
-</div>
-
-</div>
-
-</div>
-  <script>
-
-const text =
+<script>
+  const text =
 document.getElementById("text");
 
 const input =
@@ -430,9 +494,7 @@ document.getElementById("light");
 const hero =
 document.getElementById("hero");
 
-/* ======================================= */
-/* NEW ADDITIONS: HERO COUNTDOWN LOGIC     */
-/* ======================================= */
+/* COUNTDOWN */
 
 const target =
 new Date("August 9, 2026 00:00:00");
@@ -449,22 +511,41 @@ const d =
 Math.floor(diff/(1000*60*60*24));
 
 const h =
-Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+Math.floor(
+(diff%(1000*60*60*24))
+/
+(1000*60*60)
+);
 
 const m =
-Math.floor((diff%(1000*60*60))/(1000*60));
+Math.floor(
+(diff%(1000*60*60))
+/
+(1000*60)
+);
 
 const s =
-Math.floor((diff%(1000*60))/1000);
+Math.floor(
+(diff%(1000*60))
+/
+1000
+);
 
-document.getElementById("d").textContent = d.toString().padStart(2, '0');
-document.getElementById("h").textContent = h.toString().padStart(2, '0');
-document.getElementById("m").textContent = m.toString().padStart(2, '0');
-document.getElementById("s").textContent = s.toString().padStart(2, '0');
+document.getElementById("d").textContent =
+String(d).padStart(2,"0");
+
+document.getElementById("h").textContent =
+String(h).padStart(2,"0");
+
+document.getElementById("m").textContent =
+String(m).padStart(2,"0");
+
+document.getElementById("s").textContent =
+String(s).padStart(2,"0");
 
 }
 
-/* ORIGINAL METHODS */
+/* ORIGINAL FUNCTIONS */
 
 function sleep(ms){
 return new Promise(
@@ -481,14 +562,40 @@ time
 text.innerHTML =
 message;
 
-text.classList.add("show");
+text.classList.add(
+"show"
+);
 
 await sleep(time);
 
-text.classList.remove("show");
+text.classList.remove(
+"show"
+);
 
 await sleep(2500);
 }
+
+async function reveal(
+message
+){
+
+text.innerHTML =
+message;
+
+text.classList.add(
+"show"
+);
+
+await sleep(4500);
+
+text.classList.remove(
+"show"
+);
+
+await sleep(1200);
+}
+
+/* INTRO */
 
 async function intro(){
 
@@ -520,9 +627,12 @@ nameArea.classList.add(
 );
 
 input.focus();
+
 }
 
 intro();
+
+/* INPUT */
 
 document.addEventListener(
 "click",
@@ -539,6 +649,8 @@ input.value;
 }
 );
 
+/* ENTER */
+
 input.addEventListener(
 "keydown",
 async e=>{
@@ -550,6 +662,8 @@ input.value.trim();
 
 if(!name)return;
 
+/* ORIGINAL REVEALS PRESERVED */
+
 nameArea.style.opacity="0";
 
 await sleep(1500);
@@ -560,7 +674,9 @@ text.classList.remove(
 
 await sleep(1500);
 
-await reveal("Ah...");
+await reveal(
+"Ah..."
+);
 
 await reveal(
 "We have been expecting you."
@@ -569,6 +685,8 @@ await reveal(
 await reveal(
 `Welcome, ${name}`
 );
+
+/* TRANSITION TO HERO */
 
 mask.classList.add(
 "bright"
@@ -585,127 +703,252 @@ fill:"forwards"
 }
 );
 
-/* =================================================== */
-/* NEW ADDITIONS: TRIGGER HERO SECTIONS ON LIGHT FLASH */
-/* =================================================== */
-await sleep(1500);
+document.getElementById(
+"wrap"
+).style.opacity="0";
 
-// Smoothly fade out the introduction textual content container
-document.getElementById("wrap").style.opacity = "0";
+await sleep(2500);
 
-await sleep(1000);
+document.getElementById(
+"wrap"
+).style.display="none";
 
-// Hide the intro context completely from view layout calculations
-document.getElementById("wrap").style.display = "none";
+hero.style.display=
+"flex";
 
-// Trigger countdown layout gracefully
-hero.style.display = "flex";
-void hero.offsetWidth; 
-hero.style.opacity = "1";
+void hero.offsetWidth;
+
+hero.style.opacity=
+"1";
 
 updateCountdown();
-setInterval(updateCountdown, 1000);
+
+setInterval(
+updateCountdown,
+1000
+);
 
 }
 });
 
-async function reveal(
-message
+/* FALLING CARDS */
+
+const cardContainer =
+document.getElementById(
+"cardContainer"
+);
+
+const suits =
+['♦','♣','♥','♠'];
+
+const values =
+['A','K','Q','J','10','9','8','7'];
+
+function spawnCard(
+isInitial
 ){
 
-text.innerHTML =
-message;
-
-text.classList.add(
-"show"
+const card =
+document.createElement(
+"div"
 );
 
-await sleep(4500);
+card.className =
+"falling-card";
 
-text.classList.remove(
-"show"
+const suit =
+suits[
+Math.floor(
+Math.random()
+*
+suits.length
+)
+];
+
+const value =
+values[
+Math.floor(
+Math.random()
+*
+values.length
+)
+];
+
+const isRed =
+(
+suit==='♥'
+||
+suit==='♦'
 );
 
-await sleep(1200);
+card.style.color =
+isRed
+?
+'#b31b1b'
+:
+'#111111';
+
+card.innerHTML = `
+<div class="card-corner corner-top">
+<div>${value}</div>
+<div>${suit}</div>
+</div>
+
+<div class="card-suit">
+${suit}
+</div>
+
+<div class="card-corner corner-bottom">
+<div>${value}</div>
+<div>${suit}</div>
+</div>
+`;
+
+const zIdx =
+Math.random();
+
+const translateZ =
+Math.floor(
+zIdx*400-200
+);
+
+const startX =
+Math.random()
+*
+window.innerWidth;
+
+const endX =
+startX
++
+(
+Math.random()*200
+-
+100
+);
+
+const duration =
+(
+Math.random()*6
++
+12
+)
+-
+(
+zIdx*2
+);
+
+let blurVal = 0;
+let opacityVal = 0.8;
+
+if(
+translateZ < -80
+){
+blurVal = 2.5;
+opacityVal = 0.4;
+}
+else if(
+translateZ > 140
+){
+blurVal = 4;
+opacityVal = 0.6;
 }
 
+card.style.setProperty(
+'--x-start',
+`${startX}px`
+);
 
-/* =================================================== */
-/* NEW ADDITIONS: AMBIENT GRACEFUL CARDS DRIFT ENGINE  */
-/* =================================================== */
+card.style.setProperty(
+'--x-end',
+`${endX}px`
+);
 
-const cardContainer = document.getElementById("cardContainer");
-const suits = ['♦', '♣', '♥', '♠'];
-const values = ['A', 'K', 'Q', 'J', '10', '9', '8', '7'];
+card.style.setProperty(
+'--z-depth',
+`${translateZ}px`
+);
 
-function spawnCard(isInitial) {
-  const card = document.createElement("div");
-  card.className = "falling-card";
+card.style.setProperty(
+'--r-start',
+`${Math.random()*360}deg`
+);
 
-  const suit = suits[Math.floor(Math.random() * suits.length)];
-  const value = values[Math.floor(Math.random() * values.length)];
-  const isRed = (suit === '♥' || suit === '♦');
+card.style.setProperty(
+'--rot-x',
+`${Math.random()*180+90}deg`
+);
 
-  card.style.color = isRed ? '#b31b1b' : '#111111';
+card.style.setProperty(
+'--rot-y',
+`${Math.random()*180+90}deg`
+);
 
-  card.innerHTML = `
-    <div class="card-corner corner-top"><div>${value}</div><div>${suit}</div></div>
-    <div class="card-suit">${suit}</div>
-    <div class="card-corner corner-bottom"><div>${value}</div><div>${suit}</div></div>
-  `;
+card.style.setProperty(
+'--rot-z',
+`${Math.random()*90-45}deg`
+);
 
-  const zIdx = Math.random(); 
-  const translateZ = Math.floor(zIdx * 400 - 200); 
-  const startX = Math.random() * window.innerWidth;
-  const endX = startX + (Math.random() * 200 - 100); 
+card.style.animationDuration =
+`${duration}s`;
 
-  // Smooth feather-like falling speed variable targets
-  const duration = (Math.random() * 6.0 + 12.0) - (zIdx * 2.0); 
+card.style.filter =
+blurVal > 0
+?
+`blur(${blurVal}px)`
+:
+'none';
 
-  let blurVal = 0;
-  let opacityVal = 0.8;
-  if (translateZ < -80) {
-    blurVal = 2.5;
-    opacityVal = 0.4;
-  } else if (translateZ > 140) {
-    blurVal = 4;
-    opacityVal = 0.6;
-  }
+card.style.opacity =
+opacityVal;
 
-  card.style.setProperty('--x-start', `${startX}px`);
-  card.style.setProperty('--x-end', `${endX}px`);
-  card.style.setProperty('--z-depth', `${translateZ}px`);
-  card.style.setProperty('--r-start', `${Math.random() * 360}deg`);
-  
-  card.style.setProperty('--rot-x', `${Math.random() * 180 + 90}deg`);
-  card.style.setProperty('--rot-y', `${Math.random() * 180 + 90}deg`);
-  card.style.setProperty('--rot-z', `${Math.random() * 90 - 45}deg`);
+if(isInitial){
 
-  card.style.animationDuration = `${duration}s`;
-  card.style.filter = blurVal > 0 ? `blur(${blurVal}px)` : 'none';
-  card.style.opacity = opacityVal;
+card.style.animationDelay =
+`-${
+Math.random()
+*
+duration
+}s`;
 
-  if (isInitial) {
-    card.style.animationDelay = `-${Math.random() * duration}s`;
-  }
-
-  card.addEventListener("animationend", () => card.remove());
-  cardContainer.appendChild(card);
 }
 
-// Fixed maximum cap pool of 25 cards for light sparse breathing space
-const totalInitialCards = 25;
-for (let i = 0; i < totalInitialCards; i++) {
-  spawnCard(true);
+card.addEventListener(
+"animationend",
+()=>card.remove()
+);
+
+cardContainer.appendChild(
+card
+);
+
 }
 
-setInterval(() => {
-  if (cardContainer.children.length < totalInitialCards) {
-    spawnCard(false);
-  }
-}, 400);
+const totalInitialCards =
+25;
 
-</script>
+for(
+let i=0;
+i<totalInitialCards;
+i++
+){
+spawnCard(true);
+}
+
+setInterval(
+()=>{
+
+if(
+cardContainer.children.length
+<
+totalInitialCards
+){
+spawnCard(false);
+}
+
+},
+400
+);
+  </script>
 
 </body>
 </html>
