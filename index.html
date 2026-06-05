@@ -22,7 +22,11 @@ color:#f5f1e8;
 }
 
 /* BACKGROUND */
-#bg{position:fixed;inset:0;background:#000;}
+#bg{
+position:fixed;
+inset:0;
+background:#000;
+}
 
 .smoke{
 position:absolute;
@@ -38,7 +42,11 @@ animation:smoke 8s forwards, drift 25s infinite ease-in-out;
 }
 
 @keyframes smoke{from{opacity:0;}to{opacity:1;}}
-@keyframes drift{0%{transform:translate(0,0);}50%{transform:translate(40px,-30px);}100%{transform:translate(0,0);}}
+@keyframes drift{
+0%{transform:translate(0,0);}
+50%{transform:translate(40px,-30px);}
+100%{transform:translate(0,0);}
+}
 
 /* MASK */
 #mask{
@@ -103,7 +111,11 @@ animation:blink 1s infinite;
 
 @keyframes blink{50%{opacity:0;}}
 
-#input{opacity:0;position:absolute;}
+#input{
+opacity:0;
+position:absolute;
+pointer-events:none;
+}
 
 /* HERO */
 #hero{
@@ -119,7 +131,10 @@ transition:2s;
 z-index:50;
 }
 
-#hero.show{opacity:1;visibility:visible;}
+#hero.show{
+opacity:1;
+visibility:visible;
+}
 
 .hero-content{text-align:center;}
 
@@ -196,7 +211,7 @@ letter-spacing:.15em;
 
 <div id="bg">
 <div class="smoke"></div>
-<img id="mask" src="mask.png">
+<img id="mask" src="mask.png" alt="mask">
 </div>
 
 <div id="wrap">
@@ -237,17 +252,19 @@ letter-spacing:.15em;
 
 <script>
 
-const text=document.getElementById("text");
-const input=document.getElementById("input");
-const typed=document.getElementById("typed");
-const nameArea=document.getElementById("nameArea");
-const mask=document.getElementById("mask");
-const hero=document.getElementById("hero");
+document.addEventListener("DOMContentLoaded", () => {
+
+const text = document.getElementById("text");
+const input = document.getElementById("input");
+const typed = document.getElementById("typed");
+const nameArea = document.getElementById("nameArea");
+const mask = document.getElementById("mask");
+const hero = document.getElementById("hero");
 
 function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 
 async function show(msg,t){
-text.innerHTML=msg;
+text.innerHTML = msg;
 text.classList.add("show");
 await sleep(t);
 text.classList.remove("show");
@@ -255,13 +272,13 @@ await sleep(1200);
 }
 
 async function intro(){
-await sleep(3000);
-await show("An invitation was issued.",5000);
-await show("Whether it reached the right hands remains to be seen.",6000);
+await sleep(2000);
+await show("An invitation was issued.",4000);
+await show("Whether it reached the right hands remains to be seen.",5000);
 
 mask.classList.add("show");
 
-text.innerHTML="Who are you?";
+text.innerHTML = "Who are you?";
 text.classList.add("show");
 
 nameArea.classList.add("show");
@@ -271,44 +288,46 @@ input.focus();
 intro();
 
 input.addEventListener("input",e=>{
-typed.textContent=e.target.value;
+typed.textContent = e.target.value;
 });
 
 input.addEventListener("keydown",async e=>{
 if(e.key==="Enter"){
-const name=input.value.trim();
+const name = input.value.trim();
 if(!name)return;
 
-await show("Ah...",1500);
-await show("We have been expecting you.",2000);
+await show("Ah...",1200);
+await show("We have been expecting you.",1800);
 await show(`Welcome, ${name}`,2000);
 
 mask.classList.add("bright");
 
-await sleep(1000);
+await sleep(800);
 
-document.getElementById("wrap").style.opacity="0";
-await sleep(1500);
+document.getElementById("wrap").style.opacity = "0";
+await sleep(1200);
 
 hero.classList.add("show");
 }
 });
 
 /* countdown */
-const target=new Date("August 9, 2026 18:00:00");
+const target = new Date("August 9, 2026 18:00:00");
 
 function update(){
-const now=new Date();
-const d=target-now;
+const now = new Date();
+const d = target - now;
 
-document.getElementById("days").textContent=Math.floor(d/86400000);
-document.getElementById("hours").textContent=Math.floor(d%86400000/3600000);
-document.getElementById("minutes").textContent=Math.floor(d%3600000/60000);
-document.getElementById("seconds").textContent=Math.floor(d%60000/1000);
+document.getElementById("days").textContent = Math.floor(d/86400000);
+document.getElementById("hours").textContent = Math.floor(d%86400000/3600000);
+document.getElementById("minutes").textContent = Math.floor(d%3600000/60000);
+document.getElementById("seconds").textContent = Math.floor(d%60000/1000);
 }
 
 update();
 setInterval(update,1000);
+
+});
 
 </script>
 
