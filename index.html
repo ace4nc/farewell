@@ -10,7 +10,11 @@
 
 <style>
 
-*{margin:0;padding:0;box-sizing:border-box;}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
 html,body{
 width:100%;
@@ -22,7 +26,11 @@ color:#f5f1e8;
 }
 
 /* BACKGROUND */
-#bg{position:fixed;inset:0;background:#000;}
+#bg{
+position:fixed;
+inset:0;
+background:#000;
+}
 
 .smoke{
 position:absolute;
@@ -59,16 +67,16 @@ filter:brightness(1.2) contrast(1.3);
 #mask.show{opacity:.2;}
 #mask.bright{opacity:1;}
 
-/* INTRO */
-#wrap{
-position:relative;
-z-index:10;
-height:100vh;
+/* INTRO LAYER */
+#intro{
+position:fixed;
+inset:0;
 display:flex;
 justify-content:center;
 align-items:center;
 text-align:center;
 padding:20px;
+z-index:10;
 transition:1s ease;
 }
 
@@ -114,7 +122,7 @@ position:absolute;
 pointer-events:none;
 }
 
-/* HERO */
+/* HERO LAYER */
 #hero{
 position:fixed;
 inset:0;
@@ -124,7 +132,7 @@ align-items:center;
 background:#000;
 opacity:0;
 visibility:hidden;
-transition:2s;
+transition:2s ease;
 z-index:50;
 }
 
@@ -147,7 +155,7 @@ color:#b89b5f;
 margin-top:10px;
 }
 
-/* COUNTDOWN CARDS */
+/* COUNTDOWN */
 #countdown{
 margin-top:35px;
 display:flex;
@@ -202,6 +210,10 @@ letter-spacing:.15em;
 
 .note{font-size:.6rem;color:#555;margin-top:5px;}
 
+.hidden{
+display:none !important;
+}
+
 </style>
 </head>
 
@@ -212,7 +224,10 @@ letter-spacing:.15em;
 <img id="mask" src="mask.png">
 </div>
 
-<div id="wrap">
+<!-- INTRO -->
+<div id="intro">
+
+<div>
 
 <div id="text"></div>
 
@@ -223,6 +238,9 @@ letter-spacing:.15em;
 
 </div>
 
+</div>
+
+<!-- HERO -->
 <section id="hero">
 
 <div class="hero-content">
@@ -251,19 +269,19 @@ letter-spacing:.15em;
 
 document.addEventListener("DOMContentLoaded", () => {
 
+const intro = document.getElementById("intro");
 const text = document.getElementById("text");
 const input = document.getElementById("input");
 const typed = document.getElementById("typed");
 const nameArea = document.getElementById("nameArea");
 const mask = document.getElementById("mask");
 const hero = document.getElementById("hero");
-const wrap = document.getElementById("wrap");
 
 function sleep(ms){
 return new Promise(r => setTimeout(r, ms));
 }
 
-async function show(msg, t){
+async function show(msg,t){
 text.innerHTML = msg;
 text.classList.add("show");
 await sleep(t);
@@ -271,10 +289,11 @@ text.classList.remove("show");
 await sleep(1200);
 }
 
-async function intro(){
+async function start(){
+
 await sleep(2000);
-await show("An invitation was issued.", 4000);
-await show("Whether it reached the right hands remains to be seen.", 5000);
+await show("An invitation was issued.",4000);
+await show("Whether it reached the right hands remains to be seen.",5000);
 
 mask.classList.add("show");
 
@@ -285,42 +304,43 @@ nameArea.classList.add("show");
 input.focus();
 }
 
-intro();
+start();
 
-input.addEventListener("input", e => {
+input.addEventListener("input", e=>{
 typed.textContent = e.target.value;
 });
 
-input.addEventListener("keydown", async e => {
+input.addEventListener("keydown", async e=>{
 if(e.key === "Enter"){
 
 const name = input.value.trim();
 if(!name) return;
 
-typed.textContent = name;
+/* lock input immediately */
+input.disabled = true;
 
-await show("Ah...", 1200);
-await show("We have been expecting you.", 1800);
-await show(`Welcome, ${name}`, 2000);
+await show("Ah...",1200);
+await show("We have been expecting you.",1800);
+await show(`Welcome, ${name}`,2000);
 
-/* FIX: REMOVE NAME UI CLEANLY */
-nameArea.style.opacity = "0";
+/* clean exit of intro layer (IMPORTANT FIX) */
+intro.style.opacity = "0";
+intro.style.pointerEvents = "none";
 
 mask.classList.add("bright");
 
-await sleep(800);
+await sleep(900);
 
-/* FADE INTRO OUT */
-wrap.style.opacity = "0";
+/* REMOVE INTRO COMPLETELY (fixes ghost text bug) */
+intro.classList.add("hidden");
 
-await sleep(1200);
+await sleep(300);
 
-/* SHOW HERO */
 hero.classList.add("show");
 }
 });
 
-/* COUNTDOWN */
+/* countdown */
 const target = new Date("August 9, 2026 18:00:00");
 
 function update(){
@@ -334,7 +354,7 @@ document.getElementById("seconds").textContent = Math.floor(d%60000/1000);
 }
 
 update();
-setInterval(update, 1000);
+setInterval(update,1000);
 
 });
 
