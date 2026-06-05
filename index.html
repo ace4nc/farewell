@@ -90,7 +90,7 @@ opacity:0;
 
 transition:4s ease;
 
-z-index:20; /* High z-index explicitly above background cards layer */
+z-index:20;
 
 filter:
 brightness(1.2)
@@ -111,7 +111,7 @@ opacity:.35;
 
 #wrap{
 position:relative;
-z-index:30; /* Higher than mask and cards layer */
+z-index:30;
 height:100vh;
 
 display:flex;
@@ -187,7 +187,7 @@ left:-100%;
 top:0;
 width:40%;
 height:100%;
-z-index:40; /* Always sweeps on the absolute top layer */
+z-index:40;
 background:
 linear-gradient(
 90deg,
@@ -211,7 +211,7 @@ justify-content:center;
 align-items:center;
 text-align:center;
 padding:40px;
-z-index:50; /* Sits completely in front of everything else */
+z-index:50;
 opacity:0;
 transition:2.5s ease;
 }
@@ -280,11 +280,11 @@ letter-spacing:.2em;
 #cardContainer{
 position:fixed;
 inset:0;
-z-index:2; /* Safely layered far underneath text (30) and mask (20) */
+z-index:2; 
 pointer-events:none;
 perspective:1200px;
 overflow:hidden;
-transform-style:flat; /* Forces all 3D child cards to stay within this container's z-index boundary */
+transform-style:flat;
 }
 
 .falling-card{
@@ -532,7 +532,7 @@ document.addEventListener("click",()=>input.focus());
 
 
 /* =================================================== */
-/* SLOW & GRACEFUL BACKGROUND CARDS ENGINE             */
+/* GENTLE, SPARSE BACKGROUND DRIFT ENGINE              */
 /* =================================================== */
 
 const cardContainer = document.getElementById("cardContainer");
@@ -558,19 +558,19 @@ function spawnCard(isInitial) {
   const zIdx = Math.random(); 
   const translateZ = Math.floor(zIdx * 400 - 200); 
   const startX = Math.random() * window.innerWidth;
-  const endX = startX + (Math.random() * 300 - 150); 
+  const endX = startX + (Math.random() * 200 - 100); 
 
-  // CHANGED: Increased time duration significantly to slow down the downward fall speed
-  const duration = (Math.random() * 5.0 + 7.0) - (zIdx * 1.5); 
+  // CHANGED: Increased duration massively (12 to 18 seconds) for a super slow feather-like fall
+  const duration = (Math.random() * 6.0 + 12.0) - (zIdx * 2.0); 
 
   let blurVal = 0;
-  let opacityVal = 0.85;
+  let opacityVal = 0.8;
   if (translateZ < -80) {
     blurVal = 2.5;
-    opacityVal = 0.45;
+    opacityVal = 0.4;
   } else if (translateZ > 140) {
     blurVal = 4;
-    opacityVal = 0.65;
+    opacityVal = 0.6;
   }
 
   card.style.setProperty('--x-start', `${startX}px`);
@@ -578,10 +578,10 @@ function spawnCard(isInitial) {
   card.style.setProperty('--z-depth', `${translateZ}px`);
   card.style.setProperty('--r-start', `${Math.random() * 360}deg`);
   
-  // CHANGED: Decreased rotational targets to make the spin calmer and less erratic
-  card.style.setProperty('--rot-x', `${Math.random() * 360 + 180}deg`);
-  card.style.setProperty('--rot-y', `${Math.random() * 360 + 180}deg`);
-  card.style.setProperty('--rot-z', `${Math.random() * 180 - 90}deg`);
+  // CHANGED: Minimal rotation speeds so they don't look frantic spinning down
+  card.style.setProperty('--rot-x', `${Math.random() * 180 + 90}deg`);
+  card.style.setProperty('--rot-y', `${Math.random() * 180 + 90}deg`);
+  card.style.setProperty('--rot-z', `${Math.random() * 90 - 45}deg`);
 
   card.style.animationDuration = `${duration}s`;
   card.style.filter = blurVal > 0 ? `blur(${blurVal}px)` : 'none';
@@ -595,7 +595,8 @@ function spawnCard(isInitial) {
   cardContainer.appendChild(card);
 }
 
-const totalInitialCards = 65;
+// CHANGED: Lowered the maximum concurrent card cap to 25 to make the layout clean and sparse
+const totalInitialCards = 25;
 for (let i = 0; i < totalInitialCards; i++) {
   spawnCard(true);
 }
@@ -604,7 +605,7 @@ setInterval(() => {
   if (cardContainer.children.length < totalInitialCards) {
     spawnCard(false);
   }
-}, 120);
+}, 400);
 
 </script>
 
