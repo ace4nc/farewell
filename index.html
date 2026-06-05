@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>The Velvet Hour</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html,body{
+width:100%;
+height:100%;
+overflow:hidden;
+background:#000;
+}
+
+body{
+font-family:'Cinzel',serif;
+color:#f5f1e8;
+}
+
+/* BACKGROUND */
+
+#bg{
+position:fixed;
+inset:0;
+background:#000;
+overflow:hidden;
+}
+
+/* SMOKE */
+
+.smoke{
+position:absolute;
+width:200%;
+height:200%;
+left:-50%;
+top:-50%;
+opacity:0;
+
+background:
+radial-gradient(circle at 30% 40%,
+rgba(255,255,255,.05),
+transparent 40%),
+
+radial-gradient(circle at 70% 60%,
+rgba(255,255,255,.04),
+transparent 40%);
+
+animation:
+smokeReveal 8s forwards,
+smokeMove 25s infinite ease-in-out;
+}
+
+@keyframes smokeReveal{
+from{opacity:0;}
+to{opacity:1;}
+}
+
+@keyframes smokeMove{
+0%{transform:translate(0,0);}
+50%{transform:translate(40px,-30px);}
+100%{transform:translate(0,0);}
+}
+
+/* MASK */
+
+#mask{
+position:fixed;
+left:50%;
+top:40%;
+
+transform:
+translate(-50%,-50%);
+
+width:min(90vw,900px);
+
+opacity:0;
+
+transition:4s ease;
+
+filter:
+brightness(1.2)
+contrast(1.3)
+drop-shadow(0 0 20px rgba(255,255,255,.2))
+drop-shadow(0 0 60px rgba(255,255,255,.05));
+}
+
+#mask.show{
+opacity:.18;
+}
+
+#mask.bright{
+opacity:.9;
+}
+
+/* CONTENT */
+
+#wrap{
+position:relative;
+z-index:10;
+height:100vh;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+padding:30px;
+text-align:center;
+}
+
+#content{
+max-width:800px;
+width:100%;
+}
+
+#text{
+font-size:clamp(1.4rem,4vw,2.5rem);
+
+letter-spacing:.08em;
+line-height:1.8;
+
+opacity:0;
+
+transition:2s;
+
+min-height:200px;
+}
+
+#text.show{
+opacity:1;
+}
+
+/* NAME */
+
+#nameArea{
+opacity:0;
+transition:2s;
+margin-top:30px;
+}
+
+#nameArea.show{
+opacity:1;
+}
+
+#typed{
+font-family:'Montserrat',sans-serif;
+font-size:1.6rem;
+color:#d4d0c7;
+letter-spacing:.15em;
+}
+
+.cursor{
+display:inline-block;
+
+width:2px;
+height:1em;
+
+background:#d4d0c7;
+
+animation:blink 1s infinite;
+
+margin-left:4px;
+}
+
+@keyframes blink{
+50%{
+opacity:0;
+}
+}
+
+#input{
+position:absolute;
+opacity:0;
+pointer-events:none;
+}
+
+/* LIGHT SWEEP */
+
+#light{
+position:fixed;
+
+left:-100%;
+top:0;
+
+width:40%;
+height:100%;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.08),
+transparent
+);
+
+transform:skewX(-25deg);
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="bg">
+
+<div class="smoke"></div>
+
+<img src="mask.png" id="mask">
+
+<div id="light"></div>
+
+</div>
+
+<div id="wrap">
+
+<div id="content">
+
+<div id="text"></div>
+
+<div id="nameArea">
+
+<div>
+<span id="typed"></span>
+<span class="cursor"></span>
+</div>
+
+<input
+id="input"
+type="text"
+autocomplete="off">
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const text =
+document.getElementById("text");
+
+const input =
+document.getElementById("input");
+
+const typed =
+document.getElementById("typed");
+
+const nameArea =
+document.getElementById("nameArea");
+
+const mask =
+document.getElementById("mask");
+
+const light =
+document.getElementById("light");
+
+function sleep(ms){
+return new Promise(
+resolve =>
+setTimeout(resolve,ms)
+);
+}
+
+async function showLine(
+message,
+time
+){
+
+text.innerHTML =
+message;
+
+text.classList.add("show");
+
+await sleep(time);
+
+text.classList.remove("show");
+
+await sleep(2500);
+}
+
+async function intro(){
+
+await sleep(5000);
+
+await showLine(
+"An invitation was issued.",
+7000
+);
+
+await showLine(
+"Whether it reached the right hands remains to be seen.",
+8000
+);
+
+mask.classList.add(
+"show"
+);
+
+text.innerHTML =
+"Who are you?";
+
+text.classList.add(
+"show"
+);
+
+nameArea.classList.add(
+"show"
+);
+
+input.focus();
+}
+
+intro();
+
+document.addEventListener(
+"click",
+()=>{
+input.focus();
+}
+);
+
+input.addEventListener(
+"input",
+()=>{
+typed.textContent =
+input.value;
+}
+);
+
+input.addEventListener(
+"keydown",
+async e=>{
+
+if(e.key==="Enter"){
+
+const name =
+input.value.trim();
+
+if(!name)return;
+
+nameArea.style.opacity="0";
+
+await sleep(1500);
+
+text.classList.remove(
+"show"
+);
+
+await sleep(1500);
+
+await reveal("Ah...");
+
+await reveal(
+"We have been expecting you."
+);
+
+await reveal(
+`Welcome, ${name}`
+);
+
+mask.classList.add(
+"bright"
+);
+
+light.animate(
+[
+{left:"-100%"},
+{left:"150%"}
+],
+{
+duration:3000,
+fill:"forwards"
+}
+);
+
+}
+});
+
+async function reveal(
+message
+){
+
+text.innerHTML =
+message;
+
+text.classList.add(
+"show"
+);
+
+await sleep(4500);
+
+text.classList.remove(
+"show"
+);
+
+await sleep(1200);
+}
+
+</script>
+
+</body>
+</html>
