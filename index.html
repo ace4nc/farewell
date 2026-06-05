@@ -11,10 +11,6 @@
 
 <style>
 
-/* =======================
-   BASE
-======================= */
-
 body {
 margin: 0;
 padding: 0;
@@ -24,15 +20,16 @@ font-family: 'Montserrat', sans-serif;
 overflow-x: hidden;
 }
 
+/* =======================
+   INTRO
+======================= */
+
 #wrap {
 position: relative;
 z-index: 10;
 transition: 2.2s ease;
+opacity: 1;
 }
-
-/* =======================
-   INTRO (YOUR ORIGINAL SYSTEM PRESERVED)
-======================= */
 
 #content {
 display: flex;
@@ -45,8 +42,8 @@ text-align: center;
 
 #text {
 font-size: 1.2rem;
-letter-spacing: 2px;
 opacity: 0.8;
+letter-spacing: 2px;
 }
 
 #nameArea {
@@ -84,18 +81,13 @@ animation: blink 1s infinite;
 #hero {
 position: fixed;
 inset: 0;
-
 display: flex;
 justify-content: center;
 align-items: center;
-
 opacity: 0;
 visibility: hidden;
-
 transition: 2.5s ease;
-
 z-index: 25;
-
 background: radial-gradient(circle at center, rgba(40,20,20,.3), #000);
 }
 
@@ -106,29 +98,24 @@ visibility: visible;
 
 .hero-content {
 text-align: center;
-max-width: 1200px;
 width: 100%;
-position: relative;
-z-index: 2;
+max-width: 1200px;
 }
 
 .farewell-title {
-font-size: clamp(4rem, 18vw, 12rem);
-font-weight: 600;
-letter-spacing: .04em;
-line-height: .9;
+font-size: clamp(3.5rem, 14vw, 11rem);
+letter-spacing: 0.04em;
 color: #f8f3ea;
 }
 
 .class-title {
-margin-top: 20px;
-letter-spacing: .9em;
-font-size: clamp(.7rem, 2vw, 1.2rem);
+margin-top: 15px;
+letter-spacing: 0.6em;
 color: #b89b5f;
 }
 
 #countdown {
-margin-top: 60px;
+margin-top: 50px;
 display: flex;
 justify-content: center;
 gap: 15px;
@@ -136,8 +123,8 @@ flex-wrap: wrap;
 }
 
 .count-card {
-width: 95px;
-height: 120px;
+width: 90px;
+height: 110px;
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -147,31 +134,27 @@ background: rgba(20,20,20,.9);
 }
 
 .count-card span {
-font-size: 2.3rem;
+font-size: 2rem;
 }
 
 .count-card small {
-font-size: .65rem;
-letter-spacing: .25em;
+font-size: .6rem;
+letter-spacing: .2em;
 color: #c9a45c;
-margin-top: 8px;
+margin-top: 6px;
 }
 
 .date-note {
-margin-top: 40px;
+margin-top: 35px;
 font-size: .8rem;
-letter-spacing: .25em;
 opacity: .7;
+letter-spacing: .2em;
 }
-
-/* =======================
-   RESPONSIVE
-======================= */
 
 @media(max-width:768px){
 .count-card {
 width: 80px;
-height: 105px;
+height: 100px;
 }
 }
 
@@ -180,10 +163,7 @@ height: 105px;
 
 <body>
 
-<!-- =======================
-     INTRO SYSTEM (UNCHANGED STRUCTURE)
-======================= -->
-
+<!-- INTRO -->
 <div id="wrap">
 
 <div id="content">
@@ -205,10 +185,7 @@ height: 105px;
 
 </div>
 
-<!-- =======================
-     HERO SECTION
-======================= -->
-
+<!-- HERO -->
 <section id="hero">
 
 <div class="hero-content">
@@ -219,25 +196,10 @@ height: 105px;
 
 <div id="countdown">
 
-<div class="count-card">
-<span id="days">00</span>
-<small>DAYS</small>
-</div>
-
-<div class="count-card">
-<span id="hours">00</span>
-<small>HOURS</small>
-</div>
-
-<div class="count-card">
-<span id="minutes">00</span>
-<small>MINS</small>
-</div>
-
-<div class="count-card">
-<span id="seconds">00</span>
-<small>SECS</small>
-</div>
+<div class="count-card"><span id="days">00</span><small>DAYS</small></div>
+<div class="count-card"><span id="hours">00</span><small>HOURS</small></div>
+<div class="count-card"><span id="minutes">00</span><small>MINS</small></div>
+<div class="count-card"><span id="seconds">00</span><small>SECS</small></div>
 
 </div>
 
@@ -251,20 +213,20 @@ height: 105px;
 
 </section>
 
-<!-- =======================
-     SCRIPT (COUNTDOWN + TRANSITION HOOK)
-======================= -->
-
 <script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+const hero = document.getElementById("hero");
+const wrap = document.getElementById("wrap");
+const input = document.getElementById("input");
+const text = document.getElementById("text");
+
+const targetDate = new Date("August 9, 2026 18:00:00");
 
 /* =======================
    COUNTDOWN
 ======================= */
-
-const hero = document.getElementById("hero");
-const wrap = document.getElementById("wrap");
-
-const targetDate = new Date("August 9, 2026 18:00:00");
 
 function updateCountdown(){
 
@@ -291,7 +253,7 @@ updateCountdown();
 setInterval(updateCountdown, 1000);
 
 /* =======================
-   TRANSITION FUNCTION (CALL THIS FROM YOUR INTRO LOGIC)
+   TRANSITION
 ======================= */
 
 function transitionToHero(){
@@ -302,21 +264,39 @@ wrap.style.filter = "blur(6px)";
 wrap.style.transform = "scale(1.02)";
 
 setTimeout(() => {
-
 hero.classList.add("show");
-
-document.body.style.background = "#000";
-
 }, 2200);
 
 }
 
+/* expose globally */
+window.transitionToHero = transitionToHero;
+
 /* =======================
-   EXPOSE FOR YOUR INTRO SCRIPT
-   (IMPORTANT: call this after "Welcome, name")
+   SIMPLE INTRO LOGIC (SAFE VERSION)
 ======================= */
 
-window.transitionToHero = transitionToHero;
+text.innerText = "An invitation was issued.";
+
+input.addEventListener("keydown", function(e){
+
+if(e.key === "Enter"){
+
+const name = input.value || "Guest";
+
+text.innerText = "Welcome, " + name;
+
+setTimeout(() => {
+
+transitionToHero();
+
+}, 1500);
+
+}
+
+});
+
+});
 
 </script>
 
