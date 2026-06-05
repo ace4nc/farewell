@@ -36,7 +36,7 @@ position:fixed;
 inset:0;
 background:#000;
 overflow:hidden;
-z-index: 1; /* Keep background elements underneath the text content */
+z-index: 1;
 }
 
 /* SMOKE */
@@ -102,10 +102,10 @@ opacity:.18;
 }
 
 #mask.bright{
-opacity:.35; /* Keeps the mask beautifully visible behind the countdown */
+opacity:.35;
 }
 
-/* CONTENT CONTAINER (INTRO) */
+/* CONTENT */
 
 #wrap{
 position:relative;
@@ -118,7 +118,7 @@ align-items:center;
 
 padding:30px;
 text-align:center;
-transition: opacity 1.5s ease; /* Added smooth transition for the fade out */
+transition: opacity 1.5s ease;
 }
 
 #content{
@@ -185,7 +185,7 @@ left:-100%;
 top:0;
 width:40%;
 height:100%;
-z-index: 2; /* Keeps sweep over background, under hero text */
+z-index: 2;
 background:
 linear-gradient(
 90deg,
@@ -197,13 +197,12 @@ transform:skewX(-25deg);
 }
 
 /* ========================= */
-/* HERO SECTION (FIXED TRANSITION) */
+/* HERO SECTION              */
 /* ========================= */
 
 #hero{
 position:fixed;
 inset:0;
-/* Semi-transparent background allows the background smoke to blend through beautifully */
 background: radial-gradient(circle at center, rgba(5,5,5,0.5) 0%, rgba(0,0,0,0.9) 100%); 
 display: flex;
 justify-content:center;
@@ -212,13 +211,11 @@ text-align:center;
 padding:40px;
 z-index:20;
 
-/* Fade transition setup */
 opacity: 0;
 pointer-events: none; 
 transition: opacity 2s ease; 
 }
 
-/* Class to trigger the smooth fade-in */
 #hero.show-hero {
 opacity: 1;
 pointer-events: auto;
@@ -263,8 +260,8 @@ align-items:center;
 border-radius:14px;
 }
 
-.card span {
-font-family: 'Montserrat', sans-serif; /* Clean font looks better for structural numbers */
+.card span{
+font-family: 'Montserrat', sans-serif;
 font-size:2rem;
 }
 
@@ -336,7 +333,7 @@ letter-spacing:.2em;
 </div>
 
 <div class="note">
-AUGUST 9, 2026 • subject to change
+AUGUST 9
 </div>
 
 </div>
@@ -366,7 +363,7 @@ document.getElementById("light");
 const hero =
 document.getElementById("hero");
 
-/* COUNTDOWN WITH FIXED FORCED LEADING ZEROS */
+/* COUNTDOWN */
 
 const target =
 new Date("August 9, 2026 00:00:00");
@@ -399,7 +396,6 @@ Math.floor((diff%(1000*60*60))/(1000*60));
 const s =
 Math.floor((diff%(1000*60))/1000);
 
-// padStart ensures single digits (like 9) display as "09" so cards don't shift layout
 document.getElementById("d").textContent = d.toString().padStart(2, '0');
 document.getElementById("h").textContent = h.toString().padStart(2, '0');
 document.getElementById("m").textContent = m.toString().padStart(2, '0');
@@ -460,13 +456,10 @@ if(e.key==="Enter"){
 const name = input.value.trim();
 if(!name)return;
 
-/* 1. Smoothly fade intro layer out */
 document.getElementById("wrap").style.opacity="0";
 
-/* 2. Set background elements to final state */
 mask.classList.add("bright");
 
-/* 3. Run the flash light sweep effect */
 light.animate([
 {left:"-100%"},
 {left:"150%"}
@@ -475,10 +468,8 @@ duration:3000,
 fill:"forwards"
 });
 
-// Wait briefly for the fade-out to progress before fading hero in
 await sleep(1000);
 
-/* 4. Trigger countdown and fade hero section in smoothly */
 updateCountdown();
 hero.classList.add("show-hero");
 setInterval(updateCountdown,1000);
