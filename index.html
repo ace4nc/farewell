@@ -90,7 +90,7 @@ opacity:0;
 
 transition:4s ease;
 
-z-index:20;
+z-index:20; /* Layered safely on top of falling cards context */
 
 filter:
 brightness(1.2)
@@ -104,14 +104,14 @@ opacity:.18;
 }
 
 #mask.bright{
-opacity:.35;
+opacity:.9;
 }
 
 /* CONTENT */
 
 #wrap{
 position:relative;
-z-index:30;
+z-index:30; /* Higher priority layer content wrapper */
 height:100vh;
 
 display:flex;
@@ -120,7 +120,7 @@ align-items:center;
 
 padding:30px;
 text-align:center;
-transition:2s ease;
+transition:opacity 2s ease;
 }
 
 #content{
@@ -130,10 +130,14 @@ width:100%;
 
 #text{
 font-size:clamp(1.4rem,4vw,2.5rem);
+
 letter-spacing:.08em;
 line-height:1.8;
+
 opacity:0;
+
 transition:2s;
+
 min-height:200px;
 }
 
@@ -162,15 +166,21 @@ letter-spacing:.15em;
 
 .cursor{
 display:inline-block;
+
 width:2px;
 height:1em;
+
 background:#d4d0c7;
+
 animation:blink 1s infinite;
+
 margin-left:4px;
 }
 
 @keyframes blink{
-50%{opacity:0;}
+50%{
+opacity:0;
+}
 }
 
 #input{
@@ -183,11 +193,14 @@ pointer-events:none;
 
 #light{
 position:fixed;
+
 left:-100%;
 top:0;
+
 width:40%;
 height:100%;
 z-index:40;
+
 background:
 linear-gradient(
 90deg,
@@ -195,12 +208,13 @@ transparent,
 rgba(255,255,255,.08),
 transparent
 );
+
 transform:skewX(-25deg);
 }
 
-/* ========================= */
-/* HERO SECTION              */
-/* ========================= */
+/* ======================================= */
+/* NEW ADDITIONS: HERO COUNTDOWN COMPONENT */
+/* ======================================= */
 
 #hero{
 position:fixed;
@@ -233,8 +247,6 @@ letter-spacing:.3em;
 opacity:.7;
 margin-bottom:40px;
 }
-
-/* COUNTDOWN */
 
 .countdown{
 display:flex;
@@ -273,14 +285,14 @@ opacity:.5;
 letter-spacing:.2em;
 }
 
-/* ========================= */
-/* ACCELERATED CARDS LAYER   */
-/* ========================= */
+/* ======================================= */
+/* NEW ADDITIONS: AMBIENT AMBIENT ENGINE   */
+/* ======================================= */
 
 #cardContainer{
 position:fixed;
 inset:0;
-z-index:2; 
+z-index:2; /* Hidden behind the mask image and text overlays */
 pointer-events:none;
 perspective:1200px;
 overflow:hidden;
@@ -360,7 +372,10 @@ transform:translate3d(var(--x-end), 105vh, var(--z-depth)) rotateX(var(--rot-x))
 <span class="cursor"></span>
 </div>
 
-<input id="input" type="text" autocomplete="off">
+<input
+id="input"
+type="text"
+autocomplete="off">
 
 </div>
 
@@ -392,8 +407,7 @@ AUGUST 9
 </div>
 
 </div>
-
-<script>
+  <script>
 
 const text =
 document.getElementById("text");
@@ -416,7 +430,9 @@ document.getElementById("light");
 const hero =
 document.getElementById("hero");
 
-/* COUNTDOWN */
+/* ======================================= */
+/* NEW ADDITIONS: HERO COUNTDOWN LOGIC     */
+/* ======================================= */
 
 const target =
 new Date("August 9, 2026 00:00:00");
@@ -448,15 +464,23 @@ document.getElementById("s").textContent = s.toString().padStart(2, '0');
 
 }
 
-/* KEEP YOUR INTRO EXACT */
+/* ORIGINAL METHODS */
 
 function sleep(ms){
-return new Promise(r=>setTimeout(r,ms));
+return new Promise(
+resolve =>
+setTimeout(resolve,ms)
+);
 }
 
-async function showLine(message,time){
+async function showLine(
+message,
+time
+){
 
-text.innerHTML = message;
+text.innerHTML =
+message;
+
 text.classList.add("show");
 
 await sleep(time);
@@ -470,69 +494,144 @@ async function intro(){
 
 await sleep(5000);
 
-await showLine("An invitation was issued.",7000);
+await showLine(
+"An invitation was issued.",
+7000
+);
 
-await showLine("Whether it reached the right hands remains to be seen.",8000);
+await showLine(
+"Whether it reached the right hands remains to be seen.",
+8000
+);
 
-mask.classList.add("show");
+mask.classList.add(
+"show"
+);
 
-text.innerHTML = "Who are you?";
-text.classList.add("show");
+text.innerHTML =
+"Who are you?";
 
-nameArea.classList.add("show");
+text.classList.add(
+"show"
+);
+
+nameArea.classList.add(
+"show"
+);
 
 input.focus();
 }
 
 intro();
 
-/* NAME INPUT */
+document.addEventListener(
+"click",
+()=>{
+input.focus();
+}
+);
 
-input.addEventListener("input",()=>{
-typed.textContent = input.value;
-});
+input.addEventListener(
+"input",
+()=>{
+typed.textContent =
+input.value;
+}
+);
 
-/* TRANSITION TO HERO */
-
-input.addEventListener("keydown",async e=>{
+input.addEventListener(
+"keydown",
+async e=>{
 
 if(e.key==="Enter"){
 
-const name = input.value.trim();
+const name =
+input.value.trim();
+
 if(!name)return;
 
-document.getElementById("wrap").style.opacity="0";
-
-mask.classList.add("bright");
-
-light.animate([
-{left:"-100%"},
-{left:"150%"}
-],{
-duration:3000,
-fill:"forwards"
-});
+nameArea.style.opacity="0";
 
 await sleep(1500);
 
-document.getElementById("wrap").style.display="none";
+text.classList.remove(
+"show"
+);
 
-hero.style.display="flex";
+await sleep(1500);
+
+await reveal("Ah...");
+
+await reveal(
+"We have been expecting you."
+);
+
+await reveal(
+`Welcome, ${name}`
+);
+
+mask.classList.add(
+"bright"
+);
+
+light.animate(
+[
+{left:"-100%"},
+{left:"150%"}
+],
+{
+duration:3000,
+fill:"forwards"
+}
+);
+
+/* =================================================== */
+/* NEW ADDITIONS: TRIGGER HERO SECTIONS ON LIGHT FLASH */
+/* =================================================== */
+await sleep(1500);
+
+// Smoothly fade out the introduction textual content container
+document.getElementById("wrap").style.opacity = "0";
+
+await sleep(1000);
+
+// Hide the intro context completely from view layout calculations
+document.getElementById("wrap").style.display = "none";
+
+// Trigger countdown layout gracefully
+hero.style.display = "flex";
 void hero.offsetWidth; 
-hero.style.opacity="1";
+hero.style.opacity = "1";
 
 updateCountdown();
-setInterval(updateCountdown,1000);
+setInterval(updateCountdown, 1000);
 
 }
-
 });
 
-document.addEventListener("click",()=>input.focus());
+async function reveal(
+message
+){
+
+text.innerHTML =
+message;
+
+text.classList.add(
+"show"
+);
+
+await sleep(4500);
+
+text.classList.remove(
+"show"
+);
+
+await sleep(1200);
+}
 
 
 /* =================================================== */
-/* GENTLE, SPARSE BACKGROUND DRIFT ENGINE              */
+/* NEW ADDITIONS: AMBIENT GRACEFUL CARDS DRIFT ENGINE  */
 /* =================================================== */
 
 const cardContainer = document.getElementById("cardContainer");
@@ -560,6 +659,7 @@ function spawnCard(isInitial) {
   const startX = Math.random() * window.innerWidth;
   const endX = startX + (Math.random() * 200 - 100); 
 
+  // Smooth feather-like falling speed variable targets
   const duration = (Math.random() * 6.0 + 12.0) - (zIdx * 2.0); 
 
   let blurVal = 0;
@@ -593,6 +693,7 @@ function spawnCard(isInitial) {
   cardContainer.appendChild(card);
 }
 
+// Fixed maximum cap pool of 25 cards for light sparse breathing space
 const totalInitialCards = 25;
 for (let i = 0; i < totalInitialCards; i++) {
   spawnCard(true);
