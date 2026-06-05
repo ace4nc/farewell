@@ -89,6 +89,8 @@ opacity:0;
 
 transition:4s ease;
 
+z-index:5; /* Placed in front of the cards */
+
 filter:
 brightness(1.2)
 contrast(1.3)
@@ -108,7 +110,7 @@ opacity:.35;
 
 #wrap{
 position:relative;
-z-index:10;
+z-index:10; /* Placed in front of the cards */
 height:100vh;
 
 display:flex;
@@ -184,6 +186,7 @@ left:-100%;
 top:0;
 width:40%;
 height:100%;
+z-index:6; /* Sweep passes over background layers */
 background:
 linear-gradient(
 90deg,
@@ -207,7 +210,7 @@ justify-content:center;
 align-items:center;
 text-align:center;
 padding:40px;
-z-index:50;
+z-index:50; /* Placed completely in front of the cards */
 opacity:0;
 transition:2.5s ease;
 }
@@ -276,7 +279,7 @@ letter-spacing:.2em;
 #cardContainer{
 position:fixed;
 inset:0;
-z-index:3;
+z-index:2; /* Moved down so it renders BEHIND the mask (5) and text content (10) */
 pointer-events:none;
 perspective:1200px;
 overflow:hidden;
@@ -527,7 +530,7 @@ document.addEventListener("click",()=>input.focus());
 
 
 /* =================================================== */
-/* INTENSE DENSITY & VELOCITY CARDS ENGINE             */
+/* COMPACT ENGINE WITH ADJUSTED VELOCITY SPEEDS        */
 /* =================================================== */
 
 const cardContainer = document.getElementById("cardContainer");
@@ -555,8 +558,8 @@ function spawnCard(isInitial) {
   const startX = Math.random() * window.innerWidth;
   const endX = startX + (Math.random() * 400 - 200); 
 
-  // Decreased values = cards move significantly faster down the viewport
-  const duration = (Math.random() * 2.5 + 2.5) - (zIdx * 0.8); 
+  // Speeds balanced beautifully to a balanced, drifting fall structure
+  const duration = (Math.random() * 3.5 + 3.5) - (zIdx * 1.0); 
 
   let blurVal = 0;
   let opacityVal = 0.9;
@@ -573,10 +576,9 @@ function spawnCard(isInitial) {
   card.style.setProperty('--z-depth', `${translateZ}px`);
   card.style.setProperty('--r-start', `${Math.random() * 360}deg`);
   
-  // High spin rotations
-  card.style.setProperty('--rot-x', `${Math.random() * 1080 + 720}deg`);
-  card.style.setProperty('--rot-y', `${Math.random() * 1080 + 720}deg`);
-  card.style.setProperty('--rot-z', `${Math.random() * 540 - 270}deg`);
+  card.style.setProperty('--rot-x', `${Math.random() * 800 + 500}deg`);
+  card.style.setProperty('--rot-y', `${Math.random() * 800 + 500}deg`);
+  card.style.setProperty('--rot-z', `${Math.random() * 360 - 180}deg`);
 
   card.style.animationDuration = `${duration}s`;
   card.style.filter = blurVal > 0 ? `blur(${blurVal}px)` : 'none';
@@ -590,13 +592,11 @@ function spawnCard(isInitial) {
   cardContainer.appendChild(card);
 }
 
-// Increased pool density to 65 elements for a packed, heavy display storm
 const totalInitialCards = 65;
 for (let i = 0; i < totalInitialCards; i++) {
   spawnCard(true);
 }
 
-// Check and restock cards at a hyper-aggressive pace
 setInterval(() => {
   if (cardContainer.children.length < totalInitialCards) {
     spawnCard(false);
