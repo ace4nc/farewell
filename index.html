@@ -560,7 +560,6 @@ function spawnCard(isInitial) {
   const startX = Math.random() * window.innerWidth;
   const endX = startX + (Math.random() * 200 - 100); 
 
-  // CHANGED: Increased duration massively (12 to 18 seconds) for a super slow feather-like fall
   const duration = (Math.random() * 6.0 + 12.0) - (zIdx * 2.0); 
 
   let blurVal = 0;
@@ -578,7 +577,6 @@ function spawnCard(isInitial) {
   card.style.setProperty('--z-depth', `${translateZ}px`);
   card.style.setProperty('--r-start', `${Math.random() * 360}deg`);
   
-  // CHANGED: Minimal rotation speeds so they don't look frantic spinning down
   card.style.setProperty('--rot-x', `${Math.random() * 180 + 90}deg`);
   card.style.setProperty('--rot-y', `${Math.random() * 180 + 90}deg`);
   card.style.setProperty('--rot-z', `${Math.random() * 90 - 45}deg`);
@@ -595,7 +593,6 @@ function spawnCard(isInitial) {
   cardContainer.appendChild(card);
 }
 
-// CHANGED: Lowered the maximum concurrent card cap to 25 to make the layout clean and sparse
 const totalInitialCards = 25;
 for (let i = 0; i < totalInitialCards; i++) {
   spawnCard(true);
