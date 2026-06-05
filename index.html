@@ -36,7 +36,7 @@ position:fixed;
 inset:0;
 background:#000;
 overflow:hidden;
-z-index: 1; /* Ensure background stays under content layers */
+z-index: 1; /* Keep background elements underneath the text content */
 }
 
 /* SMOKE */
@@ -102,10 +102,10 @@ opacity:.18;
 }
 
 #mask.bright{
-opacity:.35; /* Bumped slightly so it stays elegant but visible */
+opacity:.35; /* Keeps the mask beautifully visible behind the countdown */
 }
 
-/* CONTENT */
+/* CONTENT CONTAINER (INTRO) */
 
 #wrap{
 position:relative;
@@ -118,7 +118,7 @@ align-items:center;
 
 padding:30px;
 text-align:center;
-transition: opacity 1.5s ease; /* Added smooth transition rule */
+transition: opacity 1.5s ease; /* Added smooth transition for the fade out */
 }
 
 #content{
@@ -185,7 +185,7 @@ left:-100%;
 top:0;
 width:40%;
 height:100%;
-z-index: 2; /* Keep sweep layer explicitly over background but under hero text */
+z-index: 2; /* Keeps sweep over background, under hero text */
 background:
 linear-gradient(
 90deg,
@@ -197,25 +197,29 @@ transform:skewX(-25deg);
 }
 
 /* ========================= */
-/* HERO SECTION (UPDATED)    */
+/* HERO SECTION (FIXED TRANSITION) */
 /* ========================= */
 
 #hero{
 position:fixed;
 inset:0;
-background: radial-gradient(circle at center, rgba(5,5,5,0.4) 0%, rgba(0,0,0,0.85) 100%); /* Allows background smoke to breathe through */
+/* Semi-transparent background allows the background smoke to blend through beautifully */
+background: radial-gradient(circle at center, rgba(5,5,5,0.5) 0%, rgba(0,0,0,0.9) 100%); 
 display: flex;
-opacity: 0;
-pointer-events: none; /* Block interactions until revealed */
 justify-content:center;
 align-items:center;
 text-align:center;
 padding:40px;
-z-index:20; /* Lowered so it sits elegantly over the original #bg elements */
-transition: opacity 2.5s ease; /* Smooth fade-in duration */
+z-index:20;
+
+/* Fade transition setup */
+opacity: 0;
+pointer-events: none; 
+transition: opacity 2s ease; 
 }
 
-#hero.reveal {
+/* Class to trigger the smooth fade-in */
+#hero.show-hero {
 opacity: 1;
 pointer-events: auto;
 }
@@ -259,8 +263,8 @@ align-items:center;
 border-radius:14px;
 }
 
-.card span{
-font-family:'Montserrat', sans-serif; /* Cleaner display for numbers */
+.card span {
+font-family: 'Montserrat', sans-serif; /* Clean font looks better for structural numbers */
 font-size:2rem;
 }
 
@@ -362,7 +366,7 @@ document.getElementById("light");
 const hero =
 document.getElementById("hero");
 
-/* COUNTDOWN WITH FORCES LEADING ZEROS */
+/* COUNTDOWN WITH FIXED FORCED LEADING ZEROS */
 
 const target =
 new Date("August 9, 2026 00:00:00");
@@ -375,8 +379,7 @@ new Date();
 const diff =
 target - now;
 
-// Fallback in case target date passes
-if (diff <= 0) {
+if(diff <= 0) {
 document.getElementById("d").textContent = "00";
 document.getElementById("h").textContent = "00";
 document.getElementById("m").textContent = "00";
@@ -396,7 +399,7 @@ Math.floor((diff%(1000*60*60))/(1000*60));
 const s =
 Math.floor((diff%(1000*60))/1000);
 
-// Use padStart to keep numbers looking consistent inside cards
+// padStart ensures single digits (like 9) display as "09" so cards don't shift layout
 document.getElementById("d").textContent = d.toString().padStart(2, '0');
 document.getElementById("h").textContent = h.toString().padStart(2, '0');
 document.getElementById("m").textContent = m.toString().padStart(2, '0');
@@ -457,13 +460,13 @@ if(e.key==="Enter"){
 const name = input.value.trim();
 if(!name)return;
 
-/* fade intro out smoothly using CSS class rule */
+/* 1. Smoothly fade intro layer out */
 document.getElementById("wrap").style.opacity="0";
 
-/* cleanup background feel and update layout state */
+/* 2. Set background elements to final state */
 mask.classList.add("bright");
 
-// Trigger light sweep simultaneously with the fade out
+/* 3. Run the flash light sweep effect */
 light.animate([
 {left:"-100%"},
 {left:"150%"}
@@ -472,11 +475,12 @@ duration:3000,
 fill:"forwards"
 });
 
-await sleep(1200);
+// Wait briefly for the fade-out to progress before fading hero in
+await sleep(1000);
 
-/* Reveal hero section via clean opacity transition class */
+/* 4. Trigger countdown and fade hero section in smoothly */
 updateCountdown();
-hero.classList.add("reveal");
+hero.classList.add("show-hero");
 setInterval(updateCountdown,1000);
 
 }
