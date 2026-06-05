@@ -22,11 +22,7 @@ color:#f5f1e8;
 }
 
 /* BACKGROUND */
-#bg{
-position:fixed;
-inset:0;
-background:#000;
-}
+#bg{position:fixed;inset:0;background:#000;}
 
 .smoke{
 position:absolute;
@@ -73,6 +69,7 @@ justify-content:center;
 align-items:center;
 text-align:center;
 padding:20px;
+transition:1s ease;
 }
 
 #text{
@@ -150,7 +147,7 @@ color:#b89b5f;
 margin-top:10px;
 }
 
-/* CARDS */
+/* COUNTDOWN CARDS */
 #countdown{
 margin-top:35px;
 display:flex;
@@ -185,6 +182,7 @@ opacity:.5;
 .count-card::after{bottom:6px;right:8px;transform:rotate(180deg);}
 
 .count-card span{font-size:1.9rem;}
+
 .count-card small{
 font-family:'Montserrat',sans-serif;
 font-size:.6rem;
@@ -211,11 +209,11 @@ letter-spacing:.15em;
 
 <div id="bg">
 <div class="smoke"></div>
-<img id="mask" src="mask.png" alt="mask">
+<img id="mask" src="mask.png">
 </div>
 
 <div id="wrap">
-<div>
+
 <div id="text"></div>
 
 <div id="nameArea">
@@ -223,7 +221,6 @@ letter-spacing:.15em;
 <input id="input" type="text">
 </div>
 
-</div>
 </div>
 
 <section id="hero">
@@ -260,10 +257,13 @@ const typed = document.getElementById("typed");
 const nameArea = document.getElementById("nameArea");
 const mask = document.getElementById("mask");
 const hero = document.getElementById("hero");
+const wrap = document.getElementById("wrap");
 
-function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+function sleep(ms){
+return new Promise(r => setTimeout(r, ms));
+}
 
-async function show(msg,t){
+async function show(msg, t){
 text.innerHTML = msg;
 text.classList.add("show");
 await sleep(t);
@@ -273,8 +273,8 @@ await sleep(1200);
 
 async function intro(){
 await sleep(2000);
-await show("An invitation was issued.",4000);
-await show("Whether it reached the right hands remains to be seen.",5000);
+await show("An invitation was issued.", 4000);
+await show("Whether it reached the right hands remains to be seen.", 5000);
 
 mask.classList.add("show");
 
@@ -287,31 +287,40 @@ input.focus();
 
 intro();
 
-input.addEventListener("input",e=>{
+input.addEventListener("input", e => {
 typed.textContent = e.target.value;
 });
 
-input.addEventListener("keydown",async e=>{
-if(e.key==="Enter"){
-const name = input.value.trim();
-if(!name)return;
+input.addEventListener("keydown", async e => {
+if(e.key === "Enter"){
 
-await show("Ah...",1200);
-await show("We have been expecting you.",1800);
-await show(`Welcome, ${name}`,2000);
+const name = input.value.trim();
+if(!name) return;
+
+typed.textContent = name;
+
+await show("Ah...", 1200);
+await show("We have been expecting you.", 1800);
+await show(`Welcome, ${name}`, 2000);
+
+/* FIX: REMOVE NAME UI CLEANLY */
+nameArea.style.opacity = "0";
 
 mask.classList.add("bright");
 
 await sleep(800);
 
-document.getElementById("wrap").style.opacity = "0";
+/* FADE INTRO OUT */
+wrap.style.opacity = "0";
+
 await sleep(1200);
 
+/* SHOW HERO */
 hero.classList.add("show");
 }
 });
 
-/* countdown */
+/* COUNTDOWN */
 const target = new Date("August 9, 2026 18:00:00");
 
 function update(){
@@ -325,7 +334,7 @@ document.getElementById("seconds").textContent = Math.floor(d%60000/1000);
 }
 
 update();
-setInterval(update,1000);
+setInterval(update, 1000);
 
 });
 
