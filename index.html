@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,7 @@
 
 <title>The Velvet Hour</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
@@ -21,16 +23,23 @@ width:100%;
 height:100%;
 overflow:hidden;
 background:#000;
+}
+
+body{
 font-family:'Cinzel',serif;
 color:#f5f1e8;
 }
 
 /* BACKGROUND */
+
 #bg{
 position:fixed;
 inset:0;
 background:#000;
+overflow:hidden;
 }
+
+/* SMOKE */
 
 .smoke{
 position:absolute;
@@ -39,179 +48,164 @@ height:200%;
 left:-50%;
 top:-50%;
 opacity:0;
+
 background:
-radial-gradient(circle at 30% 40%,rgba(255,255,255,.05),transparent 40%),
-radial-gradient(circle at 70% 60%,rgba(255,255,255,.04),transparent 40%);
-animation:smoke 8s forwards, drift 25s infinite ease-in-out;
+radial-gradient(circle at 30% 40%,
+rgba(255,255,255,.05),
+transparent 40%),
+
+radial-gradient(circle at 70% 60%,
+rgba(255,255,255,.04),
+transparent 40%);
+
+animation:
+smokeReveal 8s forwards,
+smokeMove 25s infinite ease-in-out;
 }
 
-@keyframes smoke{from{opacity:0;}to{opacity:1;}}
-@keyframes drift{
+@keyframes smokeReveal{
+from{opacity:0;}
+to{opacity:1;}
+}
+
+@keyframes smokeMove{
 0%{transform:translate(0,0);}
 50%{transform:translate(40px,-30px);}
 100%{transform:translate(0,0);}
 }
 
 /* MASK */
+
 #mask{
 position:fixed;
 left:50%;
 top:40%;
-transform:translate(-50%,-50%);
-width:min(85vw,800px);
+
+transform:
+translate(-50%,-50%);
+
+width:min(90vw,900px);
+
 opacity:0;
-transition:2s ease;
-filter:brightness(1.2) contrast(1.3);
+
+transition:4s ease;
+
+filter:
+brightness(1.2)
+contrast(1.3)
+drop-shadow(0 0 20px rgba(255,255,255,.2))
+drop-shadow(0 0 60px rgba(255,255,255,.05));
 }
 
-#mask.show{opacity:.2;}
-#mask.bright{opacity:1;}
+#mask.show{
+opacity:.18;
+}
 
-/* INTRO LAYER */
-#intro{
-position:fixed;
-inset:0;
+#mask.bright{
+opacity:.9;
+}
+
+/* CONTENT */
+
+#wrap{
+position:relative;
+z-index:10;
+height:100vh;
+
 display:flex;
 justify-content:center;
 align-items:center;
+
+padding:30px;
 text-align:center;
-padding:20px;
-z-index:10;
-transition:1s ease;
+}
+
+#content{
+max-width:800px;
+width:100%;
 }
 
 #text{
-font-size:clamp(1.4rem,4vw,2.3rem);
+font-size:clamp(1.4rem,4vw,2.5rem);
+
 letter-spacing:.08em;
 line-height:1.8;
+
 opacity:0;
-transition:1.5s;
-min-height:180px;
+
+transition:2s;
+
+min-height:200px;
 }
 
-#text.show{opacity:1;}
+#text.show{
+opacity:1;
+}
+
+/* NAME */
 
 #nameArea{
 opacity:0;
-transition:1.5s;
-margin-top:20px;
+transition:2s;
+margin-top:30px;
 }
 
-#nameArea.show{opacity:1;}
+#nameArea.show{
+opacity:1;
+}
 
 #typed{
 font-family:'Montserrat',sans-serif;
+font-size:1.6rem;
+color:#d4d0c7;
 letter-spacing:.15em;
-font-size:1.4rem;
 }
 
 .cursor{
+display:inline-block;
+
 width:2px;
 height:1em;
+
 background:#d4d0c7;
-display:inline-block;
-margin-left:4px;
+
 animation:blink 1s infinite;
+
+margin-left:4px;
 }
 
-@keyframes blink{50%{opacity:0;}}
+@keyframes blink{
+50%{
+opacity:0;
+}
+}
 
 #input{
-opacity:0;
 position:absolute;
+opacity:0;
 pointer-events:none;
 }
 
-/* HERO LAYER */
-#hero{
+/* LIGHT SWEEP */
+
+#light{
 position:fixed;
-inset:0;
-display:flex;
-justify-content:center;
-align-items:center;
-background:#000;
-opacity:0;
-visibility:hidden;
-transition:2s ease;
-z-index:50;
-}
 
-#hero.show{
-opacity:1;
-visibility:visible;
-}
+left:-100%;
+top:0;
 
-.hero-content{text-align:center;}
+width:40%;
+height:100%;
 
-.farewell-title{
-font-size:clamp(3rem,14vw,9rem);
-letter-spacing:.05em;
-}
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.08),
+transparent
+);
 
-.class-title{
-font-family:'Montserrat',sans-serif;
-letter-spacing:.6em;
-color:#b89b5f;
-margin-top:10px;
-}
-
-/* COUNTDOWN */
-#countdown{
-margin-top:35px;
-display:flex;
-gap:10px;
-justify-content:center;
-flex-wrap:wrap;
-}
-
-.count-card{
-width:85px;
-height:115px;
-border-radius:12px;
-background:linear-gradient(145deg,#fff,#e9e9e9);
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-color:#111;
-position:relative;
-box-shadow:0 10px 20px rgba(0,0,0,.5);
-}
-
-.count-card::before,
-.count-card::after{
-content:"♠";
-position:absolute;
-font-size:.75rem;
-opacity:.5;
-}
-
-.count-card::before{top:6px;left:8px;}
-.count-card::after{bottom:6px;right:8px;transform:rotate(180deg);}
-
-.count-card span{font-size:1.9rem;}
-
-.count-card small{
-font-family:'Montserrat',sans-serif;
-font-size:.6rem;
-letter-spacing:.2em;
-color:#333;
-margin-top:4px;
-}
-
-/* DATE */
-.date-note{
-margin-top:25px;
-font-family:'Montserrat',sans-serif;
-font-size:.8rem;
-color:#888;
-letter-spacing:.15em;
-}
-
-.note{font-size:.6rem;color:#555;margin-top:5px;}
-
-.hidden{
-display:none !important;
+transform:skewX(-25deg);
 }
 
 </style>
@@ -220,145 +214,203 @@ display:none !important;
 <body>
 
 <div id="bg">
+
 <div class="smoke"></div>
-<img id="mask" src="mask.png">
+
+<img src="ChatGPT Image Jun 5, 2026, 01_39_39 PM.png" id="mask">
+
+<div id="light"></div>
+
 </div>
 
-<!-- INTRO -->
-<div id="intro">
+<div id="wrap">
 
-<div>
+<div id="content">
 
 <div id="text"></div>
 
 <div id="nameArea">
-<span id="typed"></span><span class="cursor"></span>
-<input id="input" type="text">
+
+<div>
+<span id="typed"></span>
+<span class="cursor"></span>
+</div>
+
+<input
+id="input"
+type="text"
+autocomplete="off">
+
 </div>
 
 </div>
 
 </div>
-
-<!-- HERO -->
-<section id="hero">
-
-<div class="hero-content">
-
-<div class="farewell-title">FAREWELL</div>
-<div class="class-title">CLASS OF 2026</div>
-
-<div id="countdown">
-<div class="count-card"><span id="days">00</span><small>DAYS</small></div>
-<div class="count-card"><span id="hours">00</span><small>HOURS</small></div>
-<div class="count-card"><span id="minutes">00</span><small>MINS</small></div>
-<div class="count-card"><span id="seconds">00</span><small>SECS</small></div>
-</div>
-
-<div class="date-note">
-<div>AUGUST 2026</div>
-<div>09.08.26</div>
-<div class="note">date to be confirmed</div>
-</div>
-
-</div>
-
-</section>
 
 <script>
 
-document.addEventListener("DOMContentLoaded", () => {
+const text =
+document.getElementById("text");
 
-const intro = document.getElementById("intro");
-const text = document.getElementById("text");
-const input = document.getElementById("input");
-const typed = document.getElementById("typed");
-const nameArea = document.getElementById("nameArea");
-const mask = document.getElementById("mask");
-const hero = document.getElementById("hero");
+const input =
+document.getElementById("input");
+
+const typed =
+document.getElementById("typed");
+
+const nameArea =
+document.getElementById("nameArea");
+
+const mask =
+document.getElementById("mask");
+
+const light =
+document.getElementById("light");
 
 function sleep(ms){
-return new Promise(r => setTimeout(r, ms));
+return new Promise(
+resolve =>
+setTimeout(resolve,ms)
+);
 }
 
-async function show(msg,t){
-text.innerHTML = msg;
+async function showLine(
+message,
+time
+){
+
+text.innerHTML =
+message;
+
 text.classList.add("show");
-await sleep(t);
+
+await sleep(time);
+
 text.classList.remove("show");
-await sleep(1200);
+
+await sleep(2500);
 }
 
-async function start(){
+async function intro(){
 
-await sleep(2000);
-await show("An invitation was issued.",4000);
-await show("Whether it reached the right hands remains to be seen.",5000);
+await sleep(5000);
 
-mask.classList.add("show");
+await showLine(
+"An invitation was issued.",
+7000
+);
 
-text.innerHTML = "Who are you?";
-text.classList.add("show");
+await showLine(
+"Whether it reached the right hands remains to be seen.",
+8000
+);
 
-nameArea.classList.add("show");
+mask.classList.add(
+"show"
+);
+
+text.innerHTML =
+"Who are you?";
+
+text.classList.add(
+"show"
+);
+
+nameArea.classList.add(
+"show"
+);
+
 input.focus();
 }
 
-start();
+intro();
 
-input.addEventListener("input", e=>{
-typed.textContent = e.target.value;
-});
+document.addEventListener(
+"click",
+()=>{
+input.focus();
+}
+);
 
-input.addEventListener("keydown", async e=>{
-if(e.key === "Enter"){
+input.addEventListener(
+"input",
+()=>{
+typed.textContent =
+input.value;
+}
+);
 
-const name = input.value.trim();
-if(!name) return;
+input.addEventListener(
+"keydown",
+async e=>{
 
-/* lock input immediately */
-input.disabled = true;
+if(e.key==="Enter"){
 
-await show("Ah...",1200);
-await show("We have been expecting you.",1800);
-await show(`Welcome, ${name}`,2000);
+const name =
+input.value.trim();
 
-/* clean exit of intro layer (IMPORTANT FIX) */
-intro.style.opacity = "0";
-intro.style.pointerEvents = "none";
+if(!name)return;
 
-mask.classList.add("bright");
+nameArea.style.opacity="0";
 
-await sleep(900);
+await sleep(1500);
 
-/* REMOVE INTRO COMPLETELY (fixes ghost text bug) */
-intro.classList.add("hidden");
+text.classList.remove(
+"show"
+);
 
-await sleep(300);
+await sleep(1500);
 
-hero.classList.add("show");
+await reveal("Ah...");
+
+await reveal(
+"We have been expecting you."
+);
+
+await reveal(
+`Welcome, ${name}`
+);
+
+mask.classList.add(
+"bright"
+);
+
+light.animate(
+[
+{left:"-100%"},
+{left:"150%"}
+],
+{
+duration:3000,
+fill:"forwards"
+}
+);
+
 }
 });
 
-/* countdown */
-const target = new Date("August 9, 2026 18:00:00");
+async function reveal(
+message
+){
 
-function update(){
-const now = new Date();
-const d = target - now;
+text.innerHTML =
+message;
 
-document.getElementById("days").textContent = Math.floor(d/86400000);
-document.getElementById("hours").textContent = Math.floor(d%86400000/3600000);
-document.getElementById("minutes").textContent = Math.floor(d%3600000/60000);
-document.getElementById("seconds").textContent = Math.floor(d%60000/1000);
+text.classList.add(
+"show"
+);
+
+await sleep(4500);
+
+text.classList.remove(
+"show"
+);
+
+await sleep(1200);
 }
-
-update();
-setInterval(update,1000);
-
-});
 
 </script>
 
 </body>
 </html>
+```
