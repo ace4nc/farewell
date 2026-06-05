@@ -36,6 +36,7 @@ position:fixed;
 inset:0;
 background:#000;
 overflow:hidden;
+z-index:1;
 }
 
 /* SMOKE */
@@ -89,7 +90,7 @@ opacity:0;
 
 transition:4s ease;
 
-z-index:5; /* Placed in front of the cards */
+z-index:20; /* High z-index explicitly above background cards layer */
 
 filter:
 brightness(1.2)
@@ -110,7 +111,7 @@ opacity:.35;
 
 #wrap{
 position:relative;
-z-index:10; /* Placed in front of the cards */
+z-index:30; /* Higher than mask and cards layer */
 height:100vh;
 
 display:flex;
@@ -186,7 +187,7 @@ left:-100%;
 top:0;
 width:40%;
 height:100%;
-z-index:6; /* Sweep passes over background layers */
+z-index:40; /* Always sweeps on the absolute top layer */
 background:
 linear-gradient(
 90deg,
@@ -210,7 +211,7 @@ justify-content:center;
 align-items:center;
 text-align:center;
 padding:40px;
-z-index:50; /* Placed completely in front of the cards */
+z-index:50; /* Sits completely in front of everything else */
 opacity:0;
 transition:2.5s ease;
 }
@@ -279,10 +280,11 @@ letter-spacing:.2em;
 #cardContainer{
 position:fixed;
 inset:0;
-z-index:2; /* Moved down so it renders BEHIND the mask (5) and text content (10) */
+z-index:2; /* Safely layered far underneath text (30) and mask (20) */
 pointer-events:none;
 perspective:1200px;
 overflow:hidden;
+transform-style:flat; /* Forces all 3D child cards to stay within this container's z-index boundary */
 }
 
 .falling-card{
@@ -530,7 +532,7 @@ document.addEventListener("click",()=>input.focus());
 
 
 /* =================================================== */
-/* COMPACT ENGINE WITH ADJUSTED VELOCITY SPEEDS        */
+/* SLOW & GRACEFUL BACKGROUND CARDS ENGINE             */
 /* =================================================== */
 
 const cardContainer = document.getElementById("cardContainer");
@@ -554,21 +556,21 @@ function spawnCard(isInitial) {
   `;
 
   const zIdx = Math.random(); 
-  const translateZ = Math.floor(zIdx * 500 - 250); 
+  const translateZ = Math.floor(zIdx * 400 - 200); 
   const startX = Math.random() * window.innerWidth;
-  const endX = startX + (Math.random() * 400 - 200); 
+  const endX = startX + (Math.random() * 300 - 150); 
 
-  // Speeds balanced beautifully to a balanced, drifting fall structure
-  const duration = (Math.random() * 3.5 + 3.5) - (zIdx * 1.0); 
+  // CHANGED: Increased time duration significantly to slow down the downward fall speed
+  const duration = (Math.random() * 5.0 + 7.0) - (zIdx * 1.5); 
 
   let blurVal = 0;
-  let opacityVal = 0.9;
+  let opacityVal = 0.85;
   if (translateZ < -80) {
     blurVal = 2.5;
     opacityVal = 0.45;
-  } else if (translateZ > 160) {
-    blurVal = 4.5;
-    opacityVal = 0.7;
+  } else if (translateZ > 140) {
+    blurVal = 4;
+    opacityVal = 0.65;
   }
 
   card.style.setProperty('--x-start', `${startX}px`);
@@ -576,9 +578,10 @@ function spawnCard(isInitial) {
   card.style.setProperty('--z-depth', `${translateZ}px`);
   card.style.setProperty('--r-start', `${Math.random() * 360}deg`);
   
-  card.style.setProperty('--rot-x', `${Math.random() * 800 + 500}deg`);
-  card.style.setProperty('--rot-y', `${Math.random() * 800 + 500}deg`);
-  card.style.setProperty('--rot-z', `${Math.random() * 360 - 180}deg`);
+  // CHANGED: Decreased rotational targets to make the spin calmer and less erratic
+  card.style.setProperty('--rot-x', `${Math.random() * 360 + 180}deg`);
+  card.style.setProperty('--rot-y', `${Math.random() * 360 + 180}deg`);
+  card.style.setProperty('--rot-z', `${Math.random() * 180 - 90}deg`);
 
   card.style.animationDuration = `${duration}s`;
   card.style.filter = blurVal > 0 ? `blur(${blurVal}px)` : 'none';
@@ -601,7 +604,7 @@ setInterval(() => {
   if (cardContainer.children.length < totalInitialCards) {
     spawnCard(false);
   }
-}, 80);
+}, 120);
 
 </script>
 
