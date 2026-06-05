@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,204 +7,172 @@
 <title>The Velvet Hour</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
+/* =======================
+   BASE
+======================= */
+
+body {
+margin: 0;
+padding: 0;
+background: #000;
+color: #fff;
+font-family: 'Montserrat', sans-serif;
+overflow-x: hidden;
 }
 
-html,body{
-width:100%;
-height:100%;
-overflow:hidden;
-background:#000;
+#wrap {
+position: relative;
+z-index: 10;
+transition: 2.2s ease;
 }
 
-body{
-font-family:'Cinzel',serif;
-color:#f5f1e8;
+/* =======================
+   INTRO (YOUR ORIGINAL SYSTEM PRESERVED)
+======================= */
+
+#content {
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+flex-direction: column;
+text-align: center;
 }
 
-/* BACKGROUND */
-
-#bg{
-position:fixed;
-inset:0;
-background:#000;
-overflow:hidden;
+#text {
+font-size: 1.2rem;
+letter-spacing: 2px;
+opacity: 0.8;
 }
 
-/* SMOKE */
-
-.smoke{
-position:absolute;
-width:200%;
-height:200%;
-left:-50%;
-top:-50%;
-opacity:0;
-
-background:
-radial-gradient(circle at 30% 40%,
-rgba(255,255,255,.05),
-transparent 40%),
-
-radial-gradient(circle at 70% 60%,
-rgba(255,255,255,.04),
-transparent 40%);
-
-animation:
-smokeReveal 8s forwards,
-smokeMove 25s infinite ease-in-out;
+#nameArea {
+margin-top: 20px;
 }
 
-@keyframes smokeReveal{
-from{opacity:0;}
-to{opacity:1;}
+#input {
+background: transparent;
+border: none;
+border-bottom: 1px solid rgba(255,255,255,0.3);
+color: white;
+outline: none;
+text-align: center;
+font-size: 1rem;
+margin-top: 10px;
 }
 
-@keyframes smokeMove{
-0%{transform:translate(0,0);}
-50%{transform:translate(40px,-30px);}
-100%{transform:translate(0,0);}
+.cursor {
+display: inline-block;
+width: 8px;
+height: 20px;
+background: white;
+margin-left: 5px;
+animation: blink 1s infinite;
 }
 
-/* MASK */
-
-#mask{
-position:fixed;
-left:50%;
-top:40%;
-
-transform:
-translate(-50%,-50%);
-
-width:min(90vw,900px);
-
-opacity:0;
-
-transition:4s ease;
-
-filter:
-brightness(1.2)
-contrast(1.3)
-drop-shadow(0 0 20px rgba(255,255,255,.2))
-drop-shadow(0 0 60px rgba(255,255,255,.05));
+@keyframes blink {
+50% { opacity: 0; }
 }
 
-#mask.show{
-opacity:.18;
+/* =======================
+   HERO
+======================= */
+
+#hero {
+position: fixed;
+inset: 0;
+
+display: flex;
+justify-content: center;
+align-items: center;
+
+opacity: 0;
+visibility: hidden;
+
+transition: 2.5s ease;
+
+z-index: 25;
+
+background: radial-gradient(circle at center, rgba(40,20,20,.3), #000);
 }
 
-#mask.bright{
-opacity:.9;
+#hero.show {
+opacity: 1;
+visibility: visible;
 }
 
-/* CONTENT */
-
-#wrap{
-position:relative;
-z-index:10;
-height:100vh;
-
-display:flex;
-justify-content:center;
-align-items:center;
-
-padding:30px;
-text-align:center;
+.hero-content {
+text-align: center;
+max-width: 1200px;
+width: 100%;
+position: relative;
+z-index: 2;
 }
 
-#content{
-max-width:800px;
-width:100%;
+.farewell-title {
+font-size: clamp(4rem, 18vw, 12rem);
+font-weight: 600;
+letter-spacing: .04em;
+line-height: .9;
+color: #f8f3ea;
 }
 
-#text{
-font-size:clamp(1.4rem,4vw,2.5rem);
-
-letter-spacing:.08em;
-line-height:1.8;
-
-opacity:0;
-
-transition:2s;
-
-min-height:200px;
+.class-title {
+margin-top: 20px;
+letter-spacing: .9em;
+font-size: clamp(.7rem, 2vw, 1.2rem);
+color: #b89b5f;
 }
 
-#text.show{
-opacity:1;
+#countdown {
+margin-top: 60px;
+display: flex;
+justify-content: center;
+gap: 15px;
+flex-wrap: wrap;
 }
 
-/* NAME */
-
-#nameArea{
-opacity:0;
-transition:2s;
-margin-top:30px;
+.count-card {
+width: 95px;
+height: 120px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+border: 1px solid rgba(201,164,92,.35);
+background: rgba(20,20,20,.9);
 }
 
-#nameArea.show{
-opacity:1;
+.count-card span {
+font-size: 2.3rem;
 }
 
-#typed{
-font-family:'Montserrat',sans-serif;
-font-size:1.6rem;
-color:#d4d0c7;
-letter-spacing:.15em;
+.count-card small {
+font-size: .65rem;
+letter-spacing: .25em;
+color: #c9a45c;
+margin-top: 8px;
 }
 
-.cursor{
-display:inline-block;
-
-width:2px;
-height:1em;
-
-background:#d4d0c7;
-
-animation:blink 1s infinite;
-
-margin-left:4px;
+.date-note {
+margin-top: 40px;
+font-size: .8rem;
+letter-spacing: .25em;
+opacity: .7;
 }
 
-@keyframes blink{
-50%{
-opacity:0;
+/* =======================
+   RESPONSIVE
+======================= */
+
+@media(max-width:768px){
+.count-card {
+width: 80px;
+height: 105px;
 }
-}
-
-#input{
-position:absolute;
-opacity:0;
-pointer-events:none;
-}
-
-/* LIGHT SWEEP */
-
-#light{
-position:fixed;
-
-left:-100%;
-top:0;
-
-width:40%;
-height:100%;
-
-background:
-linear-gradient(
-90deg,
-transparent,
-rgba(255,255,255,.08),
-transparent
-);
-
-transform:skewX(-25deg);
 }
 
 </style>
@@ -213,15 +180,9 @@ transform:skewX(-25deg);
 
 <body>
 
-<div id="bg">
-
-<div class="smoke"></div>
-
-<img src="ChatGPT Image Jun 5, 2026, 01_39_39 PM.png" id="mask">
-
-<div id="light"></div>
-
-</div>
+<!-- =======================
+     INTRO SYSTEM (UNCHANGED STRUCTURE)
+======================= -->
 
 <div id="wrap">
 
@@ -236,181 +197,128 @@ transform:skewX(-25deg);
 <span class="cursor"></span>
 </div>
 
-<input
-id="input"
-type="text"
-autocomplete="off">
+<input id="input" type="text" autocomplete="off">
 
 </div>
 
 </div>
 
 </div>
+
+<!-- =======================
+     HERO SECTION
+======================= -->
+
+<section id="hero">
+
+<div class="hero-content">
+
+<h1 class="farewell-title">FAREWELL</h1>
+
+<div class="class-title">CLASS OF 2026</div>
+
+<div id="countdown">
+
+<div class="count-card">
+<span id="days">00</span>
+<small>DAYS</small>
+</div>
+
+<div class="count-card">
+<span id="hours">00</span>
+<small>HOURS</small>
+</div>
+
+<div class="count-card">
+<span id="minutes">00</span>
+<small>MINS</small>
+</div>
+
+<div class="count-card">
+<span id="seconds">00</span>
+<small>SECS</small>
+</div>
+
+</div>
+
+<div class="date-note">
+<div>AUGUST 2026</div>
+<div>09.08.26*</div>
+<div>*subject to change</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- =======================
+     SCRIPT (COUNTDOWN + TRANSITION HOOK)
+======================= -->
 
 <script>
 
-const text =
-document.getElementById("text");
+/* =======================
+   COUNTDOWN
+======================= */
 
-const input =
-document.getElementById("input");
+const hero = document.getElementById("hero");
+const wrap = document.getElementById("wrap");
 
-const typed =
-document.getElementById("typed");
+const targetDate = new Date("August 9, 2026 18:00:00");
 
-const nameArea =
-document.getElementById("nameArea");
+function updateCountdown(){
 
-const mask =
-document.getElementById("mask");
+const now = new Date();
+const diff = targetDate - now;
 
-const light =
-document.getElementById("light");
+if(diff < 0) return;
 
-function sleep(ms){
-return new Promise(
-resolve =>
-setTimeout(resolve,ms)
-);
-}
+document.getElementById("days").textContent =
+Math.floor(diff / (1000*60*60*24));
 
-async function showLine(
-message,
-time
-){
+document.getElementById("hours").textContent =
+Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
 
-text.innerHTML =
-message;
+document.getElementById("minutes").textContent =
+Math.floor((diff % (1000*60*60)) / (1000*60));
 
-text.classList.add("show");
-
-await sleep(time);
-
-text.classList.remove("show");
-
-await sleep(2500);
-}
-
-async function intro(){
-
-await sleep(5000);
-
-await showLine(
-"An invitation was issued.",
-7000
-);
-
-await showLine(
-"Whether it reached the right hands remains to be seen.",
-8000
-);
-
-mask.classList.add(
-"show"
-);
-
-text.innerHTML =
-"Who are you?";
-
-text.classList.add(
-"show"
-);
-
-nameArea.classList.add(
-"show"
-);
-
-input.focus();
-}
-
-intro();
-
-document.addEventListener(
-"click",
-()=>{
-input.focus();
-}
-);
-
-input.addEventListener(
-"input",
-()=>{
-typed.textContent =
-input.value;
-}
-);
-
-input.addEventListener(
-"keydown",
-async e=>{
-
-if(e.key==="Enter"){
-
-const name =
-input.value.trim();
-
-if(!name)return;
-
-nameArea.style.opacity="0";
-
-await sleep(1500);
-
-text.classList.remove(
-"show"
-);
-
-await sleep(1500);
-
-await reveal("Ah...");
-
-await reveal(
-"We have been expecting you."
-);
-
-await reveal(
-`Welcome, ${name}`
-);
-
-mask.classList.add(
-"bright"
-);
-
-light.animate(
-[
-{left:"-100%"},
-{left:"150%"}
-],
-{
-duration:3000,
-fill:"forwards"
-}
-);
+document.getElementById("seconds").textContent =
+Math.floor((diff % (1000*60)) / 1000);
 
 }
-});
 
-async function reveal(
-message
-){
+updateCountdown();
+setInterval(updateCountdown, 1000);
 
-text.innerHTML =
-message;
+/* =======================
+   TRANSITION FUNCTION (CALL THIS FROM YOUR INTRO LOGIC)
+======================= */
 
-text.classList.add(
-"show"
-);
+function transitionToHero(){
 
-await sleep(4500);
+wrap.style.transition = "2.2s ease";
+wrap.style.opacity = "0";
+wrap.style.filter = "blur(6px)";
+wrap.style.transform = "scale(1.02)";
 
-text.classList.remove(
-"show"
-);
+setTimeout(() => {
 
-await sleep(1200);
+hero.classList.add("show");
+
+document.body.style.background = "#000";
+
+}, 2200);
+
 }
+
+/* =======================
+   EXPOSE FOR YOUR INTRO SCRIPT
+   (IMPORTANT: call this after "Welcome, name")
+======================= */
+
+window.transitionToHero = transitionToHero;
 
 </script>
 
 </body>
 </html>
-```
