@@ -36,7 +36,6 @@ position:fixed;
 inset:0;
 background:#000;
 overflow:hidden;
-z-index:1;
 }
 
 /* SMOKE */
@@ -105,15 +104,6 @@ opacity:.18;
 opacity:.35;
 }
 
-/* CARDS CANVAS OVERLAY */
-
-#cardCanvas{
-position:fixed;
-inset:0;
-z-index:3;
-pointer-events:none;
-}
-
 /* CONTENT */
 
 #wrap{
@@ -127,7 +117,7 @@ align-items:center;
 
 padding:30px;
 text-align:center;
-transition:opacity 1.5s ease;
+transition:2s ease;
 }
 
 #content{
@@ -194,7 +184,6 @@ left:-100%;
 top:0;
 width:40%;
 height:100%;
-z-index:2;
 background:
 linear-gradient(
 90deg,
@@ -212,22 +201,15 @@ transform:skewX(-25deg);
 #hero{
 position:fixed;
 inset:0;
-background:radial-gradient(circle at center, rgba(5,5,5,0.5) 0%, rgba(0,0,0,0.9) 100%);
-display:flex;
+background:radial-gradient(circle at center, rgba(5,5,5,0.4) 0%, rgba(0,0,0,0.85) 100%);
+display:none;
 justify-content:center;
 align-items:center;
 text-align:center;
 padding:40px;
-z-index:20;
-
+z-index:50;
 opacity:0;
-pointer-events:none;
-transition:opacity 2s ease;
-}
-
-#hero.show-hero{
-opacity:1;
-pointer-events:auto;
+transition:2.5s ease;
 }
 
 .hero-inner{
@@ -270,7 +252,6 @@ border-radius:14px;
 }
 
 .card span{
-font-family:'Montserrat',sans-serif;
 font-size:2rem;
 }
 
@@ -288,6 +269,63 @@ opacity:.5;
 letter-spacing:.2em;
 }
 
+/* ========================= */
+/* HARDWARE-ACCELERATED CARDS*/
+/* ========================= */
+
+#cardContainer{
+position:fixed;
+inset:0;
+z-index:3;
+pointer-events:none;
+perspective:1000px;
+overflow:hidden;
+}
+
+.falling-card{
+position:absolute;
+width:70px;
+height:98px;
+background:#fff;
+border-radius:5px;
+box-shadow:0 15px 35px rgba(0,0,0,0.5);
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:sans-serif;
+font-weight:bold;
+user-select:none;
+backface-visibility:visible;
+will-change:transform;
+animation:fallLinear linear infinite;
+}
+
+.card-suit{
+font-size:28px;
+position:absolute;
+}
+
+.card-corner{
+position:absolute;
+font-size:11px;
+line-height:1;
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
+.corner-top{ top:6px; left:6px; }
+.corner-bottom{ bottom:6px; right:6px; transform:rotate(180deg); }
+
+@keyframes fallLinear{
+0%{
+transform:translate3d(var(--x-start), -150px, var(--z-depth)) rotateX(0deg) rotateY(0deg) rotateZ(var(--r-start));
+}
+100%{
+transform:translate3d(var(--x-end), 105vh, var(--z-depth)) rotateX(var(--rot-x)) rotateY(var(--rot-y)) rotateZ(var(--rot-z));
+}
+}
+
 </style>
 </head>
 
@@ -301,7 +339,7 @@ letter-spacing:.2em;
 
 <div id="light"></div>
 
-<canvas id="cardCanvas"></canvas>
+<div id="cardContainer"></div>
 
 </div>
 
@@ -387,14 +425,6 @@ new Date();
 const diff =
 target - now;
 
-if(diff <= 0){
-document.getElementById("d").textContent = "00";
-document.getElementById("h").textContent = "00";
-document.getElementById("m").textContent = "00";
-document.getElementById("s").textContent = "00";
-return;
-}
-
 const d =
 Math.floor(diff/(1000*60*60*24));
 
@@ -407,14 +437,14 @@ Math.floor((diff%(1000*60*60))/(1000*60));
 const s =
 Math.floor((diff%(1000*60))/1000);
 
-document.getElementById("d").textContent = d.toString().padStart(2,'0');
-document.getElementById("h").textContent = h.toString().padStart(2,'0');
-document.getElementById("m").textContent = m.toString().padStart(2,'0');
-document.getElementById("s").textContent = s.toString().padStart(2,'0');
+document.getElementById("d").textContent = d.toString().padStart(2, '0');
+document.getElementById("h").textContent = h.toString().padStart(2, '0');
+document.getElementById("m").textContent = m.toString().padStart(2, '0');
+document.getElementById("s").textContent = s.toString().padStart(2, '0');
 
 }
 
-/* INTRO */
+/* KEEP YOUR INTRO EXACT */
 
 function sleep(ms){
 return new Promise(r=>setTimeout(r,ms));
@@ -467,6 +497,7 @@ if(e.key==="Enter"){
 const name = input.value.trim();
 if(!name)return;
 
+/* fade intro out smoothly */
 document.getElementById("wrap").style.opacity="0";
 
 mask.classList.add("bright");
@@ -479,10 +510,18 @@ duration:3000,
 fill:"forwards"
 });
 
-await sleep(1000);
+await sleep(1500);
+
+/* Hide intro layer cleanly after transition finishes */
+document.getElementById("wrap").style.display="none";
+
+/* show hero with flawless fade */
+hero.style.display="flex";
+// Force a quick style recalculation so the opacity transition triggers correctly
+void hero.offsetWidth; 
+hero.style.opacity="1";
 
 updateCountdown();
-hero.classList.add("show-hero");
 setInterval(updateCountdown,1000);
 
 }
@@ -493,170 +532,84 @@ document.addEventListener("click",()=>input.focus());
 
 
 /* =================================================== */
-/* CINEMATIC FALLING CARDS ENGINE                      */
+/* HIGH-PERFORMANCE GPU CSS CARDS ENGINE               */
 /* =================================================== */
 
-const canvas =
-document.getElementById("cardCanvas");
+const cardContainer = document.getElementById("cardContainer");
+const suits = ['♦', '♣', '♥', '♠'];
+const values = ['A', 'K', 'Q', 'J', '10', '9'];
 
-const ctx =
-canvas.getContext("2d");
+function spawnCard(isInitial) {
+  const card = document.createElement("div");
+  card.className = "falling-card";
 
-let width =
-canvas.width = window.innerWidth;
+  const suit = suits[Math.floor(Math.random() * suits.length)];
+  const value = values[Math.floor(Math.random() * values.length)];
+  const isRed = (suit === '♥' || suit === '♦');
 
-let height =
-canvas.height = window.innerHeight;
+  card.style.color = isRed ? '#b31b1b' : '#111111';
 
-window.addEventListener("resize",()=>{
-width = canvas.width = window.innerWidth;
-height = canvas.height = window.innerHeight;
-});
+  // Inner layout structure of a classic clean card
+  card.innerHTML = `
+    <div class="card-corner corner-top"><div>${value}</div><div>${suit}</div></div>
+    <div class="card-suit">${suit}</div>
+    <div class="card-corner corner-bottom"><div>${value}</div><div>${suit}</div></div>
+  `;
 
-const cardSuits =
-['♦','♣','♥','♠'];
+  // Physics and perspective variables to mimic the reference artwork depths
+  const zIdx = Math.random(); 
+  const translateZ = Math.floor(zIdx * 400 - 200); // 3D Layer sorting
+  const startX = Math.random() * window.innerWidth;
+  const endX = startX + (Math.random() * 300 - 150); // Natural drift curves
+  const duration = (Math.random() * 6 + 6) - (zIdx * 3); // Deeper items move slower naturally
 
-const cardValues =
-['A','K','Q','J','10','9','8'];
+  // Cinematic Blurs & Opacities based on distance positions
+  let blurVal = 0;
+  let opacityVal = 0.85;
+  if (translateZ < -100) {
+    blurVal = 3;
+    opacityVal = 0.4;
+  } else if (translateZ > 150) {
+    blurVal = 5;
+    opacityVal = 0.65;
+  }
 
-function createCardBuffer(suit,value){
+  card.style.setProperty('--x-start', `${startX}px`);
+  card.style.setProperty('--x-end', `${endX}px`);
+  card.style.setProperty('--z-depth', `${translateZ}px`);
+  card.style.setProperty('--r-start', `${Math.random() * 360}deg`);
+  
+  // Custom 3D Tumbling rotations on separate axes
+  card.style.setProperty('--rot-x', `${Math.random() * 720 + 360}deg`);
+  card.style.setProperty('--rot-y', `${Math.random() * 720 + 360}deg`);
+  card.style.setProperty('--rot-z', `${Math.random() * 360 - 180}deg`);
 
-const cardBuf =
-document.createElement('canvas');
+  card.style.animationDuration = `${duration}s`;
+  card.style.filter = blurVal > 0 ? `blur(${blurVal}px)` : 'none';
+  card.style.opacity = opacityVal;
 
-cardBuf.width = 120;
-cardBuf.height = 168;
+  // Stagger entry positions initially so everything isn't hitting at once
+  if (isInitial) {
+    card.style.animationDelay = `-${Math.random() * duration}s`;
+  }
 
-const bCtx =
-cardBuf.getContext('2d');
-
-bCtx.fillStyle = '#ffffff';
-bCtx.beginPath();
-
-if(typeof bCtx.roundRect === "function"){
-bCtx.roundRect(0,0,120,168,[10]);
-}else{
-bCtx.rect(0,0,120,168);
-}
-bCtx.fill();
-
-bCtx.strokeStyle = 'rgba(0,0,0,0.15)';
-bCtx.lineWidth = 4;
-bCtx.stroke();
-
-const isRed =
-(suit === '♥' || suit === '♦');
-
-bCtx.fillStyle =
-isRed ? '#b31b1b' : '#111111';
-
-bCtx.font = '54px serif';
-bCtx.textAlign = 'center';
-bCtx.textBaseline = 'middle';
-bCtx.fillText(suit,60,84);
-
-bCtx.font = 'bold 20px sans-serif';
-bCtx.textAlign = 'left';
-bCtx.fillText(value,12,25);
-bCtx.fillText(suit,12,48);
-
-bCtx.save();
-bCtx.translate(120,168);
-bCtx.rotate(Math.PI);
-bCtx.fillText(value,12,25);
-bCtx.fillText(suit,12,48);
-bCtx.restore();
-
-return cardBuf;
+  // Infinite lifecycle looping cleanup handling
+  card.addEventListener("animationend", () => card.remove());
+  cardContainer.appendChild(card);
 }
 
-const preRenderedCards = [];
-
-for(let s of cardSuits){
-for(let v of cardValues){
-preRenderedCards.push(createCardBuffer(s,v));
-}
+// Populate the layout deck
+const totalInitialCards = 32;
+for (let i = 0; i < totalInitialCards; i++) {
+  spawnCard(true);
 }
 
-class FallingCard {
-
-constructor(initialDelay = false){
-this.reset(initialDelay);
-}
-
-reset(initialDelay){
-this.img = preRenderedCards[Math.floor(Math.random()*preRenderedCards.length)];
-this.x = Math.random()*width;
-this.z = Math.random()*0.8+0.2;
-this.y = initialDelay ? (Math.random()*-height)-150 : -180;
-
-this.speedY = (Math.random()*1.5+1)*(this.z*1.8);
-this.speedX = Math.sin(Math.random()*Math.PI)*0.4;
-
-this.rotation = Math.random()*Math.PI*2;
-this.rotSpeed = (Math.random()*0.02-0.01)*1.5;
-this.scaleX = 1;
-this.flipSpeed = Math.random()*0.03+0.01;
-
-this.blur = this.z < 0.4 ? 3 : (this.z > 0.85 ? 5 : 0);
-this.opacity = this.z < 0.4 ? 0.35 : (this.z > 0.85 ? 0.6 : 0.85);
-}
-
-update(){
-this.y += this.speedY;
-this.x += this.speedX;
-this.rotation += this.rotSpeed;
-this.scaleX = Math.sin(Date.now()*0.001*this.flipSpeed);
-
-if(this.y > height+200){
-this.reset(false);
-}
-}
-
-draw(){
-ctx.save();
-ctx.translate(this.x,this.y);
-ctx.rotate(this.rotation);
-ctx.scale(this.scaleX*this.z*0.5,this.z*0.5);
-ctx.globalAlpha = this.opacity;
-
-if(this.blur > 0 && typeof ctx.filter === 'string'){
-ctx.filter = `blur(${this.blur}px)`;
-}
-
-ctx.shadowColor = "rgba(0,0,0,0.6)";
-ctx.shadowBlur = 25*this.z;
-ctx.shadowOffsetY = 15*this.z;
-
-ctx.drawImage(this.img,-60,-84);
-ctx.restore();
-
-if(typeof ctx.filter === 'string'){
-ctx.filter = "none";
-}
-}
-
-}
-
-const deckSize = 38;
-const cardDeck = [];
-
-for(let i=0; i<deckSize; i++){
-cardDeck.push(new FallingCard(true));
-}
-
-function animateScene(){
-ctx.clearRect(0,0,width,height);
-cardDeck.sort((cardA,cardB)=>cardA.z-cardB.z);
-
-for(let card of cardDeck){
-card.update();
-card.draw();
-}
-requestAnimationFrame(animateScene);
-}
-
-animateScene();
+// Continuously stream new cards as old items pass off screen bounds
+setInterval(() => {
+  if (cardContainer.children.length < totalInitialCards) {
+    spawnCard(false);
+  }
+}, 300);
 
 </script>
 
