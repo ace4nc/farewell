@@ -36,6 +36,7 @@ position:fixed;
 inset:0;
 background:#000;
 overflow:hidden;
+z-index: 1; /* Ensure background stays under content layers */
 }
 
 /* SMOKE */
@@ -101,7 +102,7 @@ opacity:.18;
 }
 
 #mask.bright{
-opacity:.9;
+opacity:.35; /* Bumped slightly so it stays elegant but visible */
 }
 
 /* CONTENT */
@@ -117,6 +118,7 @@ align-items:center;
 
 padding:30px;
 text-align:center;
+transition: opacity 1.5s ease; /* Added smooth transition rule */
 }
 
 #content{
@@ -183,6 +185,7 @@ left:-100%;
 top:0;
 width:40%;
 height:100%;
+z-index: 2; /* Keep sweep layer explicitly over background but under hero text */
 background:
 linear-gradient(
 90deg,
@@ -194,19 +197,27 @@ transform:skewX(-25deg);
 }
 
 /* ========================= */
-/* HERO SECTION (NEW ADDITION)
+/* HERO SECTION (UPDATED)    */
 /* ========================= */
 
 #hero{
 position:fixed;
 inset:0;
-background:#050505;
-display:none;
+background: radial-gradient(circle at center, rgba(5,5,5,0.4) 0%, rgba(0,0,0,0.85) 100%); /* Allows background smoke to breathe through */
+display: flex;
+opacity: 0;
+pointer-events: none; /* Block interactions until revealed */
 justify-content:center;
 align-items:center;
 text-align:center;
 padding:40px;
-z-index:50;
+z-index:20; /* Lowered so it sits elegantly over the original #bg elements */
+transition: opacity 2.5s ease; /* Smooth fade-in duration */
+}
+
+#hero.reveal {
+opacity: 1;
+pointer-events: auto;
 }
 
 .hero-inner{
@@ -249,6 +260,7 @@ border-radius:14px;
 }
 
 .card span{
+font-family:'Montserrat', sans-serif; /* Cleaner display for numbers */
 font-size:2rem;
 }
 
@@ -281,7 +293,6 @@ letter-spacing:.2em;
 
 </div>
 
-<!-- ORIGINAL INTRO -->
 <div id="wrap">
 
 <div id="content">
@@ -303,7 +314,6 @@ letter-spacing:.2em;
 
 </div>
 
-<!-- NEW HERO (ADDED) -->
 <div id="hero">
 
 <div class="hero-inner">
@@ -352,7 +362,7 @@ document.getElementById("light");
 const hero =
 document.getElementById("hero");
 
-/* COUNTDOWN */
+/* COUNTDOWN WITH FORCES LEADING ZEROS */
 
 const target =
 new Date("August 9, 2026 00:00:00");
@@ -364,6 +374,15 @@ new Date();
 
 const diff =
 target - now;
+
+// Fallback in case target date passes
+if (diff <= 0) {
+document.getElementById("d").textContent = "00";
+document.getElementById("h").textContent = "00";
+document.getElementById("m").textContent = "00";
+document.getElementById("s").textContent = "00";
+return;
+}
 
 const d =
 Math.floor(diff/(1000*60*60*24));
@@ -377,10 +396,11 @@ Math.floor((diff%(1000*60*60))/(1000*60));
 const s =
 Math.floor((diff%(1000*60))/1000);
 
-document.getElementById("d").textContent = d;
-document.getElementById("h").textContent = h;
-document.getElementById("m").textContent = m;
-document.getElementById("s").textContent = s;
+// Use padStart to keep numbers looking consistent inside cards
+document.getElementById("d").textContent = d.toString().padStart(2, '0');
+document.getElementById("h").textContent = h.toString().padStart(2, '0');
+document.getElementById("m").textContent = m.toString().padStart(2, '0');
+document.getElementById("s").textContent = s.toString().padStart(2, '0');
 
 }
 
@@ -437,20 +457,13 @@ if(e.key==="Enter"){
 const name = input.value.trim();
 if(!name)return;
 
-/* fade intro out */
+/* fade intro out smoothly using CSS class rule */
 document.getElementById("wrap").style.opacity="0";
 
-await sleep(1500);
-
-/* show hero */
-hero.style.display="flex";
-
-updateCountdown();
-setInterval(updateCountdown,1000);
-
-/* cleanup background feel */
+/* cleanup background feel and update layout state */
 mask.classList.add("bright");
 
+// Trigger light sweep simultaneously with the fade out
 light.animate([
 {left:"-100%"},
 {left:"150%"}
@@ -458,6 +471,13 @@ light.animate([
 duration:3000,
 fill:"forwards"
 });
+
+await sleep(1200);
+
+/* Reveal hero section via clean opacity transition class */
+updateCountdown();
+hero.classList.add("reveal");
+setInterval(updateCountdown,1000);
 
 }
 
