@@ -294,7 +294,7 @@ letter-spacing:.2em;
 #cardContainer{
 position:fixed;
 inset:0;
-z-index:2;
+z-index:1;
 pointer-events:none;
 
 perspective:1200px;
@@ -383,6 +383,68 @@ rotateZ(var(--rot-z));
 
 }
 
+  /* ========================= */
+/* MOBILE OPTIMIZATION       */
+/* ========================= */
+
+@media (max-width:768px){
+
+#wrap{
+z-index:100;
+}
+
+#mask{
+width:92vw;
+top:32%;
+}
+
+#text{
+font-size:1.4rem;
+line-height:1.7;
+padding:0 10px;
+}
+
+#typed{
+font-size:1.2rem;
+}
+
+.title{
+font-size:4.5rem;
+line-height:.9;
+}
+
+.subtitle{
+font-size:.8rem;
+letter-spacing:.2em;
+}
+
+.hero-inner{
+transform:translateY(-30px);
+}
+
+.countdown{
+gap:10px;
+}
+
+.card{
+width:20vw;
+height:85px;
+}
+
+.card span{
+font-size:1.5rem;
+}
+
+.note{
+font-size:.7rem;
+}
+
+.falling-card{
+width:42px;
+height:58px;
+}
+
+}
 </style>
 </head>
 
@@ -755,6 +817,18 @@ document.createElement(
 
 card.className =
 "falling-card";
+  const mobile =
+window.innerWidth < 768;
+
+if(mobile){
+
+card.style.width =
+"42px";
+
+card.style.height =
+"58px";
+
+}
 
 const suit =
 suits[
@@ -838,7 +912,10 @@ zIdx*2
 );
 
 let blurVal = 0;
-let opacityVal = 0.8;
+let opacityVal =
+window.innerWidth < 768
+? 0.25
+: 0.8;
 
 if(
 translateZ < -80
@@ -924,7 +1001,9 @@ card
 }
 
 const totalInitialCards =
-25;
+window.innerWidth < 768
+? 10
+: 25;
 
 for(
 let i=0;
