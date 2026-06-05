@@ -270,7 +270,7 @@ letter-spacing:.2em;
 }
 
 /* ========================= */
-/* HARDWARE-ACCELERATED CARDS*/
+/* ACCELERATED CARDS LAYER   */
 /* ========================= */
 
 #cardContainer{
@@ -278,36 +278,35 @@ position:fixed;
 inset:0;
 z-index:3;
 pointer-events:none;
-perspective:1000px;
+perspective:1200px;
 overflow:hidden;
 }
 
 .falling-card{
 position:absolute;
-width:70px;
-height:98px;
-background:#fff;
-border-radius:5px;
-box-shadow:0 15px 35px rgba(0,0,0,0.5);
+width:75px;
+height:105px;
+background:#ffffff;
+border-radius:6px;
+box-shadow:0 12px 30px rgba(0,0,0,0.6);
 display:flex;
 justify-content:center;
 align-items:center;
 font-family:sans-serif;
 font-weight:bold;
 user-select:none;
-backface-visibility:visible;
 will-change:transform;
 animation:fallLinear linear infinite;
 }
 
 .card-suit{
-font-size:28px;
+font-size:30px;
 position:absolute;
 }
 
 .card-corner{
 position:absolute;
-font-size:11px;
+font-size:12px;
 line-height:1;
 display:flex;
 flex-direction:column;
@@ -497,7 +496,6 @@ if(e.key==="Enter"){
 const name = input.value.trim();
 if(!name)return;
 
-/* fade intro out smoothly */
 document.getElementById("wrap").style.opacity="0";
 
 mask.classList.add("bright");
@@ -512,12 +510,9 @@ fill:"forwards"
 
 await sleep(1500);
 
-/* Hide intro layer cleanly after transition finishes */
 document.getElementById("wrap").style.display="none";
 
-/* show hero with flawless fade */
 hero.style.display="flex";
-// Force a quick style recalculation so the opacity transition triggers correctly
 void hero.offsetWidth; 
 hero.style.opacity="1";
 
@@ -532,12 +527,12 @@ document.addEventListener("click",()=>input.focus());
 
 
 /* =================================================== */
-/* HIGH-PERFORMANCE GPU CSS CARDS ENGINE               */
+/* INTENSE DENSITY & VELOCITY CARDS ENGINE             */
 /* =================================================== */
 
 const cardContainer = document.getElementById("cardContainer");
 const suits = ['♦', '♣', '♥', '♠'];
-const values = ['A', 'K', 'Q', 'J', '10', '9'];
+const values = ['A', 'K', 'Q', 'J', '10', '9', '8', '7'];
 
 function spawnCard(isInitial) {
   const card = document.createElement("div");
@@ -549,29 +544,28 @@ function spawnCard(isInitial) {
 
   card.style.color = isRed ? '#b31b1b' : '#111111';
 
-  // Inner layout structure of a classic clean card
   card.innerHTML = `
     <div class="card-corner corner-top"><div>${value}</div><div>${suit}</div></div>
     <div class="card-suit">${suit}</div>
     <div class="card-corner corner-bottom"><div>${value}</div><div>${suit}</div></div>
   `;
 
-  // Physics and perspective variables to mimic the reference artwork depths
   const zIdx = Math.random(); 
-  const translateZ = Math.floor(zIdx * 400 - 200); // 3D Layer sorting
+  const translateZ = Math.floor(zIdx * 500 - 250); 
   const startX = Math.random() * window.innerWidth;
-  const endX = startX + (Math.random() * 300 - 150); // Natural drift curves
-  const duration = (Math.random() * 6 + 6) - (zIdx * 3); // Deeper items move slower naturally
+  const endX = startX + (Math.random() * 400 - 200); 
 
-  // Cinematic Blurs & Opacities based on distance positions
+  // Decreased values = cards move significantly faster down the viewport
+  const duration = (Math.random() * 2.5 + 2.5) - (zIdx * 0.8); 
+
   let blurVal = 0;
-  let opacityVal = 0.85;
-  if (translateZ < -100) {
-    blurVal = 3;
-    opacityVal = 0.4;
-  } else if (translateZ > 150) {
-    blurVal = 5;
-    opacityVal = 0.65;
+  let opacityVal = 0.9;
+  if (translateZ < -80) {
+    blurVal = 2.5;
+    opacityVal = 0.45;
+  } else if (translateZ > 160) {
+    blurVal = 4.5;
+    opacityVal = 0.7;
   }
 
   card.style.setProperty('--x-start', `${startX}px`);
@@ -579,37 +573,35 @@ function spawnCard(isInitial) {
   card.style.setProperty('--z-depth', `${translateZ}px`);
   card.style.setProperty('--r-start', `${Math.random() * 360}deg`);
   
-  // Custom 3D Tumbling rotations on separate axes
-  card.style.setProperty('--rot-x', `${Math.random() * 720 + 360}deg`);
-  card.style.setProperty('--rot-y', `${Math.random() * 720 + 360}deg`);
-  card.style.setProperty('--rot-z', `${Math.random() * 360 - 180}deg`);
+  // High spin rotations
+  card.style.setProperty('--rot-x', `${Math.random() * 1080 + 720}deg`);
+  card.style.setProperty('--rot-y', `${Math.random() * 1080 + 720}deg`);
+  card.style.setProperty('--rot-z', `${Math.random() * 540 - 270}deg`);
 
   card.style.animationDuration = `${duration}s`;
   card.style.filter = blurVal > 0 ? `blur(${blurVal}px)` : 'none';
   card.style.opacity = opacityVal;
 
-  // Stagger entry positions initially so everything isn't hitting at once
   if (isInitial) {
     card.style.animationDelay = `-${Math.random() * duration}s`;
   }
 
-  // Infinite lifecycle looping cleanup handling
   card.addEventListener("animationend", () => card.remove());
   cardContainer.appendChild(card);
 }
 
-// Populate the layout deck
-const totalInitialCards = 32;
+// Increased pool density to 65 elements for a packed, heavy display storm
+const totalInitialCards = 65;
 for (let i = 0; i < totalInitialCards; i++) {
   spawnCard(true);
 }
 
-// Continuously stream new cards as old items pass off screen bounds
+// Check and restock cards at a hyper-aggressive pace
 setInterval(() => {
   if (cardContainer.children.length < totalInitialCards) {
     spawnCard(false);
   }
-}, 300);
+}, 80);
 
 </script>
 
