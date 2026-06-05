@@ -105,12 +105,12 @@ opacity:.18;
 opacity:.35;
 }
 
-/* CARDS CANVAS CANVAS OVERLAY */
+/* CARDS CANVAS OVERLAY */
 #cardCanvas {
 position: fixed;
 inset: 0;
-z-index: 3; /* Sits over smoke/mask, but comfortably behind text contents */
-pointer-events: none; /* Allows clicking right through the cards */
+z-index: 3; 
+pointer-events: none; 
 }
 
 /* CONTENT */
@@ -492,7 +492,7 @@ document.addEventListener("click",()=>input.focus());
 
 
 /* =================================================== */
-/* CINEMATIC FALLING CARDS ENGINE                      */
+/* CINEMATIC FALLING CARDS ENGINE (FIXED)              */
 /* =================================================== */
 
 const canvas = document.getElementById("cardCanvas");
@@ -506,7 +506,6 @@ window.addEventListener("resize", () => {
   height = canvas.height = window.innerHeight;
 });
 
-// Programmatically generate basic high-contrast card textures so no external image links break
 const cardSuits = ['♦', '♣', '♥', '♠'];
 const cardValues = ['A', 'K', 'Q', 'J', '10', '9', '8'];
 
@@ -516,12 +515,17 @@ function createCardBuffer(suit, value) {
   cardBuf.height = 168;
   const bCtx = cardBuf.getContext('2d');
   
-  // Card base drawing
   bCtx.fillStyle = '#ffffff';
-  bCtx.roundRect ? bCtx.roundRect(0, 0, 120, 168, 10) : bCtx.rect(0, 0, 120, 168);
+  bCtx.beginPath();
+  
+  // FIX: Safe multi-browser implementation for rounded card borders
+  if (typeof bCtx.roundRect === "function") {
+    bCtx.roundRect(0, 0, 120, 168, [10]);
+  } else {
+    bCtx.rect(0, 0, 120, 168);
+  }
   bCtx.fill();
   
-  // Vignette/Shadow overlay edge to give cards depth
   bCtx.strokeStyle = 'rgba(0,0,0,0.15)';
   bCtx.lineWidth = 4;
   bCtx.stroke();
@@ -529,19 +533,16 @@ function createCardBuffer(suit, value) {
   const isRed = (suit === '♥' || suit === '♦');
   bCtx.fillStyle = isRed ? '#b31b1b' : '#111111';
   
-  // Center main design symbol
-  bCtx.font = '54px "Montserrat", sans-serif';
+  bCtx.font = '54px serif';
   bCtx.textAlign = 'center';
   bCtx.textBaseline = 'middle';
   bCtx.fillText(suit, 60, 84);
   
-  // Corner Indices
-  bCtx.font = 'bold 20px "Montserrat", sans-serif';
+  bCtx.font = 'bold 20px sans-serif';
   bCtx.textAlign = 'left';
   bCtx.fillText(value, 12, 25);
   bCtx.fillText(suit, 12, 48);
   
-  // Inverted bottom indices
   bCtx.save();
   bCtx.translate(120, 168);
   bCtx.rotate(Math.PI);
@@ -552,7 +553,6 @@ function createCardBuffer(suit, value) {
   return cardBuf;
 }
 
-// Pre-render a pool of cards for high rendering speeds
 const preRenderedCards = [];
 for(let s of cardSuits){
   for(let v of cardValues){
@@ -568,22 +568,19 @@ class FallingCard {
   reset(initialDelay) {
     this.img = preRenderedCards[Math.floor(Math.random() * preRenderedCards.length)];
     this.x = Math.random() * width;
-    // Layer Depth properties to mimic lens focal changes from your photo reference
     this.z = Math.random() * 0.8 + 0.2; 
     this.y = initialDelay ? (Math.random() * -height) - 150 : -180;
     
-    // Config speed and physics
     this.speedY = (Math.random() * 1.5 + 1) * (this.z * 1.8);
     this.speedX = Math.sin(Math.random() * Math.PI) * 0.4;
     
-    // Tumbling rotations 
     this.rotation = Math.random() * Math.PI * 2;
     this.rotSpeed = (Math.random() * 0.02 - 0.01) * 1.5;
     this.scaleX = 1;
     this.flipSpeed = Math.random() * 0.03 + 0.01;
     
-    // Soft blurred properties for backgrounds/foregrounds
-    this.blur = this.z < 0.4 ? 4 : (this.z > 0.85 ? 6 : 0);
+    // Fallback protection against systems that don't support dynamic filter blurs
+    this.blur = this.z < 0.4 ? 3 : (this.z > 0.85 ? 5 : 0);
     this.opacity = this.z < 0.4 ? 0.35 : (this.z > 0.85 ? 0.6 : 0.85);
   }
 
@@ -593,7 +590,6 @@ class FallingCard {
     this.rotation += this.rotSpeed;
     this.scaleX = Math.sin(Date.now() * 0.001 * this.flipSpeed);
 
-    // If card travels off bottom screen edge, re-loop up top
     if (this.y > height + 200) {
       this.reset(false);
     }
@@ -606,35 +602,29 @@ class FallingCard {
     ctx.scale(this.scaleX * this.z * 0.5, this.z * 0.5);
     ctx.globalAlpha = this.opacity;
     
-    if (this.blur > 0) {
+    if (this.blur > 0 && typeof ctx.filter === 'string') {
       ctx.filter = `blur(${this.blur}px)`;
     }
     
-    // Draw card drop shadows matching the luxury moodboard
     ctx.shadowColor = "rgba(0, 0, 0, 0.6)";
     ctx.shadowBlur = 25 * this.z;
     ctx.shadowOffsetY = 15 * this.z;
 
     ctx.drawImage(this.img, -60, -84);
     ctx.restore();
-    ctx.filter = "none";
+    if (typeof ctx.filter === 'string') ctx.filter = "none";
   }
 }
 
-// Generate the complete atmospheric deck scene
 const deckSize = 38;
 const cardDeck = [];
 for (let i = 0; i < deckSize; i++) {
   cardDeck.push(new FallingCard(true));
 }
 
-// Main animation loops
 function animateScene() {
   ctx.clearRect(0, 0, width, height);
-  
-  // Sort deck order by depth value so back layers render behind closer items smoothly
   cardDeck.sort((cardA, cardB) => cardA.z - cardB.z);
-  
   for (let card of cardDeck) {
     card.update();
     card.draw();
@@ -642,7 +632,7 @@ function animateScene() {
   requestAnimationFrame(animateScene);
 }
 
-// Run the falling effects engine instantly on page load
+// Fire rendering engine loop
 animateScene();
 
 </script>
