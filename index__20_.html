@@ -1,0 +1,3379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class Of 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400&family=UnifrakturMaguntia&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=IM+Fell+English:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html,body{
+width:100%;
+height:100%;
+overflow:hidden;
+background:#000;
+}
+
+body{
+font-family:'Cinzel',serif;
+color:#f5f1e8;
+}
+
+/* BACKGROUND */
+
+#bg{
+position:fixed;
+inset:0;
+background:#000;
+overflow:hidden;
+z-index:1;
+}
+
+/* SMOKE */
+
+.smoke{
+position:absolute;
+width:200%;
+height:200%;
+left:-50%;
+top:-50%;
+opacity:0;
+
+background:
+radial-gradient(circle at 30% 40%,
+rgba(255,255,255,.05),
+transparent 40%),
+
+radial-gradient(circle at 70% 60%,
+rgba(255,255,255,.04),
+transparent 40%);
+
+animation:
+smokeReveal 8s forwards,
+smokeMove 25s infinite ease-in-out;
+}
+
+@keyframes smokeReveal{
+from{opacity:0;}
+to{opacity:1;}
+}
+
+@keyframes smokeMove{
+0%{transform:translate(0,0);}
+50%{transform:translate(40px,-30px);}
+100%{transform:translate(0,0);}
+}
+
+/* MASK */
+
+#mask{
+position:fixed;
+left:50%;
+top:40%;
+transform:translate(-50%,-50%);
+width:min(90vw,900px);
+opacity:0;
+transition:4s ease;
+z-index:20;
+
+filter:
+brightness(1.2)
+contrast(1.3)
+drop-shadow(0 0 20px rgba(255,255,255,.2))
+drop-shadow(0 0 60px rgba(255,255,255,.05));
+}
+
+#mask.show{
+opacity:.18;
+}
+
+#mask.bright{
+opacity:.9;
+}
+
+/* CONTENT */
+
+#wrap{
+position:relative;
+z-index:30;
+height:100vh;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+padding:30px;
+text-align:center;
+
+transition:2s ease;
+}
+
+#content{
+max-width:800px;
+width:100%;
+}
+
+#text{
+font-size:clamp(1.4rem,4vw,2.5rem);
+letter-spacing:.08em;
+line-height:1.8;
+opacity:0;
+transition:2s;
+min-height:200px;
+}
+
+#text.show{
+opacity:1;
+}
+
+/* NAME */
+
+#nameArea{
+opacity:0;
+transition:2s;
+margin-top:30px;
+}
+
+#nameArea.show{
+opacity:1;
+}
+
+#typed{
+font-family:'Montserrat',sans-serif;
+font-size:1.6rem;
+color:#d4d0c7;
+letter-spacing:.15em;
+}
+
+.cursor{
+display:inline-block;
+width:2px;
+height:1em;
+background:#d4d0c7;
+animation:blink 1s infinite;
+margin-left:4px;
+}
+
+@keyframes blink{
+50%{
+opacity:0;
+}
+}
+
+#input{
+position:absolute;
+opacity:0;
+pointer-events:none;
+}
+
+/* LIGHT SWEEP */
+
+#light{
+position:fixed;
+left:-100%;
+top:0;
+width:40%;
+height:100%;
+z-index:40;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.08),
+transparent
+);
+
+transform:skewX(-25deg);
+}
+
+/* ═══════════════════════════════════════
+   HERO PAGE — index 11 style
+═══════════════════════════════════════ */
+
+#hero{
+position:fixed;
+inset:0;
+
+display:none;
+justify-content:center;
+align-items:center;
+text-align:center;
+
+padding:40px;
+
+background:
+radial-gradient(ellipse at 50% 0%, rgba(201,164,92,0.04) 0%, transparent 55%),
+radial-gradient(circle at center, rgba(5,5,5,.4) 0%, rgba(0,0,0,.92) 100%);
+
+z-index:50;
+
+opacity:0;
+transition:2.5s ease;
+}
+
+.hero-inner{
+width:100%;
+max-width:1100px;
+margin:0 auto;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:0;
+}
+
+/* Gold rule lines flanking subtitle */
+.hero-rule {
+display: flex;
+align-items: center;
+gap: 14px;
+margin-bottom: 6px;
+}
+.hero-rule-line {
+width: clamp(30px, 6vw, 70px);
+height: 1px;
+background: linear-gradient(90deg, transparent, rgba(201,164,92,0.6), transparent);
+}
+.hero-rule-dot {
+width: 4px;
+height: 4px;
+border-radius: 50%;
+background: rgba(201,164,92,0.7);
+}
+
+.title{
+font-size:clamp(3.2rem,11vw,9rem);
+letter-spacing:.12em;
+margin-bottom:0;
+line-height: 0.9;
+background: linear-gradient(180deg, #ffffff 30%, rgba(245,241,232,0.65) 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+filter: drop-shadow(0 0 40px rgba(255,255,255,0.08));
+}
+
+.subtitle{
+font-family:'Montserrat',sans-serif;
+font-size: clamp(0.55rem, 1.4vw, 0.8rem);
+letter-spacing:.45em;
+color: rgba(201,164,92,0.75);
+margin-bottom:32px;
+margin-top: 10px;
+text-transform: uppercase;
+}
+
+/* COUNTDOWN */
+
+.countdown{
+display:flex;
+justify-content:center;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom: 6px;
+}
+
+.card{
+width:84px;
+height:100px;
+
+background: linear-gradient(160deg, rgba(20,18,14,0.95), rgba(5,4,2,0.98));
+border: 1px solid rgba(201,164,92,.22);
+border-top: 1px solid rgba(201,164,92,.45);
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+
+border-radius:8px;
+position: relative;
+overflow: hidden;
+}
+
+.card::after {
+content: '';
+position: absolute;
+top: 0; left: 0; right: 0;
+height: 1px;
+background: linear-gradient(90deg, transparent, rgba(201,164,92,0.5), transparent);
+}
+
+.card span{
+font-size:1.8rem;
+font-family: 'Cinzel', serif;
+color: #f5f1e8;
+}
+
+.card small{
+font-size:.45rem;
+letter-spacing:.3em;
+color: rgba(201,164,92,0.55);
+margin-top:4px;
+font-family: 'Montserrat', sans-serif;
+}
+
+.note{
+margin-top:22px;
+font-size:.65rem;
+color: rgba(201,164,92,0.5);
+letter-spacing:.35em;
+font-family: 'Montserrat', sans-serif;
+text-transform: uppercase;
+}
+
+/* FALLING CARDS */
+
+#cardContainer{
+position:fixed;
+inset:0;
+z-index:1;
+pointer-events:none;
+
+perspective:1200px;
+overflow:hidden;
+transform-style:flat;
+}
+
+.falling-card{
+position:absolute;
+
+width:75px;
+height:105px;
+
+background:#fff;
+
+border-radius:6px;
+
+box-shadow:
+0 12px 30px rgba(0,0,0,.6);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-family:sans-serif;
+font-weight:bold;
+
+user-select:none;
+will-change:transform;
+
+animation:
+fallLinear linear infinite;
+}
+
+.card-suit{
+font-size:30px;
+position:absolute;
+}
+
+.card-corner{
+position:absolute;
+font-size:12px;
+line-height:1;
+
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
+.corner-top{
+top:6px;
+left:6px;
+}
+
+.corner-bottom{
+bottom:6px;
+right:6px;
+transform:rotate(180deg);
+}
+
+@keyframes fallLinear{
+
+0%{
+transform:
+translate3d(
+var(--x-start),
+-150px,
+var(--z-depth)
+)
+rotateX(0deg)
+rotateY(0deg)
+rotateZ(var(--r-start));
+}
+
+100%{
+transform:
+translate3d(
+var(--x-end),
+105vh,
+var(--z-depth)
+)
+rotateX(var(--rot-x))
+rotateY(var(--rot-y))
+rotateZ(var(--rot-z));
+}
+
+}
+
+/* ═══════════════════════════════════════
+   NEWSPAPER PAGE — index 11 as baseline
+═══════════════════════════════════════ */
+
+#newspaper{
+position:fixed;
+inset:0;
+display:none;
+justify-content:center;
+align-items:flex-start;
+z-index:60;
+opacity:0;
+transition:2.5s ease;
+overflow-y:auto;
+padding:40px 20px;
+background:rgba(0,0,0,0.82);
+}
+
+/* DESKTOP NEWSPAPER — full broadsheet feel */
+@media (min-width: 900px) {
+  #newspaper {
+    padding: 50px 40px;
+    align-items: flex-start;
+  }
+
+  .np-wrap {
+    max-width: 860px;
+    padding: 40px 44px;
+    box-shadow: 6px 6px 0 #c8b89a, 12px 12px 0 rgba(0,0,0,0.15);
+  }
+
+  .np-title-np {
+    font-size: 80px !important;
+    letter-spacing: 0.03em;
+  }
+
+  .np-tagline {
+    font-size: 16px !important;
+  }
+
+  .np-topper {
+    font-size: 11px !important;
+    letter-spacing: 0.3em;
+  }
+
+  .np-meta {
+    font-size: 11px !important;
+    padding-bottom: 6px;
+    margin-bottom: 14px;
+  }
+
+  .np-cols {
+    grid-template-columns: 1fr 1fr;
+    gap: 0 24px;
+  }
+
+  .np-col {
+    padding: 12px 14px 12px 0;
+  }
+
+  .np-col:last-child {
+    padding-left: 14px;
+    padding-right: 0;
+  }
+
+  .np-body {
+    font-size: 13px !important;
+    line-height: 1.75;
+  }
+
+  .np-dropcap::first-letter {
+    font-size: 54px !important;
+    line-height: 0.75;
+    margin-right: 6px;
+  }
+
+  .np-section-head {
+    font-size: 13px !important;
+    letter-spacing: 0.25em;
+    padding: 5px 8px;
+    margin: 8px 0;
+  }
+
+  .np-box {
+    padding: 14px 18px;
+    margin: 12px 0;
+  }
+
+  .np-box-title {
+    font-size: 16px !important;
+    margin-bottom: 8px;
+  }
+
+  .np-box-body {
+    font-size: 12px !important;
+    line-height: 1.75;
+  }
+
+  .np-payment-row {
+    font-size: 12px !important;
+    padding: 5px 0;
+  }
+
+  .np-wanted-head {
+    font-size: 28px !important;
+  }
+
+  .np-wanted-body {
+    font-size: 13px !important;
+  }
+
+  .np-ornament {
+    font-size: 18px !important;
+  }
+
+  .np-divider {
+    font-size: 11px !important;
+    margin: 10px 0;
+  }
+
+  .np-footer {
+    font-size: 11px !important;
+    padding-top: 7px;
+  }
+
+  .np-qr-img {
+    width: 140px !important;
+    height: 140px !important;
+  }
+
+  .np-qr-caption {
+    font-size: 11px !important;
+  }
+}
+
+/* NEWSPAPER STYLES */
+
+.np-wrap {
+background: rgba(245,240,232,0.88);
+color: #1a1a1a;
+padding: 24px 20px;
+font-family: 'Libre Baskerville', serif;
+max-width: 520px;
+margin: 0 auto;
+border: 1px solid #c8b89a;
+box-shadow: 3px 3px 0 #c8b89a;
+position: relative;
+}
+
+.np-texture {
+position: absolute;
+inset: 0;
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23f5f0e8'/%3E%3Ccircle cx='1' cy='1' r='0.4' fill='%23d4c9b0' opacity='0.3'/%3E%3C/svg%3E");
+pointer-events: none;
+z-index: 0;
+}
+
+.np-inner { position: relative; z-index: 1; }
+
+.np-topper {
+text-align: center;
+border-top: 3px double #1a1a1a;
+border-bottom: 1px solid #1a1a1a;
+padding: 3px 0;
+font-family: 'Libre Baskerville', serif;
+font-size: 9px;
+letter-spacing: 0.25em;
+text-transform: uppercase;
+color: #4a3a28;
+margin-bottom: 6px;
+}
+
+.np-masthead {
+text-align: center;
+border-bottom: 3px double #1a1a1a;
+padding-bottom: 8px;
+margin-bottom: 6px;
+}
+
+.np-title-np {
+font-family: 'UnifrakturMaguntia', cursive;
+font-size: 48px;
+line-height: 1;
+color: #1a1a1a;
+letter-spacing: 0.02em;
+}
+
+.np-tagline {
+font-family: 'IM Fell English', serif;
+font-style: italic;
+font-size: 13px;
+color: #4a3a28;
+letter-spacing: 0.08em;
+margin-top: 2px;
+}
+
+.np-meta {
+display: flex;
+justify-content: space-between;
+font-size: 9px;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: #4a3a28;
+border-bottom: 2px solid #1a1a1a;
+padding-bottom: 4px;
+margin-bottom: 10px;
+}
+
+.np-rule { border: none; border-top: 1px solid #1a1a1a; margin: 8px 0; }
+
+.np-cols {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 0;
+border-top: 1px solid #1a1a1a;
+}
+
+.np-col {
+padding: 8px 10px 8px 0;
+border-right: 1px solid #1a1a1a;
+}
+.np-col:last-child {
+border-right: none;
+padding-left: 10px;
+padding-right: 0;
+}
+
+.np-col-full { padding: 8px 0; }
+
+.np-body {
+font-family: 'Libre Baskerville', serif;
+font-size: 10.5px;
+line-height: 1.65;
+color: #1a1a1a;
+text-align: justify;
+}
+
+.np-body p { margin-bottom: 6px; }
+.np-body p:last-child { margin-bottom: 0; }
+
+.np-section-head {
+font-family: 'Playfair Display', serif;
+font-size: 11px;
+font-weight: 700;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+text-align: center;
+background: #1a1a1a;
+color: #f5f0e8;
+padding: 3px 6px;
+margin: 4px 0;
+}
+
+.np-divider {
+text-align: center;
+font-size: 9px;
+letter-spacing: 0.15em;
+color: #4a3a28;
+margin: 6px 0;
+}
+
+.np-box {
+border: 1px solid #1a1a1a;
+padding: 10px 12px;
+margin: 8px 0;
+background: rgba(237,232,220,0.9);
+}
+
+.np-box-title {
+font-family: 'Playfair Display', serif;
+font-size: 13px;
+font-weight: 700;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+text-align: center;
+margin-bottom: 6px;
+color: #1a1a1a;
+}
+
+.np-box-body {
+font-family: 'Libre Baskerville', serif;
+font-size: 10px;
+line-height: 1.65;
+color: #1a1a1a;
+text-align: justify;
+}
+
+.np-payment-row {
+display: flex;
+justify-content: space-between;
+font-size: 10px;
+border-bottom: 1px dotted #8a7a62;
+padding: 3px 0;
+line-height: 1.4;
+}
+
+.np-payment-label { color: #4a3a28; font-style: italic; }
+.np-payment-val { font-weight: 700; text-align: right; max-width: 55%; }
+
+.np-qr-wrap {
+display: flex;
+flex-direction: column;
+align-items: center;
+margin: 10px 0 6px;
+gap: 6px;
+}
+
+.np-qr-img {
+width: 110px;
+height: 110px;
+border: 2px solid #1a1a1a;
+display: flex;
+align-items: center;
+justify-content: center;
+background: white;
+overflow: hidden;
+}
+
+.np-qr-img img {
+width: 100%;
+height: 100%;
+object-fit: contain;
+filter: grayscale(1) contrast(1.2);
+}
+
+.np-qr-caption {
+font-size: 9px;
+letter-spacing: 0.1em;
+text-align: center;
+color: #4a3a28;
+text-transform: uppercase;
+}
+
+.np-wanted {
+border: 3px solid #1a1a1a;
+padding: 10px 12px;
+margin: 8px 0;
+text-align: center;
+background: rgba(245,240,232,0.9);
+}
+
+.np-wanted-head {
+font-family: 'Playfair Display', serif;
+font-size: 20px;
+font-weight: 900;
+letter-spacing: 0.3em;
+text-transform: uppercase;
+border-bottom: 2px solid #1a1a1a;
+padding-bottom: 4px;
+margin-bottom: 8px;
+}
+
+.np-wanted-body {
+font-family: 'IM Fell English', serif;
+font-style: italic;
+font-size: 11px;
+line-height: 1.7;
+color: #2a2020;
+}
+
+/* Newspaper illustration */
+.np-illustration {
+  margin: 6px 0 10px;
+  border: 1px solid rgba(26,26,26,0.3);
+  border-left: none;
+  border-right: none;
+  padding: 8px 0;
+  background: rgba(237,232,220,0.5);
+}
+.np-illus-svg {
+  width: 100%;
+  max-width: 280px;
+  display: block;
+  margin: 0 auto;
+}
+
+.np-footer {
+text-align: center;
+border-top: 3px double #1a1a1a;
+padding-top: 5px;
+margin-top: 8px;
+font-size: 9px;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: #4a3a28;
+}
+
+.np-dropcap::first-letter {
+font-family: 'Playfair Display', serif;
+font-size: 36px;
+font-weight: 900;
+float: left;
+line-height: 0.8;
+margin-right: 4px;
+margin-top: 2px;
+color: #1a1a1a;
+}
+
+.np-ornament {
+text-align: center;
+font-size: 14px;
+color: #4a3a28;
+margin: 3px 0;
+letter-spacing: 0.3em;
+}
+
+/* ═══════════════════════════════════════
+   IMPORTANT NOTICE — newspaper section
+═══════════════════════════════════════ */
+
+.np-notice-wrap {
+border: 2px solid #1a1a1a;
+margin: 10px 0;
+background: rgba(230,225,210,0.95);
+position: relative;
+overflow: hidden;
+}
+
+.np-notice-wrap::before {
+content: '';
+position: absolute;
+inset: 0;
+background: repeating-linear-gradient(
+  45deg,
+  transparent,
+  transparent 8px,
+  rgba(26,26,26,0.025) 8px,
+  rgba(26,26,26,0.025) 9px
+);
+pointer-events: none;
+}
+
+.np-notice-header {
+background: #1a1a1a;
+color: #f5f0e8;
+text-align: center;
+padding: 8px 12px 6px;
+position: relative;
+}
+
+.np-notice-header-top {
+font-family: 'Playfair Display', serif;
+font-size: 8px;
+letter-spacing: 0.4em;
+text-transform: uppercase;
+opacity: 0.6;
+margin-bottom: 3px;
+}
+
+.np-notice-header-title {
+font-family: 'Playfair Display', serif;
+font-size: 16px;
+font-weight: 900;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+line-height: 1.1;
+}
+
+.np-notice-header-sub {
+font-family: 'IM Fell English', serif;
+font-style: italic;
+font-size: 9.5px;
+opacity: 0.75;
+margin-top: 3px;
+letter-spacing: 0.06em;
+}
+
+@media (min-width: 900px) {
+  .np-notice-header-title { font-size: 22px !important; }
+  .np-notice-header-sub   { font-size: 12px !important; }
+  .np-notice-header-top   { font-size: 10px !important; }
+}
+
+.np-notice-seal {
+width: 44px;
+height: 44px;
+margin: 8px auto 4px;
+display: block;
+}
+
+.np-notice-body {
+padding: 8px 14px 10px;
+position: relative;
+z-index: 1;
+}
+
+.np-notice-body p {
+font-family: 'Libre Baskerville', serif;
+font-size: 9.5px;
+line-height: 1.7;
+color: #1a1a1a;
+text-align: justify;
+margin-bottom: 6px;
+}
+
+.np-notice-body p:last-child { margin-bottom: 0; }
+
+@media (min-width: 900px) {
+  .np-notice-body p { font-size: 11.5px !important; }
+  .np-notice-body { padding: 12px 20px 14px; }
+}
+
+.np-notice-rule {
+border: none;
+border-top: 1px solid rgba(26,26,26,0.25);
+margin: 6px 0;
+}
+
+.np-notice-footer {
+text-align: center;
+font-family: 'Playfair Display', serif;
+font-size: 8px;
+letter-spacing: 0.25em;
+text-transform: uppercase;
+color: #4a3a28;
+padding: 5px 12px 7px;
+border-top: 1px solid rgba(26,26,26,0.2);
+}
+
+@media (min-width: 900px) {
+  .np-notice-footer { font-size: 10px !important; }
+}
+
+/* ── SCROLL HINT ───────────────────────────────────── */
+
+#scrollHint{
+position:fixed;
+bottom:30px;
+left:50%;
+transform:translateX(-50%);
+z-index:55;
+display:none;
+flex-direction:column;
+align-items:center;
+gap:8px;
+opacity:0;
+transition:1.5s ease;
+}
+
+#scrollHint.show{
+opacity:1;
+}
+
+.scroll-label{
+font-family:'Montserrat',sans-serif;
+font-size:.65rem;
+letter-spacing:.3em;
+color:rgba(245,241,232,0.5);
+text-transform:uppercase;
+}
+
+.scroll-arrow{
+width:18px;
+height:18px;
+border-right:1px solid rgba(245,241,232,0.4);
+border-bottom:1px solid rgba(245,241,232,0.4);
+transform:rotate(45deg);
+animation:bounceArrow 1.6s infinite ease-in-out;
+}
+
+@keyframes bounceArrow{
+0%,100%{transform:rotate(45deg) translateY(0);}
+50%{transform:rotate(45deg) translateY(5px);}
+}
+
+/* MOBILE */
+
+@media (max-width:768px){
+
+#wrap{
+z-index:100;
+}
+
+#mask{
+width:82vw;
+top:34%;
+}
+
+#text{
+font-size:1.4rem;
+line-height:1.7;
+padding:0 10px;
+}
+
+#typed{
+font-size:1.2rem;
+}
+
+.title{
+font-size:3.4rem;
+line-height:.9;
+}
+
+.subtitle{
+font-size:.8rem;
+letter-spacing:.2em;
+}
+
+.hero-inner{
+transform:translateY(-30px);
+}
+
+.countdown{
+gap:10px;
+}
+
+.card{
+width:58px;
+height:68px;
+border-radius:10px;
+}
+
+.card span{
+font-size:1.2rem;
+}
+
+.card small{
+font-size:.45rem;
+letter-spacing:.15em;
+}
+
+.card span{
+font-size:1.5rem;
+}
+
+.note{
+font-size:.7rem;
+}
+
+.falling-card{
+width:42px;
+height:58px;
+}
+
+.np-title-np{
+font-size:34px;
+}
+
+#newspaper{
+padding:20px 10px;
+}
+
+}
+
+/* ═══════════════════════════════════════
+   DEADLINE POPUP
+═══════════════════════════════════════ */
+
+#deadlineOverlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.75);
+z-index:200;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+opacity:0;
+transition:0.6s ease;
+pointer-events:none;
+}
+
+#deadlineOverlay.show{
+opacity:1;
+pointer-events:all;
+}
+
+#deadlinePopup{
+background:rgba(245,240,232,0.97);
+color:#1a1a1a;
+font-family:'Libre Baskerville',serif;
+max-width:400px;
+width:100%;
+border:2px solid #1a1a1a;
+box-shadow:4px 4px 0 #c8b89a, 8px 8px 0 rgba(0,0,0,0.15);
+padding:28px 24px 22px;
+position:relative;
+text-align:center;
+transform:translateY(20px);
+transition:0.6s ease;
+}
+
+#deadlineOverlay.show #deadlinePopup{
+transform:translateY(0);
+}
+
+.dl-border-top{
+border-top:3px double #1a1a1a;
+border-bottom:1px solid #1a1a1a;
+padding:3px 0;
+font-size:8px;
+letter-spacing:0.3em;
+text-transform:uppercase;
+color:#4a3a28;
+margin-bottom:14px;
+}
+
+.dl-icon{
+font-size:28px;
+margin-bottom:8px;
+opacity:0.75;
+}
+
+.dl-head{
+font-family:'Playfair Display',serif;
+font-size:11px;
+font-weight:700;
+letter-spacing:0.25em;
+text-transform:uppercase;
+background:#1a1a1a;
+color:#f5f0e8;
+padding:4px 8px;
+display:inline-block;
+margin-bottom:14px;
+}
+
+.dl-date{
+font-family:'UnifrakturMaguntia',cursive;
+font-size:32px;
+color:#1a1a1a;
+line-height:1.1;
+margin-bottom:6px;
+}
+
+.dl-subdate{
+font-family:'IM Fell English',serif;
+font-style:italic;
+font-size:12px;
+color:#4a3a28;
+letter-spacing:0.08em;
+margin-bottom:14px;
+}
+
+.dl-rule{
+border:none;
+border-top:1px solid #1a1a1a;
+margin:12px 0;
+}
+
+.dl-body{
+font-size:10px;
+line-height:1.7;
+color:#2a2020;
+text-align:justify;
+margin-bottom:16px;
+}
+
+.dl-close{
+background:#1a1a1a;
+color:#f5f0e8;
+border:none;
+font-family:'Cinzel',serif;
+font-size:9px;
+letter-spacing:0.25em;
+text-transform:uppercase;
+padding:8px 22px;
+cursor:pointer;
+transition:0.2s;
+}
+
+.dl-close:hover{
+background:#3a3028;
+}
+
+.dl-ornament{
+font-size:12px;
+color:#4a3a28;
+letter-spacing:0.3em;
+margin-top:14px;
+}
+
+/* ═══════════════════════════════════════
+   TRAILER BUTTON — index 16 style
+═══════════════════════════════════════ */
+
+#trailerBtn {
+  margin-top: 38px;
+  position: relative;
+  background: transparent;
+  border: 1px solid rgba(201,164,92,0.55);
+  color: #c9a45c;
+  font-family: 'Cinzel', serif;
+  font-size: .72rem;
+  letter-spacing: .28em;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color .4s, color .4s;
+}
+#trailerBtn:hover {
+  border-color: rgba(201,164,92,0.9);
+  color: #e8c87a;
+}
+.trailer-btn-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 28px;
+  position: relative;
+  z-index: 1;
+}
+.trailer-play-icon {
+  font-size: .75rem;
+  opacity: .85;
+  transition: transform .3s;
+}
+#trailerBtn:hover .trailer-play-icon { transform: scale(1.25); }
+.trailer-btn-shine {
+  position: absolute;
+  top: 0; left: -120%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(201,164,92,.18), transparent);
+  transform: skewX(-20deg);
+  transition: left .6s ease;
+}
+#trailerBtn:hover .trailer-btn-shine { left: 160%; }
+
+/* ═══════════════════════════════════════
+   TRAILER OVERLAY — index 13 intro + index 16 filmstrip video
+═══════════════════════════════════════ */
+
+/* INTRO OVERLAY (cinematic slides — index 13) */
+#trailerIntroOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: #000;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+#trailerIntroOverlay.show { opacity: 1; }
+
+#trailerInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+}
+
+#grainCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  opacity: 0.09;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.trailer-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center,
+    transparent 45%,
+    rgba(0,0,0,0.6) 75%,
+    rgba(0,0,0,0.92) 100%
+  );
+  z-index: 8;
+  pointer-events: none;
+}
+
+.trailer-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.07) 2px,
+    rgba(0,0,0,0.07) 4px
+  );
+  z-index: 9;
+  pointer-events: none;
+}
+
+.trailer-scratch {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom,
+    transparent,
+    rgba(255,255,255,0.35) 20%,
+    transparent 40%,
+    rgba(255,255,255,0.2) 70%,
+    transparent
+  );
+  z-index: 11;
+  opacity: 0;
+  pointer-events: none;
+  animation: scratchFlicker 0.12s steps(1) infinite;
+}
+#scratch1 { left: 28%; animation-delay: 0s; animation-duration: 3.7s; }
+#scratch2 { left: 63%; animation-delay: 1.3s; animation-duration: 5.1s; }
+@keyframes scratchFlicker { 0%, 85%, 100% { opacity: 0; } 86%, 99% { opacity: 1; } }
+
+.trailer-leak {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 7;
+  animation: leakPulse 8s ease-in-out infinite alternate;
+}
+#leak1 {
+  top: -20%; right: -10%;
+  width: 60vw; height: 60vw;
+  background: radial-gradient(circle, rgba(201,164,92,0.08) 0%, transparent 70%);
+}
+@keyframes leakPulse {
+  from { opacity: 0.4; transform: scale(1); }
+  to   { opacity: 1;   transform: scale(1.15); }
+}
+
+#trailerStage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+}
+
+.t-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: clamp(24px, 5vw, 80px);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.t-slide.active { opacity: 1; }
+.t-title-card { background: #000; }
+
+.t-studio-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(0.5rem, 1.2vw, 0.75rem);
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: rgba(245,241,232,0.45);
+  margin-bottom: 18px;
+  opacity: 0;
+}
+.t-slide.active .t-studio-text { animation: fadeUp 0.8s 0.3s forwards; }
+
+.t-big-year {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(5rem, 20vw, 18rem);
+  line-height: 0.85;
+  color: #f5f1e8;
+  letter-spacing: 0.04em;
+  opacity: 0;
+  text-shadow: 0 0 120px rgba(255,255,255,0.08);
+}
+.t-slide.active .t-big-year { animation: yearReveal 1.2s 0.5s cubic-bezier(0.16,1,0.3,1) forwards; }
+
+@keyframes yearReveal {
+  from { opacity: 0; transform: scale(1.15); filter: blur(20px); }
+  to   { opacity: 1; transform: scale(1);    filter: blur(0); }
+}
+
+.t-rule {
+  width: 0; height: 1px;
+  background: rgba(201,164,92,0.6);
+  margin: 24px 0;
+}
+.t-slide.active .t-rule { animation: ruleExpand 0.9s 1.4s cubic-bezier(0.4,0,0.2,1) forwards; }
+@keyframes ruleExpand { from { width: 0; } to { width: min(400px, 60vw); } }
+
+.t-sub {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(0.5rem, 1.5vw, 0.85rem);
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: rgba(245,241,232,0.55);
+  opacity: 0;
+}
+.t-slide.active .t-sub { animation: fadeUp 0.8s 1.7s forwards; }
+
+.t-quote-card { background: #000; }
+.t-quote-line {
+  display: block;
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: clamp(1.4rem, 4vw, 3.2rem);
+  color: #f5f1e8;
+  line-height: 1.4;
+  max-width: 800px;
+  opacity: 0;
+  text-shadow: 0 2px 40px rgba(0,0,0,0.8);
+}
+.t-slide.active .t-quote-line:nth-child(1) { animation: fadeUp 0.9s 0.4s forwards; }
+.t-slide.active .t-quote-line:nth-child(2) { animation: fadeUp 0.9s 1.1s forwards; }
+.t-slide.active .t-quote-line:nth-child(3) { animation: fadeUp 0.9s 1.8s forwards; }
+
+.t-stat-card { background: radial-gradient(ellipse at center, #0a0a0a 0%, #000 100%); }
+.t-stat-number {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(3rem, 12vw, 10rem);
+  color: rgba(201,164,92,0.9);
+  line-height: 1;
+  opacity: 0;
+  letter-spacing: 0.04em;
+}
+.t-slide.active .t-stat-number { animation: countUp 1s 0.5s cubic-bezier(0.16,1,0.3,1) forwards; }
+@keyframes countUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.t-stat-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(0.5rem, 1.4vw, 0.8rem);
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: rgba(245,241,232,0.45);
+  margin-top: 14px;
+  opacity: 0;
+}
+.t-slide.active .t-stat-label { animation: fadeUp 0.7s 1.2s forwards; }
+
+.t-cards-slide { background: #000; }
+.t-cards-row {
+  display: flex;
+  gap: clamp(10px, 2vw, 28px);
+  margin-bottom: 32px;
+  opacity: 0;
+}
+.t-slide.active .t-cards-row { animation: fadeUp 1s 0.4s forwards; }
+.t-mini-card {
+  width: clamp(50px, 8vw, 90px);
+  height: clamp(70px, 11vw, 126px);
+  background: #fff;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(18px, 4vw, 36px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.7), 0 0 60px rgba(201,164,92,0.08);
+  transform-origin: bottom center;
+}
+.t-mini-card:nth-child(1) { color: #b31b1b; transform: rotate(-12deg); }
+.t-mini-card:nth-child(2) { color: #111;    transform: rotate(-4deg); }
+.t-mini-card:nth-child(3) { color: #b31b1b; transform: rotate(5deg); }
+.t-mini-card:nth-child(4) { color: #111;    transform: rotate(13deg); }
+.t-cards-text {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1rem, 3vw, 2rem);
+  color: #f5f1e8;
+  letter-spacing: 0.12em;
+  opacity: 0;
+  text-align: center;
+}
+.t-slide.active .t-cards-text { animation: fadeUp 0.8s 1.1s forwards; }
+
+.t-date-card { background: #000; }
+.t-date-eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(0.45rem, 1.2vw, 0.7rem);
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: rgba(245,241,232,0.4);
+  opacity: 0;
+  margin-bottom: 20px;
+}
+.t-slide.active .t-date-eyebrow { animation: fadeUp 0.7s 0.3s forwards; }
+.t-date-big {
+  font-family: 'UnifrakturMaguntia', cursive;
+  font-size: clamp(2.5rem, 9vw, 7rem);
+  color: #f5f1e8;
+  opacity: 0;
+  line-height: 1.1;
+  text-shadow: 0 0 80px rgba(201,164,92,0.3);
+}
+.t-slide.active .t-date-big { animation: yearReveal 1.3s 0.6s cubic-bezier(0.16,1,0.3,1) forwards; }
+.t-date-sub {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: clamp(0.7rem, 2vw, 1.1rem);
+  color: rgba(201,164,92,0.7);
+  letter-spacing: 0.12em;
+  margin-top: 18px;
+  opacity: 0;
+}
+.t-slide.active .t-date-sub { animation: fadeUp 0.8s 1.5s forwards; }
+
+.t-final-card { background: #000; }
+.t-farewell-word {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(3rem, 12vw, 9rem);
+  color: #f5f1e8;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  line-height: 1;
+  text-shadow: 0 0 150px rgba(255,255,255,0.12);
+}
+.t-slide.active .t-farewell-word { animation: yearReveal 1.4s 0.4s cubic-bezier(0.16,1,0.3,1) forwards; }
+.t-final-sub {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(0.45rem, 1.3vw, 0.75rem);
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: rgba(245,241,232,0.45);
+  margin-top: 20px;
+  opacity: 0;
+}
+.t-slide.active .t-final-sub { animation: fadeUp 0.8s 1.5s forwards; }
+.t-final-date-line {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: clamp(0.85rem, 2.5vw, 1.4rem);
+  color: rgba(201,164,92,0.75);
+  margin-top: 10px;
+  letter-spacing: 0.08em;
+  opacity: 0;
+}
+.t-slide.active .t-final-date-line { animation: fadeUp 0.8s 2.1s forwards; }
+
+#trailerFlash {
+  position: absolute; inset: 0;
+  background: #fff;
+  z-index: 20;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#trailerIntroClose {
+  position: absolute;
+  top: 20px; right: 24px;
+  z-index: 100;
+  background: transparent;
+  border: none;
+  color: rgba(245,241,232,0.35);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: color 0.3s;
+  font-family: 'Cinzel', serif;
+  padding: 8px;
+}
+#trailerIntroClose:hover { color: rgba(245,241,232,0.8); }
+
+#trailerSkip {
+  position: absolute;
+  bottom: 52px; right: 24px;
+  z-index: 100;
+  background: transparent;
+  border: 1px solid rgba(245,241,232,0.2);
+  color: rgba(245,241,232,0.3);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+#trailerSkip:hover { color: rgba(245,241,232,0.7); border-color: rgba(245,241,232,0.4); }
+
+#trailerProgress {
+  position: absolute;
+  bottom: 30px;
+  left: 50%; transform: translateX(-50%);
+  width: min(300px, 60vw);
+  height: 1px;
+  background: rgba(245,241,232,0.12);
+  z-index: 100;
+}
+#trailerProgressBar {
+  height: 100%; width: 0%;
+  background: rgba(201,164,92,0.7);
+  transition: width 0.15s linear;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── CLOCK SLIDE ─────────────────────────────────────── */
+
+.t-clock-card { background: #000; flex-direction: column; gap: 0; }
+.t-clock-eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(0.7rem, 2vw, 1.1rem);
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: rgba(245,241,232,0.35);
+  opacity: 0;
+  margin-bottom: clamp(16px, 3vh, 32px);
+}
+.t-slide.active .t-clock-eyebrow { animation: fadeUp 0.7s 0.2s forwards; }
+.t-clock-ring {
+  width: clamp(140px, 26vw, 220px);
+  height: clamp(140px, 26vw, 220px);
+  opacity: 0;
+  margin-bottom: clamp(16px, 3vh, 32px);
+}
+.t-slide.active .t-clock-ring { animation: fadeUp 0.9s 0.5s forwards; }
+.t-clock-svg { width: 100%; height: 100%; overflow: visible; }
+.t-clock-track { fill: none; stroke: rgba(245,241,232,0.08); stroke-width: 3; }
+.t-clock-fill {
+  fill: none;
+  stroke: rgba(201,164,92,0.75);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 553;
+  stroke-dashoffset: 553;
+  transform: rotate(-90deg);
+  transform-origin: 100px 100px;
+}
+.t-slide.active .t-clock-fill { animation: clockDrain 4.4s 0.6s linear forwards; }
+@keyframes clockDrain { from { stroke-dashoffset: 0; } to { stroke-dashoffset: 553; } }
+.t-clock-hand-hour {
+  stroke: rgba(245,241,232,0.6);
+  stroke-width: 5;
+  stroke-linecap: round;
+  transform-origin: 100px 100px;
+}
+.t-slide.active .t-clock-hand-hour { animation: hourSpin 4.4s 0.6s linear forwards; }
+@keyframes hourSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.t-clock-hand-min {
+  stroke: rgba(245,241,232,0.9);
+  stroke-width: 3;
+  stroke-linecap: round;
+  transform-origin: 100px 100px;
+}
+.t-slide.active .t-clock-hand-min { animation: minSpin 0.73s 0.6s linear infinite; }
+@keyframes minSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.t-clock-center { fill: rgba(201,164,92,0.9); }
+.t-clock-label {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.3rem, 4vw, 2.8rem);
+  letter-spacing: 0.1em;
+  color: #f5f1e8;
+  opacity: 0;
+  margin-bottom: 10px;
+}
+.t-slide.active .t-clock-label { animation: fadeUp 0.8s 0.9s forwards; }
+.t-clock-sub {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: clamp(0.75rem, 2vw, 1.1rem);
+  color: rgba(201,164,92,0.65);
+  letter-spacing: 0.06em;
+  opacity: 0;
+}
+.t-slide.active .t-clock-sub { animation: fadeUp 0.8s 1.4s forwards; }
+
+/* ── SHUFFLE SLIDE ─────────────────────────────────── */
+
+.t-shuffle-card { background: #000; gap: 0; flex-direction: column; }
+.t-shuffle-label {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.1rem, 3.5vw, 2.4rem);
+  letter-spacing: 0.1em;
+  color: #f5f1e8;
+  opacity: 0;
+  margin-bottom: clamp(20px, 4vh, 40px);
+}
+.t-slide.active .t-shuffle-label { animation: fadeUp 0.8s 0.3s forwards; }
+.t-shuffle-deck {
+  position: relative;
+  width: clamp(200px, 40vw, 380px);
+  height: clamp(90px, 14vw, 140px);
+  margin-bottom: clamp(20px, 4vh, 40px);
+  opacity: 0;
+}
+.t-slide.active .t-shuffle-deck { animation: fadeUp 0.6s 0.7s forwards; }
+.s-card {
+  position: absolute;
+  width: clamp(55px, 9vw, 88px);
+  height: clamp(78px, 13vw, 126px);
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(20px, 3.5vw, 36px);
+  top: 0;
+  left: 50%;
+}
+.t-shuffle-sub {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: clamp(0.75rem, 2vw, 1.2rem);
+  color: rgba(201,164,92,0.65);
+  letter-spacing: 0.08em;
+  opacity: 0;
+}
+.t-slide.active .t-shuffle-sub { animation: fadeUp 0.8s 1.6s forwards; }
+
+/* ── SMASH CARD ──────────────────────────────────────── */
+
+.t-smash-card { background: #000; }
+.t-smash-wrap { display: flex; flex-direction: column; align-items: center; gap: 0; line-height: 0.85; }
+.t-smash-word {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(4.5rem, 18vw, 16rem);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #f5f1e8;
+  opacity: 0;
+  display: block;
+  transform: scale(1.4) translateY(30px);
+  filter: blur(12px);
+  text-shadow: 0 0 80px rgba(255,255,255,0.1);
+  line-height: 0.9;
+}
+.t-smash-gold {
+  color: rgba(201,164,92,1);
+  text-shadow: 0 0 40px rgba(201,164,92,0.6), 0 0 120px rgba(201,164,92,0.25);
+}
+#smashW1, #smashW2, #smashW3 { animation: none; }
+.t-slide.active #smashW1 { animation: smashIn 0.55s 0.1s cubic-bezier(0.16,1,0.3,1) forwards; }
+.t-slide.active #smashW2 { animation: smashIn 0.55s 0.75s cubic-bezier(0.16,1,0.3,1) forwards; }
+.t-slide.active #smashW3 { animation: smashInGold 0.7s 1.45s cubic-bezier(0.16,1,0.3,1) forwards; }
+@keyframes smashIn { from { opacity:0; transform:scale(1.4) translateY(30px); filter:blur(12px); } to { opacity:1; transform:scale(1) translateY(0); filter:blur(0); } }
+@keyframes smashInGold { from { opacity:0; transform:scale(1.6) translateY(40px); filter:blur(16px); } to { opacity:1; transform:scale(1) translateY(0); filter:blur(0); } }
+
+/* ── VIDEO FILMSTRIP OVERLAY (index 16 style) ─────── */
+
+#trailerVideoOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0);
+  pointer-events: none;
+  transition: background .7s ease;
+}
+#trailerVideoOverlay.open {
+  background: rgba(0,0,0,.92);
+  pointer-events: all;
+}
+
+/* filmstrip shell */
+#trailerShell {
+  position: relative;
+  width: min(92vw, 820px);
+  opacity: 0;
+  transform: scale(.88) translateY(30px);
+  transition: opacity .8s ease, transform .8s ease;
+  filter: drop-shadow(0 0 60px rgba(201,164,92,.18)) drop-shadow(0 0 120px rgba(0,0,0,.9));
+}
+#trailerVideoOverlay.open #trailerShell {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* sprocket strips */
+.sprocket-strip {
+  width: 100%;
+  height: 28px;
+  background: #0e0c09;
+  border: 1px solid #1e1a13;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+.sprocket-strip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg, transparent 0px, transparent 10px, rgba(201,164,92,.06) 10px, rgba(201,164,92,.06) 11px);
+  pointer-events: none;
+}
+.sprocket-hole {
+  width: 14px; height: 16px;
+  border-radius: 2px;
+  border: 1.5px solid rgba(201,164,92,.35);
+  background: rgba(0,0,0,.6);
+  flex-shrink: 0;
+  margin: 0 7px;
+  position: relative; z-index: 1;
+  box-shadow: inset 0 0 4px rgba(0,0,0,.8);
+}
+.sprocket-counter {
+  position: absolute;
+  right: 14px;
+  font-family: 'Courier New', monospace;
+  font-size: 8px;
+  color: rgba(201,164,92,.4);
+  letter-spacing: .12em;
+}
+
+#trailerFrame {
+  position: relative;
+  background: #000;
+  border-left: 6px solid #0e0c09;
+  border-right: 6px solid #0e0c09;
+  overflow: hidden;
+  line-height: 0;
+}
+#trailerFrame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  animation: grainShift 0.08s steps(1) infinite;
+  mix-blend-mode: overlay;
+  opacity: .55;
+}
+@keyframes grainShift {
+  0%  { background-position: 0 0; }
+  25% { background-position: 60px 30px; }
+  50% { background-position: 120px 60px; }
+  75% { background-position: 30px 90px; }
+}
+#trailerVignette {
+  position: absolute; inset: 0;
+  pointer-events: none; z-index: 11;
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,.72) 100%);
+}
+#trailerScratch { position: absolute; inset: 0; pointer-events: none; z-index: 12; overflow: hidden; }
+.scratch-line {
+  position: absolute; top: 0; bottom: 0; width: 1px;
+  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,.08) 20%, rgba(255,255,255,.25) 50%, rgba(255,255,255,.08) 80%, transparent 100%);
+  animation: scratchFlicker 3s infinite;
+  opacity: 0;
+}
+
+#trailerVideoWrap {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #000;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#trailerPlaceholder {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  gap: 16px; background: #000; z-index: 5; transition: opacity .6s;
+}
+#trailerPlaceholder.hidden { opacity: 0; pointer-events: none; }
+.trailer-placeholder-year {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(3rem, 10vw, 7rem);
+  color: rgba(201,164,92,.12);
+  letter-spacing: .15em; line-height: 1; user-select: none;
+}
+.trailer-placeholder-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(.7rem, 2vw, 1.1rem);
+  color: rgba(201,164,92,.5);
+  letter-spacing: .45em; text-transform: uppercase;
+}
+.trailer-placeholder-divider {
+  width: 80px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,164,92,.4), transparent);
+}
+.trailer-placeholder-sub {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .6rem; color: rgba(201,164,92,.3);
+  letter-spacing: .25em; text-transform: uppercase;
+}
+.trailer-big-play {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(201,164,92,.5);
+  display: flex; justify-content: center; align-items: center;
+  color: rgba(201,164,92,.7);
+  font-size: 1.4rem; cursor: pointer;
+  transition: border-color .3s, color .3s, transform .3s, box-shadow .3s;
+  padding-left: 4px;
+  background: rgba(0,0,0,.4);
+}
+.trailer-big-play:hover {
+  border-color: rgba(201,164,92,.95); color: #e8c87a;
+  transform: scale(1.08);
+  box-shadow: 0 0 30px rgba(201,164,92,.2);
+}
+#trailerIframe {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  border: none; z-index: 4;
+  opacity: 0; transition: opacity .6s;
+}
+#trailerIframe.loaded { opacity: 1; }
+
+#trailerBar {
+  background: #0a0806;
+  border-left: 6px solid #0e0c09; border-right: 6px solid #0e0c09;
+  border-bottom: none;
+  padding: 10px 20px;
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid rgba(201,164,92,.12);
+}
+.trailer-bar-left {
+  font-family: 'Cinzel', serif; font-size: .6rem;
+  letter-spacing: .3em; color: rgba(201,164,92,.5); text-transform: uppercase;
+}
+.trailer-bar-right { display: flex; gap: 18px; align-items: center; }
+.trailer-source-btn {
+  font-family: 'Montserrat', sans-serif; font-size: .58rem;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(201,164,92,.45); background: transparent;
+  border: 1px solid rgba(201,164,92,.25);
+  padding: 5px 14px; cursor: pointer; transition: all .25s;
+}
+.trailer-source-btn:hover { color: #c9a45c; border-color: rgba(201,164,92,.65); background: rgba(201,164,92,.06); }
+.trailer-close-btn {
+  font-family: 'Montserrat', sans-serif; font-size: .58rem;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(245,241,232,.4); background: transparent;
+  border: 1px solid rgba(245,241,232,.18); padding: 5px 14px; cursor: pointer; transition: all .25s;
+}
+.trailer-close-btn:hover { color: #f5f1e8; border-color: rgba(245,241,232,.5); }
+
+#trailerSourcePanel {
+  background: #0a0806;
+  border-left: 6px solid #0e0c09; border-right: 6px solid #0e0c09;
+  border-top: 1px solid rgba(201,164,92,.08);
+  padding: 18px 24px;
+  display: none;
+}
+#trailerSourcePanel.open { display: block; }
+.source-panel-title {
+  font-family: 'Cinzel', serif; font-size: .62rem;
+  letter-spacing: .35em; color: rgba(201,164,92,.5);
+  text-transform: uppercase; text-align: center; margin-bottom: 14px;
+}
+.source-input-row { display: flex; gap: 8px; align-items: center; }
+#trailerUrlInput {
+  flex: 1;
+  background: rgba(201,164,92,.05); border: 1px solid rgba(201,164,92,.25);
+  color: #f5f1e8; font-family: 'Courier New', monospace; font-size: .7rem;
+  padding: 9px 12px; letter-spacing: .04em; outline: none; transition: border-color .25s;
+}
+#trailerUrlInput:focus { border-color: rgba(201,164,92,.6); }
+#trailerUrlInput::placeholder { color: rgba(201,164,92,.25); }
+.source-load-btn {
+  background: rgba(201,164,92,.12); border: 1px solid rgba(201,164,92,.4);
+  color: #c9a45c; font-family: 'Cinzel', serif; font-size: .6rem;
+  letter-spacing: .2em; padding: 9px 18px; cursor: pointer; transition: all .25s; white-space: nowrap;
+}
+.source-load-btn:hover { background: rgba(201,164,92,.22); border-color: rgba(201,164,92,.7); }
+.source-hint {
+  font-family: 'Montserrat', sans-serif; font-size: .55rem;
+  color: rgba(201,164,92,.3); letter-spacing: .1em; margin-top: 8px; text-align: center;
+}
+
+@keyframes filmFlicker {
+  0%,100% { opacity: 1; }
+  3%       { opacity: .7; }
+  6%       { opacity: 1; }
+  9%       { opacity: .5; }
+  12%      { opacity: 1; }
+}
+#trailerShell.flicker { animation: filmFlicker .4s ease forwards; }
+
+@media (max-width: 600px) {
+  .sprocket-hole { width: 10px; height: 12px; margin: 0 5px; }
+  .sprocket-strip { height: 22px; }
+  #trailerBar { flex-direction: column; gap: 10px; text-align: center; }
+  .trailer-bar-right { justify-content: center; }
+  #trailerBtn { margin-top: 28px; }
+}
+
+/* ── SOUND MUTE BUTTON ─────────────────────────────── */
+#soundToggle {
+  position: fixed; bottom: 24px; left: 24px;
+  z-index: 9999;
+  background: transparent;
+  border: 1px solid rgba(245,241,232,0.2);
+  color: rgba(245,241,232,0.4);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.5rem; letter-spacing: 0.3em; text-transform: uppercase;
+  padding: 7px 13px; cursor: pointer; transition: all 0.3s;
+  display: none;
+}
+#soundToggle.visible { display: block; }
+#soundToggle:hover { border-border-color: rgba(245,241,232,0.5); color: rgba(245,241,232,0.75); }
+
+/* ═══════════════════════════════════════
+   NEWSPAPER SECTION ANIMATIONS & IMAGES
+═══════════════════════════════════════ */
+
+/* Scroll-triggered reveal */
+.np-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.np-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Off the Record — typewriter flicker effect */
+.np-box.offrecord-box {
+  position: relative;
+  overflow: hidden;
+}
+.np-box.offrecord-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(26,26,26,0);
+  animation: recordFlicker 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes recordFlicker {
+  0%,94%,100% { background: rgba(26,26,26,0); }
+  95% { background: rgba(26,26,26,0.04); }
+  96% { background: rgba(26,26,26,0); }
+  97% { background: rgba(26,26,26,0.06); }
+  98% { background: rgba(26,26,26,0); }
+}
+.np-box.offrecord-box .np-box-title {
+  position: relative; z-index: 1;
+  animation: titleUnderline 3s 1s ease forwards;
+}
+@keyframes titleUnderline {
+  from { letter-spacing: 0.15em; }
+  50%  { letter-spacing: 0.22em; }
+  to   { letter-spacing: 0.15em; }
+}
+
+/* Off the Record stamped image */
+.np-offrecord-img {
+  width: 100%;
+  max-width: 260px;
+  margin: 8px auto 4px;
+  display: block;
+  filter: grayscale(1) contrast(1.15) brightness(0.9);
+  border: 1px solid rgba(26,26,26,0.25);
+  opacity: 0.82;
+}
+
+/* Reserve Your Seat — stamped reveal */
+.np-seat-header-wrap {
+  position: relative;
+  overflow: hidden;
+}
+.np-seat-stamp {
+  display: inline-block;
+  font-family: 'Playfair Display', serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(139,30,30,0.7);
+  border: 2px solid rgba(139,30,30,0.5);
+  padding: 3px 8px;
+  transform: rotate(-4deg);
+  margin: 4px auto 0;
+  display: block;
+  width: fit-content;
+  opacity: 0;
+  animation: stampIn 0.4s 0.6s cubic-bezier(0.2,1.5,0.5,1) forwards;
+}
+@keyframes stampIn {
+  from { opacity: 0; transform: rotate(-4deg) scale(2); }
+  to   { opacity: 1; transform: rotate(-4deg) scale(1); }
+}
+.np-seat-img {
+  width: 100%;
+  max-width: 240px;
+  margin: 8px auto 2px;
+  display: block;
+  filter: grayscale(1) contrast(1.2) brightness(0.88);
+  border: 1px solid rgba(26,26,26,0.2);
+  opacity: 0.78;
+}
+
+/* WANTED section — pulse border */
+.np-wanted {
+  animation: wantedPulse 4s ease-in-out infinite;
+  position: relative;
+}
+@keyframes wantedPulse {
+  0%,100% { box-shadow: none; }
+  50%     { box-shadow: 0 0 0 2px rgba(26,26,26,0.12), inset 0 0 8px rgba(26,26,26,0.04); }
+}
+.np-wanted-head {
+  position: relative;
+  overflow: hidden;
+}
+.np-wanted-head::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 40%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(26,26,26,0.06), transparent);
+  animation: wantedSheen 5s 2s ease-in-out infinite;
+}
+@keyframes wantedSheen {
+  from { left: -100%; }
+  to   { left: 200%; }
+}
+
+/* Wanted poster portrait SVG */
+.np-wanted-portrait {
+  width: 80px;
+  height: 90px;
+  margin: 6px auto 8px;
+  display: block;
+  border: 2px solid #1a1a1a;
+  filter: contrast(1.1);
+  animation: portraitSway 6s ease-in-out infinite;
+}
+@keyframes portraitSway {
+  0%,100% { transform: rotate(0deg); }
+  25%     { transform: rotate(0.6deg); }
+  75%     { transform: rotate(-0.6deg); }
+}
+
+/* Wanted REWARD badge */
+.np-wanted-reward {
+  font-family: 'Playfair Display', serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  text-align: center;
+  border-top: 1px solid #1a1a1a;
+  padding-top: 5px;
+  margin-top: 6px;
+  color: #1a1a1a;
+  animation: rewardBlink 3s 1s step-start infinite;
+}
+@keyframes rewardBlink {
+  0%,90%,100% { opacity: 1; }
+  92%         { opacity: 0.2; }
+  94%         { opacity: 1; }
+  96%         { opacity: 0.3; }
+}
+
+/* Reserve Your Seat ticket-tear line */
+.np-ticket-line {
+  border: none;
+  border-top: 2px dashed rgba(26,26,26,0.3);
+  margin: 10px 0;
+  position: relative;
+}
+.np-ticket-line::before,
+.np-ticket-line::after {
+  content: '✂';
+  position: absolute;
+  top: -10px;
+  font-size: 14px;
+  color: rgba(26,26,26,0.3);
+  line-height: 1;
+}
+.np-ticket-line::before { left: -4px; }
+.np-ticket-line::after  { right: -4px; transform: scaleX(-1); }
+
+</style>
+</head>
+
+<body>
+  <div id="bg">
+    <div class="smoke"></div>
+    <img src="mask.png" id="mask">
+    <div id="light"></div>
+    <div id="cardContainer"></div>
+  </div>
+
+  <!-- INTRO SCREEN -->
+  <div id="wrap">
+    <div id="content">
+      <div id="text"></div>
+      <div id="nameArea">
+        <div>
+          <span id="typed"></span>
+          <span class="cursor"></span>
+        </div>
+        <input id="input" type="text" autocomplete="off">
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO PAGE — index 11 style -->
+  <div id="hero">
+    <div class="hero-inner">
+      <div class="title">FAREWELL</div>
+      <div class="hero-rule">
+        <div class="hero-rule-line"></div>
+        <div class="hero-rule-dot"></div>
+        <div class="hero-rule-line"></div>
+      </div>
+      <div class="subtitle">CLASS OF 2026</div>
+      <div class="countdown">
+        <div class="card"><span id="d">00</span><small>DAYS</small></div>
+        <div class="card"><span id="h">00</span><small>HOURS</small></div>
+        <div class="card"><span id="m">00</span><small>MINS</small></div>
+        <div class="card"><span id="s">00</span><small>SECS</small></div>
+      </div>
+      <div class="note">AUGUST 9</div>
+      <button id="trailerBtn" onclick="openTrailer()">
+        <span class="trailer-btn-inner">
+          <span class="trailer-play-icon">▶</span>
+          <span class="trailer-btn-text">WATCH THE TRAILER</span>
+        </span>
+        <span class="trailer-btn-shine"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCROLL HINT -->
+  <div id="scrollHint">
+    <div class="scroll-label">Scroll</div>
+    <div class="scroll-arrow"></div>
+  </div>
+
+  <!-- NEWSPAPER PAGE — index 11 baseline + notice -->
+  <div id="newspaper">
+    <div class="np-wrap">
+      <div class="np-texture"></div>
+      <div class="np-inner">
+
+        <div class="np-topper">Established 2026 &nbsp;·&nbsp; First &amp; Final Edition &nbsp;·&nbsp; Farewell</div>
+
+        <div class="np-masthead">
+          <div class="np-title-np">The Farewell Times</div>
+          <div class="np-tagline">All the News Fit to Speculate About</div>
+        </div>
+
+        <div class="np-meta">
+          <span>Class of 2026</span>
+          <span>Volume I — Issue I</span>
+          <span>August 9, 2026</span>
+        </div>
+
+        <hr class="np-rule">
+
+        <div class="np-cols">
+          <div class="np-col">
+            <div class="np-body">
+              <p class="np-dropcap">Rumour has it that the Class of 2026 may finally be getting the farewell they've spent months pretending not to care about. Naturally, nobody is confirming anything.</p>
+              <p>The details remain suspiciously scarce. Several students have suddenly become very interested in conversations that don't concern them, and a remarkable number of people seem convinced they know exactly what's happening despite having absolutely no evidence to support their claims.</p>
+              <p>As usual, the rumours are doing what rumours do best: spreading faster than facts.</p>
+              <p>The people who know what's happening aren't talking.</p>
+              <p>The people talking don't know what's happening.</p>
+            </div>
+          </div>
+          <div class="np-col">
+            <div class="np-body">
+              <p>From what we've heard, preparations are already underway behind closed doors. The people involved have remained frustratingly secretive, which, if history has taught us anything, usually means something interesting is worth keeping quiet.</p>
+              <p>Not that anyone is complaining.</p>
+              <p>After all, half the excitement comes from trying to figure it out. The other half comes from pretending you already have it figured out.</p>
+              <p>For now, all that's certain is that something is coming. And judging by the amount of speculation it's already generating, it might just be worth the wait.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="np-divider">━━━━━━━━━━━━━━━━━━━━</div>
+
+        <div class="np-box offrecord-box np-reveal">
+          <div class="np-box-title">Off the Record</div>
+          <!-- Candlelit table illustration -->
+          <svg class="np-offrecord-img" viewBox="0 0 260 90" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- table surface -->
+            <rect x="20" y="60" width="220" height="6" rx="2" fill="#2a2018" opacity="0.7"/>
+            <!-- tablecloth drape -->
+            <path d="M20 66 Q50 72 130 70 Q210 72 240 66 L240 68 Q210 76 130 74 Q50 76 20 68Z" fill="#1a1a1a" opacity="0.15"/>
+            <!-- candle left -->
+            <rect x="68" y="30" width="10" height="30" rx="2" fill="#e8dcc8" opacity="0.9"/>
+            <ellipse cx="73" cy="29" rx="5" ry="3" fill="#d4c4a0" opacity="0.8"/>
+            <!-- flame left -->
+            <ellipse cx="73" cy="22" rx="3" ry="5" fill="#c8a055" opacity="0.9"/>
+            <ellipse cx="73" cy="20" rx="1.5" ry="3" fill="#f5e8c0" opacity="0.95"/>
+            <line x1="73" y1="28" x2="73" y2="26" stroke="#1a1208" stroke-width="0.8"/>
+            <!-- glow left -->
+            <circle cx="73" cy="22" r="14" fill="rgba(201,164,92,0.08)"/>
+            <!-- candle right -->
+            <rect x="182" y="28" width="10" height="32" rx="2" fill="#e8dcc8" opacity="0.9"/>
+            <ellipse cx="187" cy="27" rx="5" ry="3" fill="#d4c4a0" opacity="0.8"/>
+            <!-- flame right -->
+            <ellipse cx="187" cy="20" rx="3" ry="5" fill="#c8a055" opacity="0.9"/>
+            <ellipse cx="187" cy="18" rx="1.5" ry="3" fill="#f5e8c0" opacity="0.95"/>
+            <line x1="187" y1="26" x2="187" y2="24" stroke="#1a1208" stroke-width="0.8"/>
+            <circle cx="187" cy="20" r="14" fill="rgba(201,164,92,0.08)"/>
+            <!-- glass center -->
+            <path d="M122 42 L118 60 L142 60 L138 42Z" fill="none" stroke="#3a3228" stroke-width="1.2" opacity="0.6"/>
+            <ellipse cx="130" cy="42" rx="8" ry="3" fill="none" stroke="#3a3228" stroke-width="1.2" opacity="0.6"/>
+            <ellipse cx="130" cy="60" rx="12" ry="3" fill="none" stroke="#3a3228" stroke-width="1.2" opacity="0.5"/>
+            <!-- liquid in glass -->
+            <path d="M122 52 L119 60 L141 60 L138 52Z" fill="#2a1a1a" opacity="0.25"/>
+            <!-- scattered papers -->
+            <rect x="42" y="52" width="30" height="20" rx="1" fill="#f0e8d8" stroke="#c8b890" stroke-width="0.5" opacity="0.5" transform="rotate(-8,57,62)"/>
+            <rect x="185" y="50" width="28" height="18" rx="1" fill="#f0e8d8" stroke="#c8b890" stroke-width="0.5" opacity="0.5" transform="rotate(6,199,59)"/>
+          </svg>
+          <div class="np-box-body">Apparently, the person behind all of this has spent so much time planning that several witnesses are no longer sure whether they're organising a farewell or running a small government. We'll spare them the public recognition. For now.</div>
+        </div>
+
+        <div class="np-divider">━━━━━━━━━━━━━━━━━━━━</div>
+
+        <!-- IMPORTANT NOTICE SECTION -->
+        <div class="np-notice-wrap">
+          <div class="np-notice-header">
+            <div class="np-notice-header-top">Official Statement · Class of 2026</div>
+            <div class="np-notice-header-title">Important Notice</div>
+            <div class="np-notice-header-sub">Regarding the Farewell</div>
+          </div>
+
+          <!-- Wax seal SVG ornament -->
+          <svg class="np-notice-seal" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="40" cy="40" r="36" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+            <circle cx="40" cy="40" r="30" fill="none" stroke="#1a1a1a" stroke-width="0.75" stroke-dasharray="3 2"/>
+            <text x="40" y="36" text-anchor="middle" font-family="'Playfair Display',serif" font-size="8" font-weight="700" fill="#1a1a1a" letter-spacing="1">CLASS</text>
+            <text x="40" y="47" text-anchor="middle" font-family="'Playfair Display',serif" font-size="10" font-weight="900" fill="#1a1a1a" letter-spacing="0.5">2026</text>
+            <path d="M22 54 L40 62 L58 54" fill="none" stroke="#1a1a1a" stroke-width="0.75"/>
+          </svg>
+
+          <div class="np-notice-body">
+            <p>We would like to clearly inform everyone that this farewell is <strong>NOT an official school event</strong> and is in no way associated with the school administration, school management, teachers, or any member of the school staff.</p>
+            <hr class="np-notice-rule">
+            <p>This event is being organised entirely by students for students. Similar student-led farewells have been a long-standing tradition in our school for many years, and this year's event is no different.</p>
+            <p>Before registering or attending, please ensure that you have your parent(s)' or guardian(s)' <strong>full permission</strong>. If your parent(s) are not comfortable with you attending, we respectfully request that you do not attend.</p>
+            <hr class="np-notice-rule">
+            <p>Under no circumstances should anyone misrepresent this event as an official school function or tell their parents that it is being organised, supervised, endorsed, or approved by the school, because that would be false.</p>
+            <p>The organising committee has worked extensively with the venue to ensure proper arrangements and security. Entry will be restricted strictly to invited members of our batch through a verified guest list and physical invitations. Individuals not on the approved guest list will not be permitted to enter the venue.</p>
+            <hr class="np-notice-rule">
+            <p>Appropriate security measures will be in place both inside and outside the venue. However, attendance at this event is entirely voluntary and at each attendee's and their parent(s)' discretion. By choosing to attend, participants acknowledge that they are doing so as private individuals and not as representatives of the school.</p>
+            <p>The organising committee will make every reasonable effort to ensure a safe and well-managed event, but cannot assume responsibility beyond the arrangements being provided for the event itself.</p>
+            <hr class="np-notice-rule">
+            <p>We kindly request everyone to act responsibly, communicate honestly with their parents, and help ensure that neither the school nor any student organiser is placed in an uncomfortable position due to misunderstandings regarding the nature of this event.</p>
+          </div>
+
+          <div class="np-notice-footer">
+            The Organising Committee &nbsp;·&nbsp; Class of 2026 &nbsp;·&nbsp; Student-Led Event
+          </div>
+        </div>
+        <!-- END IMPORTANT NOTICE -->
+
+        <div class="np-divider">━━━━━━━━━━━━━━━━━━━━</div>
+
+        <div class="np-seat-header-wrap np-reveal">
+          <div class="np-section-head">Reserve Your Seat</div>
+          <!-- Playing cards fan illustration -->
+          <svg class="np-seat-img" viewBox="0 0 240 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- card shadows -->
+            <ellipse cx="120" cy="76" rx="60" ry="4" fill="#1a1a1a" opacity="0.15"/>
+            <!-- card 1 — leftmost -->
+            <rect x="28" y="18" width="42" height="58" rx="4" fill="#f5f0e8" stroke="#c8b890" stroke-width="1" transform="rotate(-22,49,47)"/>
+            <text x="33" y="27" font-family="serif" font-size="10" fill="#b31b1b" transform="rotate(-22,49,47)">A</text>
+            <text x="40" y="48" font-family="serif" font-size="18" fill="#b31b1b" transform="rotate(-22,49,47)">♥</text>
+            <!-- card 2 -->
+            <rect x="52" y="14" width="42" height="58" rx="4" fill="#f5f0e8" stroke="#c8b890" stroke-width="1" transform="rotate(-11,73,43)"/>
+            <text x="57" y="23" font-family="serif" font-size="10" fill="#111" transform="rotate(-11,73,43)">K</text>
+            <text x="63" y="44" font-family="serif" font-size="18" fill="#111" transform="rotate(-11,73,43)">♠</text>
+            <!-- card 3 — center -->
+            <rect x="99" y="12" width="42" height="58" rx="4" fill="#f5f0e8" stroke="#c8b890" stroke-width="1.5"/>
+            <text x="104" y="22" font-family="serif" font-size="10" fill="#b31b1b">Q</text>
+            <text x="110" y="44" font-family="serif" font-size="18" fill="#b31b1b">♦</text>
+            <!-- card 4 -->
+            <rect x="146" y="14" width="42" height="58" rx="4" fill="#f5f0e8" stroke="#c8b890" stroke-width="1" transform="rotate(11,167,43)"/>
+            <text x="151" y="23" font-family="serif" font-size="10" fill="#111" transform="rotate(11,167,43)">J</text>
+            <text x="158" y="44" font-family="serif" font-size="18" fill="#111" transform="rotate(11,167,43)">♣</text>
+            <!-- card 5 — rightmost -->
+            <rect x="170" y="18" width="42" height="58" rx="4" fill="#f5f0e8" stroke="#c8b890" stroke-width="1" transform="rotate(22,191,47)"/>
+            <text x="175" y="27" font-family="serif" font-size="10" fill="#b31b1b" transform="rotate(22,191,47)">10</text>
+            <text x="180" y="48" font-family="serif" font-size="18" fill="#b31b1b" transform="rotate(22,191,47)">♥</text>
+          </svg>
+          <div class="np-body" style="font-style:italic; text-align:center; margin: 5px 0 4px; font-size:10px;">Secure your place before the cards are dealt.</div>
+          <hr class="np-ticket-line">
+        </div>
+
+        <div class="np-divider">━━━━━━━━━━━━━━━━━━━━</div>
+
+        <div class="np-section-head">Place Your Bet</div>
+        <div class="np-col-full np-body" style="font-style:italic; text-align:center; margin: 4px 0 8px; font-size:10px;">For those asking questions nobody intends to answer individually:</div>
+
+        <div style="border: 1px solid #1a1a1a; padding: 10px 12px; background: rgba(237,232,220,0.9); margin-bottom: 8px;">
+          <div class="np-payment-row">
+            <span class="np-payment-label">Amount</span>
+            <span class="np-payment-val">₹ 4,000</span>
+          </div>
+          <div class="np-payment-row">
+            <span class="np-payment-label">Account Name</span>
+            <span class="np-payment-val">Sheikh Mohammad Yaseen</span>
+          </div>
+          <div class="np-payment-row">
+            <span class="np-payment-label">Account Number</span>
+            <span class="np-payment-val">0200010100002391</span>
+          </div>
+          <div class="np-payment-row">
+            <span class="np-payment-label">Account Type</span>
+            <span class="np-payment-val">Current Account</span>
+          </div>
+          <div class="np-payment-row" style="border-bottom:none;">
+            <span class="np-payment-label">IFSC Code</span>
+            <span class="np-payment-val">JAKA0CHANPO</span>
+          </div>
+        </div>
+
+        <div class="np-qr-wrap">
+          <div class="np-qr-img">
+            <img src="qr.png" alt="UPI QR Code for gutsy92-1@okicici">
+          </div>
+          <div class="np-qr-caption">UPI ID: gutsy92-1@okicici</div>
+        </div>
+
+        <div class="np-divider">━━━━━━━━━━━━━━━━━━━━</div>
+
+        <div class="np-box">
+          <div class="np-box-title">To Whom It May Concern</div>
+          <div class="np-box-body">
+            <p>Once payment has been made, send:</p>
+            <ul style="margin: 4px 0 6px 14px; padding:0;">
+              <li>Payment Screenshot</li>
+              <li>Full Name</li>
+              <li>Class &amp; Section</li>
+              <li>Transaction ID</li>
+            </ul>
+            <p>to either of the numbers below.</p>
+            <div style="text-align:center; margin-top: 6px; font-size: 11px; font-weight:700; letter-spacing: 0.05em;">
+              WhatsApp: +91 60050 00511<br>
+              WhatsApp: +91 87139 00367
+            </div>
+            <p style="margin-top:8px; font-style:italic; text-align:center; font-size:10px;">Then wait.<br>Every name crosses a desk before it reaches the list.</p>
+          </div>
+        </div>
+
+        <div class="np-divider">━━━━━━━━━━━━━━━━━━━━</div>
+
+        <div class="np-ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+        <div class="np-wanted np-reveal">
+          <div class="np-wanted-head">WANTED</div>
+          <!-- Silhouette portrait -->
+          <svg class="np-wanted-portrait" viewBox="0 0 80 90" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="80" height="90" fill="#f0e8d8"/>
+            <!-- bust silhouette -->
+            <ellipse cx="40" cy="30" rx="16" ry="19" fill="#2a2018" opacity="0.85"/>
+            <path d="M14 90 Q14 58 28 52 Q34 68 40 68 Q46 68 52 52 Q66 58 66 90Z" fill="#2a2018" opacity="0.85"/>
+            <!-- collar detail -->
+            <path d="M34 62 L40 72 L46 62" fill="none" stroke="#f0e8d8" stroke-width="1.5" opacity="0.6"/>
+            <!-- hatching lines at bottom for old-print feel -->
+            <line x1="14" y1="82" x2="66" y2="82" stroke="#1a1a1a" stroke-width="0.4" opacity="0.2"/>
+            <line x1="14" y1="86" x2="66" y2="86" stroke="#1a1a1a" stroke-width="0.4" opacity="0.2"/>
+          </svg>
+          <div class="np-wanted-body">
+            Last seen:<br>
+            <strong>Motivation to study.</strong><br><br>
+            If located, kindly return before the board examinations.
+          </div>
+          <div class="np-wanted-reward">— REWARD: One Peaceful Exam Season —</div>
+        </div>
+
+        <div class="np-footer">
+          The Farewell Times &nbsp;·&nbsp; Class of 2026 &nbsp;·&nbsp; First &amp; Final Edition
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+<!-- DEADLINE POPUP -->
+<div id="deadlineOverlay">
+  <div id="deadlinePopup">
+    <div class="dl-border-top">Urgent Notice &nbsp;·&nbsp; Class of 2026 &nbsp;·&nbsp; Payment</div>
+    <div class="dl-icon">⧖</div>
+    <div class="dl-head">Final Notice</div>
+    <div class="dl-date">12 · 06 · 2026</div>
+    <div class="dl-subdate">Wednesday, the Tenth of June</div>
+    <hr class="dl-rule">
+    <div class="dl-body">
+      The deadline for submission of farewell payments has been formally set.<br><br>
+      All contributions are to be received <strong>no later than the 12th of June, 2026, at 7PM sharp.</strong> Payments made after this date cannot be guaranteed a place on the list.<br><br>
+      Those who have not yet settled their dues are kindly advised to do so at the earliest convenience. The cards are being counted.
+    </div>
+    <button class="dl-close" onclick="closeDeadline()">I Understand</button>
+    <div class="dl-ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+  </div>
+</div>
+
+<!-- TRAILER INTRO OVERLAY (cinematic slides) -->
+<div id="trailerIntroOverlay">
+  <div id="trailerInner">
+    <canvas id="grainCanvas"></canvas>
+    <div class="trailer-vignette"></div>
+    <div class="trailer-scanlines"></div>
+    <div class="trailer-scratch" id="scratch1"></div>
+    <div class="trailer-scratch" id="scratch2"></div>
+    <div class="trailer-leak" id="leak1"></div>
+    <div id="trailerStage"></div>
+    <button id="trailerIntroClose" onclick="closeTrailerIntro()">✕</button>
+    <button id="trailerSkip" onclick="skipToVideo()">Skip ›</button>
+    <div id="trailerProgress"><div id="trailerProgressBar"></div></div>
+  </div>
+</div>
+
+<!-- TRAILER VIDEO OVERLAY (filmstrip shell) -->
+<div id="trailerVideoOverlay">
+  <div id="trailerShell">
+    <div class="sprocket-strip" id="sprocketTop">
+      <span class="sprocket-counter">CLASS · OF · 2026</span>
+    </div>
+    <div id="trailerFrame">
+      <div id="trailerVideoWrap">
+        <div id="trailerPlaceholder">
+          <div class="trailer-placeholder-year">2026</div>
+          <div class="trailer-placeholder-divider"></div>
+          <div class="trailer-placeholder-title">Farewell</div>
+          <div class="trailer-placeholder-sub">Class Trailer</div>
+          <div class="trailer-big-play" id="trailerPlayBtn" onclick="playLocalTrailer()">▶</div>
+          <div class="trailer-placeholder-sub" style="margin-top:8px;font-size:.5rem;opacity:.6;">Click to play</div>
+        </div>
+        <video id="trailerVideo" playsinline preload="metadata"
+          style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:4;opacity:0;transition:opacity .6s;background:#000;"
+        ></video>
+        <iframe id="trailerIframe" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+      </div>
+      <div id="trailerVignette"></div>
+      <div id="trailerScratch">
+        <div class="scratch-line" style="left:22%;animation-delay:0s;"></div>
+        <div class="scratch-line" style="left:55%;animation-delay:1.2s;"></div>
+        <div class="scratch-line" style="left:78%;animation-delay:2.4s;"></div>
+      </div>
+    </div>
+
+    <div id="trailerBar">
+      <span class="trailer-bar-left">The Final Act · August 9, 2026</span>
+      <div class="trailer-bar-right">
+        <button class="trailer-close-btn" onclick="closeVideoOverlay()">✕ CLOSE</button>
+      </div>
+    </div>
+    <div class="sprocket-strip" id="sprocketBottom">
+      <span class="sprocket-counter">FIRST · &amp; · FINAL · EDITION</span>
+    </div>
+  </div>
+</div>
+
+<!-- Sound toggle -->
+<button id="soundToggle" onclick="toggleMute()">♪ SOUND</button>
+
+<script>
+/* ════════════════════════════════════════════════
+   CORE REFS & HELPERS
+════════════════════════════════════════════════ */
+const text      = document.getElementById("text");
+const input     = document.getElementById("input");
+const typed     = document.getElementById("typed");
+const nameArea  = document.getElementById("nameArea");
+const mask      = document.getElementById("mask");
+const light     = document.getElementById("light");
+const hero      = document.getElementById("hero");
+const newspaper = document.getElementById("newspaper");
+const scrollHint= document.getElementById("scrollHint");
+
+function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+/* COUNTDOWN */
+const target = new Date("August 9, 2026 00:00:00");
+function updateCountdown(){
+  const now = new Date();
+  const diff = target - now;
+  const d = Math.floor(diff/(1000*60*60*24));
+  const h = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  const m = Math.floor((diff%(1000*60*60))/(1000*60));
+  const s = Math.floor((diff%(1000*60))/1000);
+  document.getElementById("d").textContent = String(d).padStart(2,"0");
+  document.getElementById("h").textContent = String(h).padStart(2,"0");
+  document.getElementById("m").textContent = String(m).padStart(2,"0");
+  document.getElementById("s").textContent = String(s).padStart(2,"0");
+}
+
+async function showLine(message, time){
+  text.innerHTML = message;
+  text.classList.add("show");
+  await sleep(time);
+  text.classList.remove("show");
+  await sleep(2500);
+}
+
+async function reveal(message){
+  text.innerHTML = message;
+  text.classList.add("show");
+  await sleep(4500);
+  text.classList.remove("show");
+  await sleep(1200);
+}
+
+/* INTRO */
+async function intro(){
+  await sleep(5000);
+  await showLine("An invitation was issued.", 7000);
+  await showLine("Whether it reached the right hands remains to be seen.", 8000);
+  mask.classList.add("show");
+  text.innerHTML = "Who are you?";
+  text.classList.add("show");
+  nameArea.classList.add("show");
+  input.focus();
+}
+intro();
+
+document.addEventListener("click", () => { input.focus(); });
+input.addEventListener("input", () => {
+  typed.textContent = input.value;
+  try { playTick(); } catch(e){}
+});
+
+async function saveToSheet(name){
+  try{
+    await fetch("https://sheetdb.io/api/v1/kduei8e7f6jk1", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        data:[{
+          Name: name,
+          Timestamp: new Date().toLocaleString("en-IN",{timeZone:"Asia/Kolkata"}),
+          Device: /Mobi|Android/i.test(navigator.userAgent) ? "Mobile" : "Desktop"
+        }]
+      })
+    });
+  }catch(err){ console.warn("Sheet save failed:",err); }
+}
+
+input.addEventListener("keydown", async e => {
+  if(e.key === "Enter"){
+    const name = input.value.trim();
+    if(!name) return;
+    unlockAudio();
+    saveToSheet(name);
+    nameArea.style.opacity = "0";
+    await sleep(1500);
+    text.classList.remove("show");
+    await sleep(1500);
+    await reveal("Ah...");
+    await reveal("We have been expecting you.");
+    await reveal(`Welcome, ${name}`);
+    mask.classList.add("bright");
+    light.animate([{left:"-100%"},{left:"150%"}],{duration:3000, fill:"forwards"});
+    // hero reveal boom
+    try { playBoom(40, 3.5, 0); playBoom(55, 2.8, 0.15); } catch(e){}
+    document.getElementById("wrap").style.opacity = "0";
+    await sleep(2500);
+    document.getElementById("wrap").style.display = "none";
+    hero.style.display = "flex";
+    void hero.offsetWidth;
+    hero.style.opacity = "1";
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+    await sleep(2800);
+    scrollHint.style.display = "flex";
+    void scrollHint.offsetWidth;
+    scrollHint.classList.add("show");
+  }
+});
+
+/* SCROLL FROM HERO TO NEWSPAPER */
+let newspaperVisible = false;
+
+function closeDeadline(){
+  document.getElementById("deadlineOverlay").classList.remove("show");
+}
+function showDeadline(){
+  document.getElementById("deadlineOverlay").classList.add("show");
+}
+
+function showNewspaper(){
+  if(newspaperVisible) return;
+  try { playWhoosh(); } catch(e){}
+  newspaperVisible = true;
+  scrollHint.classList.remove("show");
+  setTimeout(()=>{ scrollHint.style.display="none"; }, 1500);
+  newspaper.style.display = "flex";
+  void newspaper.offsetWidth;
+  newspaper.style.opacity = "1";
+  setTimeout(showDeadline, 1800);
+}
+
+function hideNewspaper(){
+  if(!newspaperVisible) return;
+  try { playWhoosh(); } catch(e){}
+  newspaperVisible = false;
+  newspaper.style.opacity = "0";
+  setTimeout(()=>{ newspaper.style.display="none"; }, 2500);
+  scrollHint.style.display = "flex";
+  void scrollHint.offsetWidth;
+  scrollHint.classList.add("show");
+}
+
+window.addEventListener("wheel", e => {
+  if(hero.style.display === "flex" && hero.style.opacity === "1"){
+    if(e.deltaY > 30) showNewspaper();
+  }
+  if(newspaperVisible && newspaper.scrollTop === 0 && e.deltaY < -30){
+    hideNewspaper();
+  }
+}, {passive:true});
+
+let touchStartY = 0;
+window.addEventListener("touchstart", e => { touchStartY = e.touches[0].clientY; }, {passive:true});
+window.addEventListener("touchend", e => {
+  const dy = touchStartY - e.changedTouches[0].clientY;
+  if(hero.style.display === "flex" && hero.style.opacity === "1"){
+    if(dy > 40) showNewspaper();
+  }
+  if(newspaperVisible && newspaper.scrollTop === 0 && dy < -40){
+    hideNewspaper();
+  }
+}, {passive:true});
+
+/* FALLING CARDS */
+const cardContainer = document.getElementById("cardContainer");
+const suits = ['♦','♣','♥','♠'];
+const values = ['A','K','Q','J','10','9','8','7'];
+
+function spawnCard(isInitial){
+  const card = document.createElement("div");
+  card.className = "falling-card";
+  const mobile = window.innerWidth < 768;
+  if(mobile){ card.style.width="42px"; card.style.height="58px"; }
+  const suit = suits[Math.floor(Math.random()*suits.length)];
+  const value = values[Math.floor(Math.random()*values.length)];
+  const isRed = (suit==='♥'||suit==='♦');
+  card.style.color = isRed ? '#b31b1b' : '#111111';
+  card.innerHTML = `
+    <div class="card-corner corner-top"><div>${value}</div><div>${suit}</div></div>
+    <div class="card-suit">${suit}</div>
+    <div class="card-corner corner-bottom"><div>${value}</div><div>${suit}</div></div>`;
+  const zIdx = Math.random();
+  const translateZ = Math.floor(zIdx*400-200);
+  const startX = Math.random()*window.innerWidth;
+  const endX = startX+(Math.random()*200-100);
+  const duration = (Math.random()*6+12)-(zIdx*2);
+  let blurVal = 0;
+  let opacityVal = window.innerWidth < 768 ? 0.25 : 0.8;
+  if(translateZ < -80){ blurVal=2.5; opacityVal=0.4; }
+  else if(translateZ > 140){ blurVal=4; opacityVal=0.6; }
+  card.style.setProperty('--x-start',`${startX}px`);
+  card.style.setProperty('--x-end',`${endX}px`);
+  card.style.setProperty('--z-depth',`${translateZ}px`);
+  card.style.setProperty('--r-start',`${Math.random()*360}deg`);
+  card.style.setProperty('--rot-x',`${Math.random()*180+90}deg`);
+  card.style.setProperty('--rot-y',`${Math.random()*180+90}deg`);
+  card.style.setProperty('--rot-z',`${Math.random()*90-45}deg`);
+  card.style.animationDuration = `${duration}s`;
+  card.style.filter = blurVal>0 ? `blur(${blurVal}px)` : 'none';
+  card.style.opacity = opacityVal;
+  if(isInitial){ card.style.animationDelay = `-${Math.random()*duration}s`; }
+  card.addEventListener("animationend", ()=>card.remove());
+  cardContainer.appendChild(card);
+}
+const totalInitialCards = window.innerWidth < 768 ? 10 : 25;
+for(let i=0; i<totalInitialCards; i++){ spawnCard(true); }
+setInterval(()=>{ if(cardContainer.children.length < totalInitialCards){ spawnCard(false); } }, 400);
+
+/* ════════════════════════════════════════════════
+   SOUND ENGINE — Web Audio API only, no files
+   No ambient music. Sound effects only.
+   Trailer intro gets the full cinematic banger.
+════════════════════════════════════════════════ */
+
+let audioCtx = null;
+let masterGain = null;
+let isMuted = false;
+let audioUnlocked = false;
+
+function getAudioCtx() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = 0.55;
+    masterGain.connect(audioCtx.destination);
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+
+function toggleMute() {
+  isMuted = !isMuted;
+  const btn = document.getElementById('soundToggle');
+  if (masterGain) masterGain.gain.value = isMuted ? 0 : 0.55;
+  btn.textContent = isMuted ? '✕ MUTED' : '♪ SOUND';
+  btn.style.color = isMuted ? 'rgba(201,164,92,0.6)' : 'rgba(245,241,232,0.4)';
+}
+
+function unlockAudio() {
+  if (audioUnlocked) return;
+  audioUnlocked = true;
+  getAudioCtx();
+  document.getElementById('soundToggle').classList.add('visible');
+}
+document.addEventListener('click', unlockAudio, { once: true });
+document.addEventListener('keydown', unlockAudio, { once: true });
+document.addEventListener('touchstart', unlockAudio, { once: true });
+
+/* Vinyl crackle noise */
+function playVinylCrackle(duration = 3.5) {
+  const ctx = getAudioCtx();
+  const bufSize = ctx.sampleRate * duration;
+  const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+  const data = buf.getChannelData(0);
+  for (let i = 0; i < bufSize; i++) {
+    const hiss = (Math.random() * 2 - 1) * 0.012;
+    const pop = Math.random() < 0.0004 ? (Math.random() * 2 - 1) * 0.45 : 0;
+    data[i] = hiss + pop;
+  }
+  const src = ctx.createBufferSource(); src.buffer = buf;
+  const hpf = ctx.createBiquadFilter(); hpf.type = 'highpass'; hpf.frequency.value = 1200;
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(0, ctx.currentTime);
+  g.gain.linearRampToValueAtTime(0.55, ctx.currentTime + 0.3);
+  g.gain.linearRampToValueAtTime(0.38, ctx.currentTime + duration * 0.6);
+  g.gain.linearRampToValueAtTime(0, ctx.currentTime + duration);
+  src.connect(hpf); hpf.connect(g); g.connect(masterGain);
+  src.start();
+}
+
+/* Deep cinematic boom */
+function playBoom(freq = 55, duration = 2.2, delay = 0) {
+  const ctx = getAudioCtx();
+  const osc = ctx.createOscillator(); osc.type = 'sine';
+  osc.frequency.setValueAtTime(freq, ctx.currentTime + delay);
+  osc.frequency.exponentialRampToValueAtTime(freq * 0.3, ctx.currentTime + delay + duration);
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(0, ctx.currentTime + delay);
+  g.gain.linearRampToValueAtTime(0.65, ctx.currentTime + delay + 0.05);
+  g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + duration);
+  osc.connect(g); g.connect(masterGain);
+  osc.start(ctx.currentTime + delay);
+  osc.stop(ctx.currentTime + delay + duration + 0.1);
+}
+
+/* Orchestral string swell */
+function playStringSwell(duration = 6, delay = 1.5) {
+  const ctx = getAudioCtx();
+  const freqs = [110, 138.6, 164.8, 220];
+  freqs.forEach((f, i) => {
+    const osc = ctx.createOscillator(); osc.type = 'sawtooth'; osc.frequency.value = f;
+    const detune = (Math.random() - 0.5) * 12;
+    osc.detune.value = detune;
+    const vibOsc = ctx.createOscillator(); vibOsc.frequency.value = 5.2 + i * 0.3;
+    const vibGain = ctx.createGain(); vibGain.gain.value = 8;
+    vibOsc.connect(vibGain); vibGain.connect(osc.detune);
+    vibOsc.start(ctx.currentTime + delay + 0.8);
+    const lpf = ctx.createBiquadFilter(); lpf.type = 'lowpass'; lpf.frequency.value = 900 + i * 200; lpf.Q.value = 2;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0, ctx.currentTime + delay);
+    g.gain.linearRampToValueAtTime(0.09 - i * 0.01, ctx.currentTime + delay + duration * 0.35);
+    g.gain.linearRampToValueAtTime(0.07, ctx.currentTime + delay + duration * 0.7);
+    g.gain.linearRampToValueAtTime(0, ctx.currentTime + delay + duration);
+    osc.connect(lpf); lpf.connect(g); g.connect(masterGain);
+    osc.start(ctx.currentTime + delay);
+    osc.stop(ctx.currentTime + delay + duration + 0.2);
+    vibOsc.stop(ctx.currentTime + delay + duration + 0.2);
+  });
+}
+
+/* Snare */
+function playSnare(time = 0) {
+  const ctx = getAudioCtx();
+  const t = ctx.currentTime + time;
+  const buf = ctx.createBuffer(1, ctx.sampleRate * 0.15, ctx.sampleRate);
+  const d = buf.getChannelData(0);
+  for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  const src = ctx.createBufferSource(); src.buffer = buf;
+  const hpf = ctx.createBiquadFilter(); hpf.type = 'highpass'; hpf.frequency.value = 2000;
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(0.3, t);
+  g.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+  src.connect(hpf); hpf.connect(g); g.connect(masterGain);
+  src.start(t);
+  const osc = ctx.createOscillator(); osc.type = 'triangle'; osc.frequency.value = 185;
+  const g2 = ctx.createGain();
+  g2.gain.setValueAtTime(0.25, t);
+  g2.gain.exponentialRampToValueAtTime(0.001, t + 0.09);
+  osc.connect(g2); g2.connect(masterGain);
+  osc.start(t); osc.stop(t + 0.1);
+}
+
+/* Flash thud */
+function playFlashThud() {
+  playBoom(80, 0.4, 0);
+  const ctx = getAudioCtx();
+  const osc = ctx.createOscillator(); osc.type = 'square'; osc.frequency.value = 3200;
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(0.08, ctx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04);
+  osc.connect(g); g.connect(masterGain);
+  osc.start(); osc.stop(ctx.currentTime + 0.05);
+}
+
+/* Typewriter tick */
+function playTick() {
+  const ctx = getAudioCtx();
+  const t = ctx.currentTime;
+  const buf = ctx.createBuffer(1, ctx.sampleRate * 0.03, ctx.sampleRate);
+  const d = buf.getChannelData(0);
+  for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  const src = ctx.createBufferSource(); src.buffer = buf;
+  const bpf = ctx.createBiquadFilter(); bpf.type = 'bandpass'; bpf.frequency.value = 3500; bpf.Q.value = 1;
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(0.12, t);
+  g.gain.exponentialRampToValueAtTime(0.001, t + 0.025);
+  src.connect(bpf); bpf.connect(g); g.connect(masterGain);
+  src.start(t);
+}
+
+/* Scroll whoosh */
+function playWhoosh() {
+  const ctx = getAudioCtx();
+  const buf = ctx.createBuffer(1, ctx.sampleRate * 0.35, ctx.sampleRate);
+  const d = buf.getChannelData(0);
+  for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  const src = ctx.createBufferSource(); src.buffer = buf;
+  const bpf = ctx.createBiquadFilter(); bpf.type = 'bandpass';
+  bpf.frequency.setValueAtTime(3000, ctx.currentTime);
+  bpf.frequency.linearRampToValueAtTime(200, ctx.currentTime + 0.35);
+  bpf.Q.value = 0.8;
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(0.28, ctx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+  src.connect(bpf); bpf.connect(g); g.connect(masterGain);
+  src.start();
+}
+
+/* Clock tick (trailer) */
+function playClockTick(time = 0) {
+  const ctx = getAudioCtx();
+  const t = ctx.currentTime + time;
+  const buf = ctx.createBuffer(1, ctx.sampleRate * 0.025, ctx.sampleRate);
+  const d = buf.getChannelData(0);
+  for (let i = 0; i < d.length; i++) d[i] = (Math.random()*2-1) * Math.pow(1 - i/d.length, 3);
+  const src = ctx.createBufferSource(); src.buffer = buf;
+  const bpf = ctx.createBiquadFilter(); bpf.type = 'bandpass'; bpf.frequency.value = 2800; bpf.Q.value = 2;
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(0.5, t);
+  g.gain.exponentialRampToValueAtTime(0.001, t + 0.022);
+  src.connect(bpf); bpf.connect(g); g.connect(masterGain);
+  src.start(t);
+  const osc = ctx.createOscillator(); osc.type = 'sine'; osc.frequency.value = 95;
+  const g2 = ctx.createGain();
+  g2.gain.setValueAtTime(0.22, t);
+  g2.gain.exponentialRampToValueAtTime(0.001, t + 0.07);
+  osc.connect(g2); g2.connect(masterGain);
+  osc.start(t); osc.stop(t + 0.08);
+}
+
+/* Card shuffle */
+function playCardShuffle() {
+  const ctx = getAudioCtx();
+  const count = 14;
+  for (let i = 0; i < count; i++) {
+    const delay = i * 0.055 + Math.random() * 0.02;
+    const t = ctx.currentTime + delay;
+    const dur = 0.04 + Math.random() * 0.03;
+    const buf = ctx.createBuffer(1, ctx.sampleRate * dur, ctx.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let j = 0; j < d.length; j++) d[j] = (Math.random()*2-1) * (1 - j/d.length);
+    const src = ctx.createBufferSource(); src.buffer = buf;
+    const hpf = ctx.createBiquadFilter(); hpf.type = 'highpass'; hpf.frequency.value = 1400 + Math.random()*800;
+    const g = ctx.createGain();
+    const vol = 0.12 + Math.random() * 0.1;
+    g.gain.setValueAtTime(vol, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+    src.connect(hpf); hpf.connect(g); g.connect(masterGain);
+    src.start(t);
+  }
+  const slapT = ctx.currentTime + count * 0.055 + 0.05;
+  const osc = ctx.createOscillator(); osc.type = 'triangle'; osc.frequency.value = 200;
+  const sg = ctx.createGain();
+  sg.gain.setValueAtTime(0.3, slapT);
+  sg.gain.exponentialRampToValueAtTime(0.001, slapT + 0.12);
+  osc.connect(sg); sg.connect(masterGain);
+  osc.start(slapT); osc.stop(slapT + 0.13);
+}
+
+/* Smash */
+function playSmash() {
+  const ctx = getAudioCtx();
+  const t = ctx.currentTime;
+  [30, 42, 55].forEach((f, i) => {
+    const o = ctx.createOscillator(); o.type = 'sine';
+    o.frequency.setValueAtTime(f, t);
+    o.frequency.exponentialRampToValueAtTime(f * 0.25, t + 1.8);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(0.4 - i*0.08, t + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 2.2);
+    o.connect(g); g.connect(masterGain);
+    o.start(t); o.stop(t + 2.3);
+  });
+  const crashBuf = ctx.createBuffer(1, ctx.sampleRate * 0.5, ctx.sampleRate);
+  const cd = crashBuf.getChannelData(0);
+  for (let i = 0; i < cd.length; i++) cd[i] = Math.random()*2-1;
+  const cSrc = ctx.createBufferSource(); cSrc.buffer = crashBuf;
+  const lpf = ctx.createBiquadFilter(); lpf.type = 'lowpass'; lpf.frequency.value = 600;
+  const cG = ctx.createGain();
+  cG.gain.setValueAtTime(0.35, t);
+  cG.gain.exponentialRampToValueAtTime(0.001, t + 0.45);
+  cSrc.connect(lpf); lpf.connect(cG); cG.connect(masterGain);
+  cSrc.start(t);
+}
+
+/* ════════════════════════════════════════════════
+   TRAILER ENGINE
+════════════════════════════════════════════════ */
+
+const TRAILER_SLIDES = [
+  {
+    id: 'sl-clock', cls: 't-clock-card', duration: 4800, sound: 'clock',
+    html: `
+      <div class="t-clock-eyebrow">Tick tock,</div>
+      <div class="t-clock-ring">
+        <svg class="t-clock-svg" viewBox="0 0 200 200">
+          <circle class="t-clock-track" cx="100" cy="100" r="88" />
+          <circle class="t-clock-fill" cx="100" cy="100" r="88" />
+          <line class="t-clock-hand-hour"  x1="100" y1="100" x2="100" y2="38" />
+          <line class="t-clock-hand-min"   x1="100" y1="100" x2="100" y2="22" />
+          <circle class="t-clock-center" cx="100" cy="100" r="5" />
+        </svg>
+      </div>
+      <div class="t-clock-label">Batch of 2026.</div>
+      <div class="t-clock-sub">The clock is officially running out.</div>
+    `
+  },
+  {
+    id: 'sl-twelve', cls: 't-quote-card', duration: 4500, sound: null,
+    html: `
+      <span class="t-quote-line">It took twelve years to get here,</span>
+      <span class="t-quote-line">and it all comes down to this.</span>
+      <span class="t-quote-line" style="color:rgba(245,241,232,0.45); font-size:clamp(0.9rem,2.2vw,1.5rem); margin-top:0.3em;">One final evening to remember — cheating the clock until the morning comes to collect.</span>
+    `
+  },
+  {
+    id: 'sl-shuffle', cls: 't-shuffle-card', duration: 4200, sound: 'shuffle',
+    html: `
+      <div class="t-shuffle-label">The deck is shuffled.</div>
+      <div class="t-shuffle-deck" id="shuffleDeck"></div>
+      <div class="t-shuffle-sub">The chips are down.</div>
+    `
+  },
+  {
+    id: 'sl-aug', cls: 't-date-card', duration: 3800, sound: null,
+    html: `
+      <div class="t-date-eyebrow">The night that changes everything.</div>
+      <div class="t-date-big">August 9th.</div>
+      <div class="t-date-sub">Place your bets. Dress to impress.</div>
+    `
+  },
+  {
+    id: 'sl-bet', cls: 't-smash-card', duration: 5500, sound: 'smash',
+    html: `
+      <div class="t-smash-wrap">
+        <div class="t-smash-word" id="smashW1">ONE</div>
+        <div class="t-smash-word" id="smashW2">LAST</div>
+        <div class="t-smash-word t-smash-gold" id="smashW3">BET</div>
+      </div>
+    `
+  }
+];
+
+let trailerActive = false;
+let trailerRaf = null;
+let trailerStartTime = null;
+let trailerTotalDuration = 0;
+let grainRaf = null;
+
+TRAILER_SLIDES.forEach(s => { trailerTotalDuration += s.duration; });
+
+function buildTrailer() {
+  const stage = document.getElementById('trailerStage');
+  stage.innerHTML = '';
+  const flash = document.createElement('div');
+  flash.id = 'trailerFlash';
+  document.getElementById('trailerInner').appendChild(flash);
+  TRAILER_SLIDES.forEach(s => {
+    const div = document.createElement('div');
+    div.className = `t-slide ${s.cls}`;
+    div.id = s.id;
+    div.innerHTML = s.html;
+    stage.appendChild(div);
+  });
+}
+
+function flashCut(cb) {
+  const f = document.getElementById('trailerFlash');
+  if (!f) { cb && cb(); return; }
+  playFlashThud();
+  f.style.background = '#fff'; f.style.transition = 'none'; f.style.opacity = '0.45';
+  setTimeout(() => {
+    f.style.background = '#000'; f.style.opacity = '0.8';
+    setTimeout(() => {
+      f.style.transition = 'opacity 0.3s ease'; f.style.opacity = '0';
+      setTimeout(() => { cb && cb(); }, 310);
+    }, 60);
+  }, 40);
+}
+
+async function runTrailer() {
+  buildTrailer();
+  trailerActive = true;
+  trailerStartTime = performance.now();
+  document.getElementById('trailerProgressBar').style.width = '0%';
+  startGrain();
+  playVinylCrackle(3.5);
+  playBoom(45, 2.8, 0.15);
+  playStringSwell(22, 1.8);
+  [7.5, 10.8, 14.2, 17.0].forEach(t => playSnare(t));
+  setTimeout(() => playBoom(35, 4, 0), 12000);
+
+  for (let i = 0; i < TRAILER_SLIDES.length; i++) {
+    if (!trailerActive) break;
+    const s = TRAILER_SLIDES[i];
+    const el = document.getElementById(s.id);
+    if (!el) continue;
+    if (i > 0) await new Promise(r => flashCut(r));
+    if (s.sound === 'clock') {
+      [0, 0.22, 0.44, 0.66, 0.88, 1.1].forEach(t => playClockTick(t));
+    } else if (s.sound === 'shuffle') {
+      setTimeout(() => playCardShuffle(), 300);
+    } else if (s.sound === 'smash') {
+      setTimeout(() => playSmash(), 50);
+      setTimeout(() => playSmash(), 700);
+      setTimeout(() => playSmash(), 1400);
+    }
+    el.classList.add('active');
+    if (s.id === 'sl-shuffle') buildShuffleDeck();
+    await sleep(s.duration);
+    el.classList.remove('active');
+    await sleep(300);
+  }
+
+  if (trailerActive) {
+    // Transition to filmstrip video overlay
+    closeTrailerIntro();
+    await sleep(800);
+    openVideoOverlay();
+  }
+}
+
+function buildShuffleDeck() {
+  const deck = document.getElementById('shuffleDeck');
+  if (!deck) return;
+  deck.innerHTML = '';
+  const suits2 = ['♥','♠','♦','♣','♥','♠','♦','♣'];
+  const colors2 = ['#b31b1b','#111','#b31b1b','#111','#b31b1b','#111','#b31b1b','#111'];
+  const count = suits2.length;
+  const w = deck.offsetWidth || 340;
+  const spread = w * 0.85;
+  suits2.forEach((suit, i) => {
+    const card = document.createElement('div');
+    card.className = 's-card';
+    card.style.color = colors2[i];
+    card.textContent = suit;
+    const finalX = (i / (count - 1)) * spread - spread / 2;
+    const finalRot = (i - (count-1)/2) * 9;
+    card.style.transform = `translateX(-50%) rotate(0deg)`;
+    card.style.zIndex = i;
+    deck.appendChild(card);
+    setTimeout(() => {
+      card.style.transition = `transform 0.55s cubic-bezier(0.34,1.56,0.64,1)`;
+      card.style.transform = `translateX(calc(-50% + ${finalX}px)) rotate(${finalRot}deg)`;
+    }, 100 + i * 60);
+  });
+}
+
+function startGrain() {
+  const canvas = document.getElementById('grainCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  function drawGrain() {
+    if (!trailerActive) return;
+    const w = canvas.width, h = canvas.height;
+    const img = ctx.createImageData(w, h);
+    const d = img.data;
+    for (let i = 0; i < d.length; i += 4) {
+      const v = Math.random() * 255 | 0;
+      d[i] = d[i+1] = d[i+2] = v; d[i+3] = 22;
+    }
+    ctx.putImageData(img, 0, 0);
+    grainRaf = requestAnimationFrame(drawGrain);
+  }
+  drawGrain();
+}
+
+function updateProgress() {
+  if (!trailerActive || !trailerStartTime) return;
+  const elapsed = performance.now() - trailerStartTime;
+  const pct = Math.min((elapsed / trailerTotalDuration) * 100, 100);
+  document.getElementById('trailerProgressBar').style.width = pct + '%';
+  trailerRaf = requestAnimationFrame(updateProgress);
+}
+
+/* Open trailer → plays cinematic intro first, then goes to filmstrip video */
+function openTrailer() {
+  unlockAudio();
+  const introOv = document.getElementById('trailerIntroOverlay');
+  introOv.style.display = 'block';
+  void introOv.offsetWidth;
+  introOv.classList.add('show');
+  trailerStartTime = performance.now();
+  runTrailer();
+  updateProgress();
+}
+
+function closeTrailerIntro() {
+  trailerActive = false;
+  if (grainRaf) cancelAnimationFrame(grainRaf);
+  if (trailerRaf) cancelAnimationFrame(trailerRaf);
+  const introOv = document.getElementById('trailerIntroOverlay');
+  introOv.classList.remove('show');
+  setTimeout(() => {
+    introOv.style.display = 'none';
+    document.getElementById('trailerStage').innerHTML = '';
+    const f = document.getElementById('trailerFlash');
+    if (f) f.remove();
+  }, 900);
+}
+
+function skipToVideo() {
+  closeTrailerIntro();
+  setTimeout(openVideoOverlay, 400);
+}
+
+/* Open the filmstrip video shell */
+function openVideoOverlay() {
+  const ov = document.getElementById('trailerVideoOverlay');
+  ov.style.display = 'flex';
+  void ov.offsetWidth;
+  ov.classList.add('open');
+  const sh = document.getElementById('trailerShell');
+  sh.classList.remove('flicker'); void sh.offsetWidth; sh.classList.add('flicker');
+  document.body.style.overflow = 'hidden';
+  // Auto-play local trailer.mp4
+  setTimeout(playLocalTrailer, 500);
+}
+
+function closeVideoOverlay() {
+  const ov = document.getElementById('trailerVideoOverlay');
+  ov.classList.remove('open');
+  setTimeout(() => {
+    ov.style.display = 'none';
+    const iframe = document.getElementById('trailerIframe');
+    const src = iframe.src; iframe.src = ''; iframe.src = src;
+    // Also reset local video
+    const vid = document.getElementById('trailerVideo');
+    if (vid) { vid.pause(); vid.src = ''; vid.style.opacity = '0'; }
+    const placeholder = document.getElementById('trailerPlaceholder');
+    if (placeholder) placeholder.classList.remove('hidden');
+  }, 700);
+  document.body.style.overflow = '';
+}
+
+document.getElementById('trailerVideoOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('trailerVideoOverlay')) closeVideoOverlay();
+});
+
+
+/* ────────────────────────────────────────
+   LOCAL VIDEO: auto-loads trailer.mp4
+──────────────────────────────────────── */
+function playLocalTrailer() {
+  const vid = document.getElementById('trailerVideo');
+  const placeholder = document.getElementById('trailerPlaceholder');
+  if (!vid) return;
+  vid.src = 'trailer.mp4';
+  vid.load();
+  vid.play().catch(() => {});
+  vid.style.opacity = '1';
+  if (placeholder) placeholder.classList.add('hidden');
+  const sh = document.getElementById('trailerShell');
+  if (sh) { sh.classList.remove('flicker'); void sh.offsetWidth; sh.classList.add('flicker'); }
+}
+
+/* ────────────────────────────────────────
+   BACKGROUND MUSIC: track.mp3
+──────────────────────────────────────── */
+(function() {
+  const bgm = new Audio('track.mp3');
+  bgm.loop = true;
+  bgm.volume = 0.22;
+  let bgmStarted = false;
+  function startBgm() {
+    if (bgmStarted) return;
+    bgmStarted = true;
+    bgm.play().catch(() => {});
+  }
+  // start on first interaction
+  document.addEventListener('click', startBgm, { once: true });
+  document.addEventListener('keydown', startBgm, { once: true });
+  document.addEventListener('touchstart', startBgm, { once: true });
+  // Pause bgm when trailer video is playing
+  const trailerVid = document.getElementById('trailerVideo');
+  if (trailerVid) {
+    trailerVid.addEventListener('play', () => { bgm.volume = 0.05; });
+    trailerVid.addEventListener('pause', () => { bgm.volume = 0.22; });
+    trailerVid.addEventListener('ended', () => { bgm.volume = 0.22; });
+  }
+})();
+
+/* ────────────────────────────────────────
+   SCROLL-REVEAL for newspaper sections
+──────────────────────────────────────── */
+(function() {
+  function revealOnScroll() {
+    const els = document.querySelectorAll('.np-reveal:not(.revealed)');
+    els.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.92) {
+        el.classList.add('revealed');
+      }
+    });
+  }
+  // Also trigger when newspaper is shown
+  const npObs = new MutationObserver(() => {
+    const np = document.getElementById('newspaper');
+    if (np && np.style.display !== 'none' && parseFloat(np.style.opacity || 0) > 0) {
+      setTimeout(revealOnScroll, 400);
+    }
+  });
+  const np = document.getElementById('newspaper');
+  if (np) {
+    npObs.observe(np, { attributes: true, attributeFilter: ['style'] });
+    np.addEventListener('scroll', revealOnScroll, { passive: true });
+  }
+  // Kick off on first reveal too
+  setTimeout(revealOnScroll, 1200);
+})();
+
+/* SPROCKET HOLES */
+function buildSprockets() {
+  ['sprocketTop', 'sprocketBottom'].forEach(id => {
+    const strip = document.getElementById(id);
+    if (!strip) return;
+    const counter = strip.querySelector('.sprocket-counter');
+    // remove old holes
+    strip.querySelectorAll('.sprocket-hole').forEach(h => h.remove());
+    const count = Math.floor(strip.offsetWidth / 28);
+    for (let i = 0; i < count; i++) {
+      const h = document.createElement('div');
+      h.className = 'sprocket-hole';
+      strip.insertBefore(h, counter);
+    }
+  });
+}
+window.addEventListener('load', buildSprockets);
+window.addEventListener('resize', buildSprockets);
+</script>
+
+</body>
+</html>
